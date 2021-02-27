@@ -27,6 +27,7 @@ import pickle as PD
 
 # * def dateIntvlM(dateToUse, months):
 # * def dateToStr(dateIn):
+# * def displayStats(LN_, COL_, statsStr_):
 # * def doAHash(HASH_, stringToHash):
 # * def doError(strToOutToErr_):
 # * def getDebugInfo():
@@ -42,7 +43,7 @@ import pickle as PD
 # * def nowZStrSql(dtObj=DT.utcnow()):
 # * def outputOptionsDict():
 # * def pickleIt(fileName_, dataToPickle_):
-# * def print(*args_):
+# * def print_(*args_):
 # * def readFileToStr(FILENAME_):
 # * def relDateDiff(startTS, endTS):
 # * def relDateDiffStripped(startTS, endTS):
