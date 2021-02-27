@@ -352,7 +352,7 @@ DIRDNRT_MSK_OR = lambda X_: DIRDNRT_MSK_VAL | X_  # FLAG DIR DOWN or lambda
 DIRDNRT_MSK_VAL = 0B1001  # MASK DIR DOWN RIGHT
 DIRDNRT_OR = lambda X_: DIRDNRT_VAL | X_  # FLAG DIR DNRT or lambda
 DIRDNRT_VAL = 0B0110  # FLAG DIR DOWN RIGHT
-DIRDNUP_VAL = 0B0101  # FLAG DIRDNUP
+DIRDNUP_VAL = 0B0101  # FLAG DIRDNUP 
 DIRDN_AND = lambda X_: DIRDN_VAL & X_  # FLAG DIR DN and lambda
 DIRDN_MSK_AND = lambda X_: DIRDN_MSK_VAL & X_  # FLAG DIR DOWN and lambda
 DIRDN_MSK_OR = lambda X_: DIRDN_MSK_VAL | X_  # FLAG DIR DOWN or lambda
@@ -1950,43 +1950,43 @@ DEVTDICT = {
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 DEVICES = {  # define SCTN44 DEVICES
 	DEFT: {  # define the DEFT trackball
-		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held,
-		DEV_DEVICETYPE: DEVICETYPE_MOUSE,  # DEFT device type flag,
-		DEV_ENABLED: False,  # DEFT enabled flag,
-		DEV_ERR_DELTA: 300 * 60 * 100,  # 5 minutes between error checks,
-		DEV_ERR_NEXTTIME: 0,  # DEFT next time to check error status,
-		DEV_FD: None,  # file descriptor for DEFT,
-		DEV_GRAB: True,  # grab the device,
-		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name,
-		DEV_QUEUE: [],  # DEFT queue,
-		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status,
-		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status,
-		DEV_RPT_NEXTTIME: 0,  # DEFT next time to repeat,
-		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # DEFT time between repeats,
-		DEV_SPENT: False,  # DEFT queue has been sent/spent,
-		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # DEFT status,
+		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held, 
+		DEV_DEVICETYPE: DEVICETYPE_MOUSE,  # DEFT device type flag, 
+		DEV_ENABLED: False,  # DEFT enabled flag, 
+		DEV_ERR_DELTA: 300 * 60 * 100,  # 5 minutes between error checks, 
+		DEV_ERR_NEXTTIME: 0,  # DEFT next time to check error status, 
+		DEV_FD: None,  # file descriptor for DEFT, 
+		DEV_GRAB: True,  # grab the device, 
+		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name, 
+		DEV_QUEUE: [],  # DEFT queue, 
+		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status, 
+		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status, 
+		DEV_RPT_NEXTTIME: 0,  # DEFT next time to repeat, 
+		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # DEFT time between repeats, 
+		DEV_SPENT: False,  # DEFT queue has been sent/spent, 
+		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # DEFT status, 
 	},
 	MIMD: {  # define MIMD gamepad
-		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
-		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held,
-		DEV_DEVICETYPE: DEVICETYPE_GAMEPAD,  # MIMD device type flag,
-		DEV_ENABLED: True,  # MIMD enabled flag,
-		DEV_ERR_DELTA: 30000,  # 300 seconds delta for error checking,
-		DEV_ERR_NEXTTIME: 0,  # MIMD next time to check error status,
-		DEV_FD: None,  # MIMD file descriptor,
-		DEV_GRAB: True,  # grab the MIMD,
-		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name,
-		DEV_QUEUE: [],  # MIMD queue,
-		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status,
-		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat,
-		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # MIMD time between repeats,
-		DEV_SPENT: False,  # MIMD queue has been sent/spent,
-		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # MIMD status,
+		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
+		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held, 
+		DEV_DEVICETYPE: DEVICETYPE_GAMEPAD,  # MIMD device type flag, 
+		DEV_ENABLED: True,  # MIMD enabled flag, 
+		DEV_ERR_DELTA: 30000,  # 300 seconds delta for error checking, 
+		DEV_ERR_NEXTTIME: 0,  # MIMD next time to check error status, 
+		DEV_FD: None,  # MIMD file descriptor, 
+		DEV_GRAB: True,  # grab the MIMD, 
+		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name, 
+		DEV_QUEUE: [],  # MIMD queue, 
+		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status, 
+		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat, 
+		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # MIMD time between repeats, 
+		DEV_SPENT: False,  # MIMD queue has been sent/spent, 
+		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # MIMD status, 
 	},
 }
 
@@ -2158,6 +2158,87 @@ REPEATDICT = {
 	},
 }
 
+BTNTYPEDICT = {
+	MIMD: {
+		BTNGHAT_DN: BTNTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_DNLT: BTNTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_DNRT: BTNTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_LT: BTNTYPE_NORMAL,  # artificial button hat left LEFT
+		BTNGHAT_RT: BTNTYPE_NORMAL,  # artificial button hat right RIGHT
+		BTNGHAT_UP: BTNTYPE_NORMAL,  # artificial button hat up UP
+		BTNGHAT_UPLT: BTNTYPE_NORMAL,  # artificial button hat up UP
+		BTNGHAT_UPRT: BTNTYPE_NORMAL,  # artificial button hat up UP
+		BTNGLTSTK_DN: BTNTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNLT: BTNTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNRT: BTNTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_LT: BTNTYPE_NORMAL,  # artificial button left stick left MSE_LT
+		BTNGLTSTK_RT: BTNTYPE_NORMAL,  # artificial button left stick right MSE_RT
+		BTNGLTSTK_UP: BTNTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGLTSTK_UPLT: BTNTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGLTSTK_UPRT: BTNTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGRTSTK_DN: BTNTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNLT: BTNTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNRT: BTNTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_LT: BTNTYPE_NORMAL,  # right stick left MSEWHL_LT
+		BTNGRTSTK_RT: BTNTYPE_NORMAL,  # right stick right MSEWHL_RT
+		BTNGRTSTK_UP: BTNTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPLT: BTNTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPRT: BTNTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNG_01: BTNTYPE_NORMAL,  # XnViewer flip horizontal
+		BTNG_02: BTNTYPE_NORMAL,  # ESC key
+		BTNG_03: BTNTYPE_NORMAL,  # press middle mouse button
+		BTNG_04: BTNTYPE_NORMAL,  # save/CTRL-S
+		BTNG_05: {  # holdable button BTNG_05
+			BTNG_01: BTNTYPE_NORMAL,  # select all CTRL-A
+			BTNG_03: BTNTYPE_NORMAL,  # XnViewer CROP
+			BTNG_06: {  # holdable buttons BTNG_05:BTNG_06
+				BTNG_01: BTNTYPE_NORMAL,  # quit CTRL-Q
+			},
+			BTNG_13: BTNTYPE_NORMAL,  # select to top SHIFT-HOME SHIFT-RT
+			BTNGHAT_DN: BTNTYPE_NORMAL,  # SHIFT-DN
+			BTNGHAT_DNLT: BTNTYPE_NORMAL,  # SHIFT-DNLT
+			BTNGHAT_DNRT: BTNTYPE_NORMAL,  # SHIFT-DNRT
+			BTNGHAT_LT: BTNTYPE_NORMAL,  # SHIFT-LT
+			BTNGHAT_RT: BTNTYPE_NORMAL,  # SHIFT-RT
+			BTNGHAT_UP: BTNTYPE_NORMAL,  # SHIFT-UP
+			BTNGHAT_UPLT: BTNTYPE_NORMAL,  # SHIFT-UPLT
+			BTNGHAT_UPRT: BTNTYPE_NORMAL,  # SHIFT-UPRT
+		},
+		BTNG_06: {  # holdable button BTNG_06
+			BTNG_01: BTNTYPE_NORMAL,  # QUIT Q in many programs
+			BTNG_02: BTNTYPE_NORMAL,  # QUIT CTRL-Q in many programs
+			BTNG_03: BTNTYPE_NORMAL,  # ALT-D dismiss in some programs
+			BTNG_04: BTNTYPE_NORMAL,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNGHAT_DN: BTNTYPE_NORMAL,  # PGDN
+			BTNGHAT_LT: BTNTYPE_NORMAL,  # HOME
+			BTNGHAT_RT: BTNTYPE_NORMAL,  # END
+			BTNGHAT_UP: BTNTYPE_NORMAL,  # PGUP
+		},
+		BTNG_07: {  # holdable button BTNG_07
+			BTNG_01: BTNTYPE_NORMAL,  # desktop 1 ALT-1
+			BTNG_02: BTNTYPE_NORMAL,  # desktop 2 ALT-2
+			BTNG_03: BTNTYPE_NORMAL,  # desktop 3 ALT-3
+			BTNG_04: BTNTYPE_NORMAL,  # desktop 4 ALT-4
+			BTNG_13: BTNTYPE_NORMAL,  # DEL on BTNG_07-BTNG_13
+			BTNGHAT_DN: BTNTYPE_NORMAL,  # XnViewer zoom to out/-
+			BTNGHAT_LT: BTNTYPE_NORMAL,  # XnViewer zoom to default
+			BTNGHAT_RT: BTNTYPE_NORMAL,  # XnViewer zoom to 1:1
+			BTNGHAT_UP: BTNTYPE_NORMAL,  # XnViewer zoom to out/-
+		},
+		BTNG_08: {  # holdable button BTNG_08
+			BTNG_13: BTNTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
+			BTNGHAT_DN: BTNTYPE_NORMAL,  # PGDN
+			BTNGHAT_LT: BTNTYPE_NORMAL,  # ALTTAB
+			BTNGHAT_RT: BTNTYPE_NORMAL,  # CTRLTAB
+			BTNGHAT_UP: BTNTYPE_NORMAL,  # PGUP
+		},
+		BTNG_09: BTNTYPE_NORMAL,  # ENTER on BTNG_09
+		BTNG_10: BTNTYPE_NORMAL,  # XnViewer move
+		BTNG_11LTSTK: BTNTYPE_NORMAL,  # left mouse button on same stick click
+		BTNG_12RTSTK: BTNTYPE_NORMAL,  # right mouse button on same stick click
+		BTNG_13: BTNTYPE_NORMAL,  # ENTER on HOME/BTNG_13
+	},
+
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN46 device XLATE table
@@ -2261,325 +2342,3 @@ DIR2BTN = {
 #
 
 
-#
-#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# start of not managed section of DO
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
-#
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# isMatch
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def isMatch(eventCD1_, eventCD2_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	valToRtn_ = False
-	# print(f"isMatch eventCD1_ {eventCD1_}   eventCD2_ {eventCD2_}{CF.NEWLINE}")
-
-	if eventCD1_[0] == eventCD2_[0]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
-		# print(f"EQUAL")
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif eventCD1_[0] in DEVTDICT[LTSTK] and eventCD2_[0] in DEVTDICT[LTSTK]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
-		# print(f"LTSTK")
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif eventCD1_[0] in DEVTDICT[RTSTK] and eventCD2_[0] in DEVTDICT[RTSTK]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
-		# print(f"RTSTK")
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif eventCD1_[0] in DEVTDICT[HATS] and eventCD2_[0] in DEVTDICT[HATS]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
-		# print(f"HATS")
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	return valToRtn_
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# fixBtn
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def fixBtn(DEVTCode_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	codeToRtn_ = None
-	for thisDevice_, entries_ in XLATETABLE.items():
-		if DEVTCode_ in entries_:
-			codeToRtn_ = entries_[DEVTCode_]
-	return codeToRtn_
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# openOutputDevice
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def openOutputDevice(lookingForDeviceName_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	for myTEvent in os.listdir('/dev/input'):
-		# print(myTEvent)
-		try:
-			fdJoyStick_ = open('/dev/input/' + myTEvent, "rb")
-			fcntl.fcntl(fdJoyStick_, fcntl.F_SETFL, os.O_NONBLOCK)
-			myLDJoyStick_ = LD.Device(fdJoyStick_)
-			if myLDJoyStick_.name == lookingForDeviceName_:
-				return myLDJoyStick_
-			fdJoyStick_.close()
-		except IOError:
-			pass
-	print("failed to find the", lookingForDeviceName_)
-	return None
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# SPCL_
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def SPCL_(spclEvent_, spclVal_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	if spclEvent_ == DO.SPCL_PAUSE:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		CF.mySleep(spclVal_)
-		return True
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif spclEvent_ == DO.SPCL_PAUSE3S:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		CF.mySleep(300)
-		return True
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif spclEvent_ == DO.SPCL_PAUSE30F:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		CF.mySleep(30)
-		return True
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif spclEvent_ == DO.SPCL_PAUSE50F:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		CF.mySleep(50)
-		return True
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	else:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		print(f"{CF.NEWLINE}unknown special event |{spclEvent_}|{spclVal_}|{CF.NEWLINE}")
-		return None
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# fixEvent
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def fixEvent(thisDevice_, eventToFix_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	eventToRtn_ = (None, None)
-	# print(f"""{CF.getDebugInfo()} eventToFix_1 {eventToFix_} eventToRtn_ {eventToRtn_}""")
-	thisCode_ = eventToFix_.code
-	thisType_ = eventToFix_.type
-	thisValue_ = eventToFix_.value
-	dir1_ = DIRNOT_VAL
-	dir2_ = DIRNOT_VAL
-	dir3_ = DIRNOT_VAL
-	if thisCode_ not in DEVTDICT[ABSS] and thisCode_ not in DEVTDICT[RELS] and thisType_ != LD.EV_KEY:
-		return eventToRtn_
-	elif thisCode_ in DEVTDICT[HATS]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-
-		if thisValue_ == HATMIN:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_HAT0X:
-				eventToRtn_ = (BTNGHAT_LT, KEYPRS)
-			else:
-				eventToRtn_ = (BTNGHAT_UP, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		elif thisValue_ == HATMAX:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_HAT0X:
-				eventToRtn_ = (BTNGHAT_RT, KEYPRS)
-			else:
-				eventToRtn_ = (BTNGHAT_DN, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		else:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			eventToRtn_ = (BTNGHAT_RLS, KEYRLS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif thisCode_ in DEVTDICT[STICKS]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-
-		if thisValue_ < JOYSTICKMID: # (JOYSTICKMID - JOYSTICKDEAD):
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_ABSX:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRLT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSY:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRUP_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSRZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRUP_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRLT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		elif thisValue_ > JOYSTICKMID:  # (JOYSTICKMID + JOYSTICKDEAD):
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_ABSX:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRRT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSY:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRDN_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSRZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRDN_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRRT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		else:  # thisValue_ == JOYSTICKMID +- JOYSTICKDEAD
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ in DEVTDICT[LTSTK]:
-				# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-				if thisCode_ == DEVCD_ABSX:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-					dir2_ = DIRY_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[LTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				else:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-					dir2_ = DIRY_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[LTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-			elif thisCode_ in DEVTDICT[RTSTK]:
-				# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-				if thisCode_ == DEVCD_ABSZ:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-					dir2_ = DIRX_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[RTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				else:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-					dir2_ = DIRX_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[RTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif thisType_ == LD.EV_KEY:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		if thisValue_ == KEYPRS:
-			eventToRtn_ = (fixBtn(thisCode_), KEYPRS)
-			if eventToRtn_[0] in BTNSHOLDABLELIST:
-				eventToRtn_ = (eventToRtn_[0], KEYHLD)
-		elif thisValue_ == KEYRLS:
-			eventToRtn_ = (fixBtn(thisCode_), KEYRLS)
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	# CF.displayStats(15, 0, f"""fixEvent eventToFix_ {eventToFix_} eventToRtn_ {eventToRtn_} dir1_ {dir1_} dir2_ {dir2_}  dir3_ {dir3_}{CF.CLREOL}""")
-	return eventToRtn_
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-#
-#
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * end of DO.py
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-#
-#
