@@ -12,23 +12,6 @@ HBIDev = HBI.IDB()
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# setRptTime
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def setRptTime(device_, delta_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	# print(f"setting repeat time for {device_} to {delta_}")
-
-	if delta_ == 0:
-		DO.DEVICES[device_][DO.DEV_RPT_NEXTTIME] = 0
-		DO.DEVICES[device_][DO.DEV_RPT_NEXTTIMEDELTA] = 0
-
-	else:
-		DO.DEVICES[device_][DO.DEV_RPT_NEXTTIME] = CF.MTSPlus(delta_)
-		DO.DEVICES[device_][DO.DEV_RPT_NEXTTIMEDELTA] = delta_
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # checkDeviceConnect check and try to (re)connect all enabled devices
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def checkDeviceConnect():
@@ -90,95 +73,24 @@ def checkDeviceConnect():
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# deleteReleasedEvent
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def deleteReleasedEvent(queueIn_, eventIn_):
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	queueOut_ = []
-	for thisEvent_ in queueIn_:
-		if not DO.isMatch(thisEvent_, eventIn_):
-			queueOut_.append(thisEvent_)
-	return queueOut_
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# checkDevices check all enabled and connected devices for input, add/subtract from the queue
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def checkDevices():
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	for thisDevice_ in DO.DEVICES:
-		# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-		if DO.DEVICES[thisDevice_][DO.DEV_STATUS] == DO.DEVICESTATUS_CONNECTED and DO.DEVICES[thisDevice_][DO.DEV_ENABLED] is True:
-			# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-			for thisEvent_ in DO.DEVICES[thisDevice_][DO.DEV_FD].events():
-				# ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3
-				thisEventOut_ = DO.fixEvent(thisDevice_, thisEvent_)
-				if thisEventOut_[1] == 0:
-					# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
-					newQueue_ = deleteReleasedEvent(DO.DEVICES[thisDevice_][DO.DEV_QUEUE], thisEventOut_)
-					if newQueue_ == []:
-						deviceType_ = DO.DEVICES[thisDevice_][DO.DEV_DEVICETYPE]
-						if deviceType_ == DO.DEVICETYPE_GAMEPAD:
-							DO.DEVICES[thisDevice_][DO.DEV_ABSHAT_STATUS] = DO.DIRNOT_VAL
-							DO.DEVICES[thisDevice_][DO.DEV_ABSLTSTK_STATUS] = DO.DIRNOT_VAL
-							DO.DEVICES[thisDevice_][DO.DEV_ABSRTSTK_STATUS] = DO.DIRNOT_VAL
-						elif deviceType_ == DO.DEVICETYPE_MOUSE:
-							DO.DEVICES[thisDevice_][DO.DEV_RELMSE_STATUS] = DO.DIRNOT_VAL
-							DO.DEVICES[thisDevice_][DO.DEV_RELMW_STATUS] = DO.DIRNOT_VAL
-					DO.DEVICES[thisDevice_][DO.DEV_QUEUE] = newQueue_
-					DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] = 0
-					DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIMEDELTA] = 0
-					DO.DEVICES[thisDevice_][DO.DEV_SPENT] = False
-					# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
-				elif thisEventOut_[0] is not None and thisEventOut_[1] is not None and thisEventOut_ not in DO.DEVICES[thisDevice_][DO.DEV_QUEUE]:
-					# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
-					DO.DEVICES[thisDevice_][DO.DEV_QUEUE].append(thisEventOut_)
-					DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] = 0
-					DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIMEDELTA] = 0
-					DO.DEVICES[thisDevice_][DO.DEV_SPENT] = False
-					# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
-
-				# ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3
-
-			# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-		elif DO.DEVICES[thisDevice_][DO.DEV_STATUS] == DO.DEVICESTATUS_ERROR and CF.isPast(DO.DEVICES[thisDevice_][DO.DEV_ERR_NEXTTIME]) is True:
-			# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-			thisResult_ = checkDeviceConnect()
-			# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-
-		# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
-
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # doAX
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def doAX(AXToDo_):
+def doAX(AXToDo_, btnNdx_, btnAxType_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	if DO.SPCL_PAUSE in AXToDo_:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		# do something with a pause
-		list1_ = []
-		list2_ = []
-		listSpcl_ = []
-		for LDEVToSend_ in AXToDo_:
-			if LDEVToSend_ not in DO.SPCLAXLIST and listSpcl_ is []:
-				list1_.append(LDEVToSend_)
-			elif LDEVToSend_ in DO.SPCLAXLIST:
-				listSpcl_.append(LDEVToSend_)
-			elif LDEVToSend_ not in DO.SPCLAXLIST and listSpcl_ is not []:
-				list2_.append(LDEVToSend_)
-		print(f"doAX+SPCL_ list1_ {list1_} listSpcl_ {listSpcl_} list2_ {list2_}")
-		# HBIDev.send_events(*AXToDo_)
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	else:
+	if btnAxType_ == DO.BTNAXTYPE_NORMAL:
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		# print(f"doAX sending {DO.ACTIONS[AXToDo_]}{CF.NEWLINE}")
-		HBIDev.send_events(DO.ACTIONS[AXToDo_])
+		HBIDev.send_events(DO.ACTIONS[AXToDo_[0]])
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	elif btnAxType_ == DO.BTNAXTYPE_TOGGLE:
+		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+		# print(f"doAX sending {DO.ACTIONS[AXToDo_]}{CF.NEWLINE}")
+		HBIDev.send_events(DO.ACTIONS[AXToDo_[btnNdx_]])
+		btnNdx_ = DO.incNdx(AXToDo_, btnNdx_)
+		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+
+	return btnNdx_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
@@ -188,67 +100,62 @@ def doAX(AXToDo_):
 def dispatchEvents():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	for thisDevice_ in DO.DEVICES:
+		# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
 		thisQueue_ = DO.DEVICES[thisDevice_][DO.DEV_QUEUE]
-		# print(f"""dispatchEvents queue {thisDevice_} {thisQueue_}""")
-		QLen_ = len(thisQueue_)
-		if QLen_ == 0 or QLen_ > 3:
+		if thisQueue_ is None:
+			thisQueue_ = []
+		queueLen_ = len(thisQueue_)
+		if (queueLen_ == 0) or \
+				(queueLen_ > 3) or \
+				(thisQueue_[-1][1] != DO.KEYPRS):
 			continue
+		# CF.displayStats(20, 0, f"""{CF.CLREOL}{CF.NEWLINE}{CF.CLREOL}thisQueue_ {thisQueue_}{CF.CLREOL}{CF.NEWLINE}{CF.MTSclr()}""")
 		spent_ = DO.DEVICES[thisDevice_][DO.DEV_SPENT]
 		nextDelta_ = DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIMEDELTA]
 		isPast_ = CF.isPast(DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME])
+		hasPaused_ = DO.DEVICES[thisDevice_][DO.DEV_PAUSED]
 		if (spent_ is True and nextDelta_ != 0 and isPast_ is True) or (spent_ is False):
 			try:
-				if QLen_ == 1:
-					# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-					if thisQueue_[0][1] == 1:
-						# CF.displayStats(10, 0, f"not holdable 1st queue {thisQueue_} spent_ {spent_}{CF.NEWLINE} DEVICES {DO.DEVICES[thisDevice_]}")
-						thisRepeat_ = DO.REPEATDICT[thisDevice_][thisQueue_[0][0]]
-						if thisRepeat_ == 0:
-							setRptTime(thisDevice_, thisRepeat_)
-						elif spent_ is False:
-							setRptTime(thisDevice_, thisRepeat_ + DO.DORPT_PAUSE)
-						else:
-							setRptTime(thisDevice_, thisRepeat_)
-						# CF.displayStats(20, 0, f"""doAX(DO.PROFILE[{thisDevice_}][{thisQueue_[0][0]}]) {DO.PROFILE[thisDevice_][thisQueue_[0][0]]}""")
-						doAX(DO.PROFILE[thisDevice_][thisQueue_[0][0]])
-					# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+				if queueLen_ == 1:
+					newNdx_ = doAX(
+						DO.PROFILE[thisDevice_][thisQueue_[0][0]],
+						DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]],
+						DO.BTNTYPEDICT[thisDevice_][thisQueue_[0][0]])
+					DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]] = newNdx_
 
-				elif QLen_ == 2:
-					# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-					if thisQueue_[0][1] == 2 and thisQueue_[1][1] == 1:
-						thisRepeat_ = DO.REPEATDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]]
-						if thisRepeat_ == 0:
-							setRptTime(thisDevice_, thisRepeat_)
-						elif spent_ is False:
-							setRptTime(thisDevice_, thisRepeat_ + DO.DORPT_PAUSE)
-						else:
-							setRptTime(thisDevice_, thisRepeat_)
-						doAX(DO.PROFILE[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]])
-					# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+				elif queueLen_ == 2:
+					newNdx_ = doAX(
+						DO.PROFILE[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]],
+						DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]],
+						DO.BTNTYPEDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]])
+					DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]] = newNdx_
 
-				elif QLen_ == 3:
-					# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-					if thisQueue_[0][1] == 2 and thisQueue_[1][1] == 2 and thisQueue_[2][1] == 1:
-						thisRepeat_ = DO.REPEATDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]]
-						if thisRepeat_ == 0:
-							setRptTime(thisDevice_, thisRepeat_)
-						elif spent_ is False:
-							setRptTime(thisDevice_, thisRepeat_ + DO.DORPT_PAUSE)
-						else:
-							setRptTime(thisDevice_, thisRepeat_)
-						doAX(DO.PROFILE[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]])
-					# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+				elif queueLen_ == 3:
+					newNdx_ = doAX(
+						DO.PROFILE[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]],
+						DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]],
+						DO.BTNTYPEDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]])
+					DO.BTNNDXDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]] = newNdx_
+
+				if isPast_ is True and DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] != 0:
+					DO.DEVICES[thisDevice_][DO.DEV_PAUSED] = True
 
 				DO.DEVICES[thisDevice_][DO.DEV_SPENT] = True
-				spent_ = True
-				continue
+				if nextDelta_ != 0:
+					if hasPaused_ is False:
+						DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] = CF.MTSPlus(nextDelta_ + DO.DORPT_PAUSE)
+					else:
+						DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] = CF.MTSPlus(nextDelta_)
+				else:
+					DO.DEVICES[thisDevice_][DO.DEV_RPT_NEXTTIME] = 0
 
 			except KeyError:
 				DO.DEVICES[thisDevice_][DO.DEV_SPENT] = True
-				spent_ = True
 				continue
 			except KeyboardInterrupt:
 				exit()
+		# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
+	DO.DEVICES[thisDevice_][DO.DEV_SPENT] = True
 
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
@@ -262,10 +169,9 @@ def __main__():
 	# print(f"{CF.CLRALL}")
 	while True:
 		try:
-			checkDevices()
-			# CF.displayStats(25, 0, f"""MIMD[queue] {DO.DEVICES[DO.MIMD][DO.DEV_QUEUE]}{CF.CLREOL}""")
-		# except IOError:
-			# pass
+			for thisDevice_ in DO.DEVICES:
+				DO.queueEvents(thisDevice_)
+				dispatchEvents()
 		except DO.LD.EventsDroppedException:
 			print(f"dropped events{CF.NEWLINE}")
 		except OSError as e:
@@ -275,7 +181,6 @@ def __main__():
 		except KeyboardInterrupt:
 			exit()
 
-		dispatchEvents()
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 

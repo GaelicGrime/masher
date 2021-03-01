@@ -19,6 +19,7 @@ import CF
 #
 # * def fixBtn(DEVTCode_):
 # * def fixEvent(thisDevice_, eventToFix_):
+# * def incNdx(AXLst_, currentNDX_):
 # * def isMatch(eventCD1_, eventCD2_):
 # * def openOutputDevice(lookingForDeviceName_):
 # * def SPCL_(spclEvent_, spclVal_):
@@ -43,8 +44,12 @@ AXMCSEL = "AXMCSEL"  # MC select INS
 AXMSEBTNBAK = "AXMSEBTNBAK"  # MSE BTN BACK
 AXMSEBTNFWD = "AXMSEBTNFWD"  # MSE BTN FWD
 AXMSEBTNLT = "AXMSEBTNLT"  # MSE BTN LEFT
+AXMSEBTNLT_T01 = "AXMSEBTNLT_T01"  # MSE BTN LEFT_1 pressed
+AXMSEBTNLT_T02 = "AXMSEBTNLT_T02"  # MSE BTN LEFT_2 released
 AXMSEBTNMID = "AXMSEBTNMID"  # MSE BTN MIDDLE
 AXMSEBTNRT = "AXMSEBTNRT"  # MSE BTN RIGHT
+AXMSEBTNRT_T01 = "AXMSEBTNRT_T01"  # MSE BTN LEFT_1 pressed
+AXMSEBTNRT_T02 = "AXMSEBTNRT_T02"  # MSE BTN LEFT_2 released
 AXMSEBTNSIDE = "AXMSEBTNSIDE"  # MSE BTN SIDE
 AXMSEBTNTASK = "AXMSEBTNTASK"  # MSE BTN TASK
 AXMSEDN = "AXMSEDN"  # MSE DOWN
@@ -78,6 +83,8 @@ AXXNVZOOMRESET = "AXXNVZOOMRESET"  # reset XnViewer zoom by back, forward, forwa
 AX_ALTC = "AX_ALTC"  # ALT-C
 AX_ALTD = "AX_ALTD"  # ALT-D
 AX_ALTTAB = "AX_ALTTAB"  # ALT-TAB
+AX_ALT_T01 = "AX_ALT_T01"  # ALT-C
+AX_ALT_T02 = "AX_ALT_T02"  # ALT-C
 AX_CRSRDN = "AX_CRSRDN"  # DOWN
 AX_CRSRDNLT = "AX_CRSRDNLT"  # DOWN
 AX_CRSRDNRT = "AX_CRSRDNRT"  # DOWN
@@ -93,6 +100,8 @@ AX_CTRLQ = "AX_CTRLQ"  # CTRL-Q
 AX_CTRLS = "AX_CTRLS"  # CTRL-S
 AX_CTRLTAB = "AX_CTRLTAB"  # CTRL-TAB
 AX_CTRLW = "AX_CTRLW"  # CTRL-W
+AX_CTRL_T01 = "AX_CTRL_T01"  # CTRL toggle actions
+AX_CTRL_T02 = "AX_CTRL_T02"  # CTRL toggle actions
 AX_DEL = "AX_DEL"  # DEL
 AX_END = "AX_END"  # END
 AX_ENTER = "AX_ENTER"  # ENTER
@@ -102,6 +111,7 @@ AX_F10 = "AX_F10"  # F10
 AX_F5 = "AX_F5"  # F5
 AX_F6 = "AX_F6"  # F6
 AX_HOME = "AX_HOME"  # HOME
+AX_INS = "AX_INS"  # MC select INS
 AX_N = "AX_N"  # N
 AX_PGDN = "AX_PGDN"  # PGDN
 AX_PGUP = "AX_PGUP"  # PGUP
@@ -209,6 +219,11 @@ ABS_RZ = "ABS_RZ"  # key for stick 1 Y
 ABS_X = "ABS_X"  # key for stick 0 X
 ABS_Y = "ABS_Y"  # key for stick 0 Y
 ABS_Z = "ABS_Z"  # key for stick 1 X
+BTNAXTYPE_LOCKING = "BTNAXTYPE_LOCKING"  # action type NORMAL key
+BTNAXTYPE_NORMAL = "BTNAXTYPE_NORMAL"  # action type NORMAL key
+BTNAXTYPE_PUSHRELEASE = "BTNAXTYPE_PUSHRELEASE"  # action type key
+BTNAXTYPE_TOGGLE = "BTNAXTYPE_TOGGLE"  # action type key
+BTNAXTYPE_WITHPAUSE = "BTNAXTYPE_WITHPAUSE"  # action type key
 BTNS00 = 0B00000001  # FLAG LD.EV_KEY holdable BTN0 GPM
 BTNS05 = 0B00000010  # FLAG LD.EV_KEY holdable BTN5 gamepads
 BTNS06 = 0B00000100  # FLAG LD.EV_KEY holdable BTN6 gamepads
@@ -220,14 +235,9 @@ BTNS24 = 0B10000000  # FLAG LD.EV_KEY holdable BTN24 saitek
 BTNS_NOT = 0B00000000  # FLAG no BTN or _KEY_ held
 BTNTYPE = "BTNTYPE"  # action type key
 BTNTYPE_HOLDABLE = "BTNTYPE_HOLDABLE"  # HOLDABLE button
-BTNTYPE_LOCKING = "BTNTYPE_LOCKING"  # action type key
-BTNTYPE_NORMAL = "BTNTYPE_NORMAL"  # action type NORMAL key
 BTNTYPE_NOTHOLDABLE = "BTNTYPE_NOTHOLDABLE"  # NOTHOLDABLE button
-BTNTYPE_PUSHRELEASE = "BTNTYPE_PUSHRELEASE"  # action type key
 BTNTYPE_SIMABS = "BTNTYPE_SIMABS"  # simulated ABS button
 BTNTYPE_SIMREL = "BTNTYPE_SIMREL"  # simulated REL button
-BTNTYPE_TOGGLE = "BTNTYPE_TOGGLE"  # action type key
-BTNTYPE_WITHPAUSE = "BTNTYPE_WITHPAUSE"  # action type key
 DEFT = "DEFT"  # define the DEFT trackball
 DEVCD_ABSRZ = LD.EV_ABS.ABS_RZ  # shortcut to ABS_RZ
 DEVCD_ABSX = LD.EV_ABS.ABS_X  # shortcut to ABS_X
@@ -332,6 +342,7 @@ DEV_FD = "DEV_FD"  # FD (file descriptor) of the device
 DEV_GRAB = "DEV_GRAB"  # GRAB shal the device be grabbed exclusively or not
 DEV_MYNAME = "DEV_MYNAME"  # device normal name_
 DEV_NAME = "DEV_NAME"  # NAME of device returned by uvdev/evdev/etc
+DEV_PAUSED = "DEV_PAUSED"  # PAUSED
 DEV_QUEUE = "DEV_QUEUE"  # QUEUE holding EVENT as they come in to the device handler
 DEV_RELMSE_STATUS = "DEV_RELMSE_STATUS"  # ABS status flags key
 DEV_RELMW_STATUS = "DEV_RELMW_STATUS"  # ABS status flags key
@@ -407,17 +418,17 @@ DIRX_VAL = 0B1010  # LTRT directions
 DIRY_AND = lambda X_: DIRY_VAL & X_  # FLAG DIR UPDN and lambda
 DIRY_OR = lambda X_: DIRY_VAL | X_  # FLAG DIR UPDN or lambda
 DIRY_VAL = 0B0101  # UP/DN directions
-DORPT_CRSR = 50  # cursor repeat
-DORPT_MSE = 5  # mouse repeat
+DORPT_CRSR = 200  # cursor repeat
+DORPT_MSE = 10  # mouse repeat
 DORPT_NOT = 0  # no repeat
-DORPT_PAUSE = 50  # pause before repeating
-DORPT_WHL = 10  # mouse  wheelrepeat
+DORPT_PAUSE = 500  # pause before repeating
+DORPT_WHL = 100  # mouse  wheelrepeat
 ERRORNOT = 0X00000000  # FLAG NOTHING is ERROR
-ERRORTDELTA = 300  # FLAG NOTHING is ERROR
+ERRORTDELTA = 30000  # FLAG NOTHING is ERROR
 HATMAX = 1  # HAT MAX
 HATMID = 0  # HAT MID/REST
 HATMIN = -1  # HAT MIN
-JOYSTICKDEAD = 100  # DEAD zone on a lo rez ABS device
+JOYSTICKDEAD = 120  # DEAD zone on a lo rez ABS device
 JOYSTICKMAX = 255  # MAX on lo rez ABS device
 JOYSTICKMID = 128  # MID on lo rez ABS device
 JOYSTICKMIN = 0  # MIN on lo rez ABS device
@@ -427,7 +438,7 @@ KEYPRSHLD = 0X03  # KEY pressed held
 KEYRLS = 0X00  # KEY released
 LOGITECH = "LOGITECH"  # device Logitech trackman marble
 MIMD = "MIMD"  # define MIMD gamepad
-MOUSEDISTANCE = 3  # how far to move the mouse per event
+MOUSEDISTANCE = 2  # how far to move the mouse per event
 OBJMODE_CLASS = "OBJMODE_CLASS"  # dict key for class internal []{}
 OBJMODE_STANDALONE = "OBJMODE_STANDALONE"  # dict key for standalone []{}
 OBJMODE_STANDALONECLASS = "OBJMODE_STANDALONECLASS"  # dict key for a class []{}
@@ -1147,6 +1158,16 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AXMSEBTNLT_T01: [  # MSE BTN LEFT_1 pressed
+		MSEBTNLT_PRSHLD,  # press MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNLT_T02: [  # MSE BTN LEFT_2 released
+		MSEBTNLT_RLS,  # release MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEBTNMID: [  # MSE BTN MIDDLE
 		MSEBTNMID_PRSHLD,  # press MSEBTNMID
 		SYNREPORT,  # SYNREPORT
@@ -1157,6 +1178,16 @@ ACTIONS = {
 	AXMSEBTNRT: [  # MSE BTN RIGHT
 		MSEBTNRT_PRSHLD,  # press MSEBTNRT
 		SYNREPORT,  # SYNREPORT
+		MSEBTNRT_RLS,  # release MSEBTNRT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNRT_T01: [  # MSE BTN LEFT_1 pressed
+		MSEBTNRT_PRSHLD,  # press MSEBTNRT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNRT_T02: [  # MSE BTN LEFT_2 released
 		MSEBTNRT_RLS,  # release MSEBTNRT
 		SYNREPORT,  # SYNREPORT
 	],
@@ -1387,6 +1418,16 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AX_ALT_T01: [  # ALT-C
+		KBDALTLT_PRS,  # press ALT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_ALT_T02: [  # ALT-C
+		KBDALTLT_RLS,  # release ALT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AX_CRSRDN: [  # DOWN
 		KBDDN_PRS,  # press DOWN
 		KBDDN_RLS,  # release DOWN
@@ -1499,6 +1540,16 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AX_CTRL_T01: [  # CTRL toggle actions
+		KBDALTLT_PRS,  # press ALT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_CTRL_T02: [  # CTRL toggle actions
+		KBDALTLT_RLS,  # release ALT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AX_DEL: [  # DEL
 		KBDDEL_PRS,  # press DEL
 		KBDDEL_RLS,  # release DEL
@@ -1550,6 +1601,12 @@ ACTIONS = {
 	AX_HOME: [  # HOME
 		KBDHOME_PRS,  # press HOME
 		KBDHOME_RLS,  # release HOME
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_INS: [  # MC select INS
+		KBDINSERT_PRS,  # press INSERT
+		KBDINSERT_RLS,  # release INSERT
 		SYNREPORT,  # SYNREPORT
 	],
 
@@ -1692,6 +1749,7 @@ ABSS = "ABSS"  # EV type list entry ABSS
 BTNS = "BTNS"  # EV type list BTNS entry
 HATS = "HATS"  # EV type list entry HAT
 LTSTK = "LTSTK"  # EV type list entry LTSTK
+RAW = "RAW"  # EV type list entry ABSS
 RELS = "RELS"  # EV type for RELS supported
 RTSTK = "RTSTK"  # EV type list entry RTSTK
 STICKS = "STICKS"  # EV type list entry STICKS
@@ -1704,6 +1762,7 @@ DEVTLIST = [
 	BTNS,  # EV type list BTNS entry
 	HATS,  # EV type list entry HAT
 	LTSTK,  # EV type list entry LTSTK
+	RAW,  # EV type list entry ABSS
 	RELS,  # EV type for RELS supported
 	RTSTK,  # EV type list entry RTSTK
 	STICKS,  # EV type list entry STICKS
@@ -1866,6 +1925,11 @@ DEVTDICT = {
 		DEVCD_BTNGLTSTK_UPLT,  # DEVCD_BTNGLTSTK_UPLT entry in BTNS
 		DEVCD_BTNGLTSTK_UPRT,  # DEVCD_BTNGLTSTK_UPRT entry in BTNS
 	],
+	RAW: [  # EV type list entry ABSS
+		LD.EV_ABS,  # raw code for ABS
+		LD.EV_REL,  # raw code for REL
+		LD.EV_KEY,  # raw code for KEY
+	],
 	RELS: [  # EV type for RELS supported
 		DEVCD_BTNMWH_DN,  # BTNMWHLDN/MSE_DN on mice
 		DEVCD_BTNMWH_DNLT,  # BTNMWHLDN/MSE_DNLT on mice
@@ -1961,6 +2025,7 @@ DEVICES = {  # define SCTN44 DEVICES
 		DEV_FD: None,  # file descriptor for DEFT,
 		DEV_GRAB: True,  # grab the device,
 		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name,
+		DEV_PAUSED: False,  # DEFT name,
 		DEV_QUEUE: [],  # DEFT queue,
 		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status,
 		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status,
@@ -1981,6 +2046,7 @@ DEVICES = {  # define SCTN44 DEVICES
 		DEV_FD: None,  # MIMD file descriptor,
 		DEV_GRAB: True,  # grab the MIMD,
 		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name,
+		DEV_PAUSED: False,  # MIMD name,
 		DEV_QUEUE: [],  # MIMD queue,
 		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status,
 		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat,
@@ -1996,83 +2062,239 @@ DEVICES = {  # define SCTN44 DEVICES
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 PROFILE = {  # device profile defined
 	MIMD: {
-		BTNGHAT_DN: AX_CRSRDN,  # artificial button hat down DOWN
-		BTNGHAT_DNLT: AX_CRSRDNLT,  # artificial button hat down DOWN
-		BTNGHAT_DNRT: AX_CRSRDNRT,  # artificial button hat down DOWN
-		BTNGHAT_LT: AX_CRSRLT,  # artificial button hat left LEFT
-		BTNGHAT_RT: AX_CRSRRT,  # artificial button hat right RIGHT
-		BTNGHAT_UP: AX_CRSRUP,  # artificial button hat up UP
-		BTNGHAT_UPLT: AX_CRSRUPLT,  # artificial button hat up UP
-		BTNGHAT_UPRT: AX_CRSRUPRT,  # artificial button hat up UP
-		BTNGLTSTK_DN: AXMSEDN,  # artificial button left stick down MSE_DN
-		BTNGLTSTK_DNLT: AXMSEDNLT,  # artificial button left stick down MSE_DN
-		BTNGLTSTK_DNRT: AXMSEDNRT,  # artificial button left stick down MSE_DN
-		BTNGLTSTK_LT: AXMSELT,  # artificial button left stick left MSE_LT
-		BTNGLTSTK_RT: AXMSERT,  # artificial button left stick right MSE_RT
-		BTNGLTSTK_UP: AXMSEUP,  # left stick up MSE_UP
-		BTNGLTSTK_UPLT: AXMSEUPLT,  # left stick up MSE_UP
-		BTNGLTSTK_UPRT: AXMSEUPRT,  # left stick up MSE_UP
-		BTNGRTSTK_DN: AXMSEWHLDN,  # right stick down MSEWHL_DN
-		BTNGRTSTK_DNLT: AXMSEWHLDNLT,  # right stick down MSEWHL_DN
-		BTNGRTSTK_DNRT: AXMSEWHLDNRT,  # right stick down MSEWHL_DN
-		BTNGRTSTK_LT: AXMSEWHLLT,  # right stick left MSEWHL_LT
-		BTNGRTSTK_RT: AXMSEWHLRT,  # right stick right MSEWHL_RT
-		BTNGRTSTK_UP: AXMSEWHLUP,  # right stick up MSEWHL_UP
-		BTNGRTSTK_UPLT: AXMSEWHLUPLT,  # right stick up MSEWHL_UP
-		BTNGRTSTK_UPRT: AXMSEWHLUPRT,  # right stick up MSEWHL_UP
-		BTNG_01: AXXNVFLIPH,  # XnViewer flip horizontal
-		BTNG_02: AX_ESC,  # ESC key
-		BTNG_03: AXMSEBTNMID,  # press middle mouse button
-		BTNG_04: AX_CTRLS,  # save/CTRL-S
+		BTNGHAT_DN: [
+			AX_CRSRDN,  # artificial button hat down DOWN
+		],
+		BTNGHAT_DNLT: [
+			AX_CRSRDNLT,  # artificial button hat down DOWN
+		],
+		BTNGHAT_DNRT: [
+			AX_CRSRDNRT,  # artificial button hat down DOWN
+		],
+		BTNGHAT_LT: [
+			AX_CRSRLT,  # artificial button hat left LEFT
+		],
+		BTNGHAT_RT: [
+			AX_CRSRRT,  # artificial button hat right RIGHT
+		],
+		BTNGHAT_UP: [
+			AX_CRSRUP,  # artificial button hat up UP
+		],
+		BTNGHAT_UPLT: [
+			AX_CRSRUPLT,  # artificial button hat up UP
+		],
+		BTNGHAT_UPRT: [
+			AX_CRSRUPRT,  # artificial button hat up UP
+		],
+		BTNGLTSTK_DN: [
+			AXMSEDN,  # artificial button left stick down MSE_DN
+		],
+		BTNGLTSTK_DNLT: [
+			AXMSEDNLT,  # artificial button left stick down MSE_DN
+		],
+		BTNGLTSTK_DNRT: [
+			AXMSEDNRT,  # artificial button left stick down MSE_DN
+		],
+		BTNGLTSTK_LT: [
+			AXMSELT,  # artificial button left stick left MSE_LT
+		],
+		BTNGLTSTK_RT: [
+			AXMSERT,  # artificial button left stick right MSE_RT
+		],
+		BTNGLTSTK_UP: [
+			AXMSEUP,  # left stick up MSE_UP
+		],
+		BTNGLTSTK_UPLT: [
+			AXMSEUPLT,  # left stick up MSE_UP
+		],
+		BTNGLTSTK_UPRT: [
+			AXMSEUPRT,  # left stick up MSE_UP
+		],
+		BTNGRTSTK_DN: [
+			AXMSEWHLDN,  # right stick down MSEWHL_DN
+		],
+		BTNGRTSTK_DNLT: [
+			AXMSEWHLDNLT,  # right stick down MSEWHL_DN
+		],
+		BTNGRTSTK_DNRT: [
+			AXMSEWHLDNRT,  # right stick down MSEWHL_DN
+		],
+		BTNGRTSTK_LT: [
+			AXMSEWHLLT,  # right stick left MSEWHL_LT
+		],
+		BTNGRTSTK_RT: [
+			AXMSEWHLRT,  # right stick right MSEWHL_RT
+		],
+		BTNGRTSTK_UP: [
+			AXMSEWHLUP,  # right stick up MSEWHL_UP
+		],
+		BTNGRTSTK_UPLT: [
+			AXMSEWHLUPLT,  # right stick up MSEWHL_UP
+		],
+		BTNGRTSTK_UPRT: [
+			AXMSEWHLUPRT,  # right stick up MSEWHL_UP
+		],
+		BTNG_01: [
+			AXXNVFLIPH,  # XnViewer flip horizontal
+		],
+		BTNG_02: [
+			AX_ESC,  # ESC key
+		],
+		BTNG_03: [
+			AXMSEBTNMID,  # press middle mouse button
+		],
+		BTNG_04: [
+			AX_CTRLS,  # save/CTRL-S
+		],
 		BTNG_05: {  # holdable button BTNG_05
-			BTNG_01: AX_CTRLA,  # select all CTRL-A
-			BTNG_03: AXXNVCROP,  # XnViewer CROP
-			BTNG_06: {  # holdable buttons BTNG_05:BTNG_06
-				BTNG_01: AX_CTRLQ,  # quit CTRL-Q
-			},
-			BTNG_13: AXXNVSEL2TOP,  # select to top SHIFT-HOME SHIFT-RT
-			BTNGHAT_DN: AX_SHIFTDN,  # SHIFT-DN
-			BTNGHAT_DNLT: AX_SHIFTDNLT,  # SHIFT-DNLT
-			BTNGHAT_DNRT: AX_SHIFTDNRT,  # SHIFT-DNRT
-			BTNGHAT_LT: AX_SHIFTLT,  # SHIFT-LT
-			BTNGHAT_RT: AX_SHIFTRT,  # SHIFT-RT
-			BTNGHAT_UP: AX_SHIFTUP,  # SHIFT-UP
-			BTNGHAT_UPLT: AX_SHIFTUPLT,  # SHIFT-UPLT
-			BTNGHAT_UPRT: AX_SHIFTUPRT,  # SHIFT-UPRT
+			BTNG_01: [
+				AX_CTRLA,  # select all CTRL-A
+			],
+			BTNG_04: [
+				AXXNVROTLT,  # select all CTRL-A
+			],
+			BTNG_02: [
+				AXXNVROTRT,  # select all CTRL-A
+			],
+			BTNG_03: [
+				AXXNVCROP,  # XnViewer CROP
+			],
+			BTNG_13: [
+				AXXNVSEL2TOP,  # select to top SHIFT-HOME SHIFT-RT
+			],
+			BTNGHAT_DN: [
+				AX_SHIFTDN,  # SHIFT-DN
+			],
+			BTNGHAT_DNLT: [
+				AX_SHIFTDNLT,  # SHIFT-DNLT
+			],
+			BTNGHAT_DNRT: [
+				AX_SHIFTDNRT,  # SHIFT-DNRT
+			],
+			BTNGHAT_LT: [
+				AX_SHIFTLT,  # SHIFT-LT
+			],
+			BTNGHAT_RT: [
+				AX_SHIFTRT,  # SHIFT-RT
+			],
+			BTNGHAT_UP: [
+				AX_SHIFTUP,  # SHIFT-UP
+			],
+			BTNGHAT_UPLT: [
+				AX_SHIFTUPLT,  # SHIFT-UPLT
+			],
+			BTNGHAT_UPRT: [
+				AX_SHIFTUPRT,  # SHIFT-UPRT
+			],
 		},
 		BTNG_06: {  # holdable button BTNG_06
-			BTNG_01: AX_Q,  # QUIT Q in many programs
-			BTNG_02: AX_CTRLQ,  # QUIT CTRL-Q in many programs
-			BTNG_03: AX_ALTD,  # ALT-D dismiss in some programs
-			BTNG_04: AXGIMPOVWRT,  # gimp overwrite ALT-CTRL-SHIFT-O
-			BTNGHAT_DN: AX_PGDN,  # PGDN
-			BTNGHAT_LT: AX_HOME,  # HOME
-			BTNGHAT_RT: AX_END,  # END
-			BTNGHAT_UP: AX_PGUP,  # PGUP
+			BTNG_01: [
+				AX_Q,  # QUIT Q in many programs
+			],
+			BTNG_02: [
+				AX_CTRLQ,  # QUIT CTRL-Q in many programs
+			],
+			BTNG_03: [
+				AX_ALTD,  # ALT-D dismiss in some programs
+			],
+			BTNG_04: [
+				AXGIMPOVWRT,  # gimp overwrite ALT-CTRL-SHIFT-O
+			],
+			BTNG_11LTSTK: [
+				AXMSEBTNLT_T01,  # click MSEBTNLT
+				AXMSEBTNLT_T02,  # click MSEBTNLT
+			],
+			BTNG_13: [
+				AX_DEL,  # gimp overwrite ALT-CTRL-SHIFT-O
+			],
+			BTNGHAT_DN: [
+				AX_PGDN,  # PGDN
+			],
+			BTNGHAT_LT: [
+				AX_HOME,  # HOME
+			],
+			BTNGHAT_RT: [
+				AX_END,  # END
+			],
+			BTNGHAT_UP: [
+				AX_PGUP,  # PGUP
+			],
 		},
 		BTNG_07: {  # holdable button BTNG_07
-			BTNG_01: AXDSKTP1,  # desktop 1 ALT-1
-			BTNG_02: AXDSKTP2,  # desktop 2 ALT-2
-			BTNG_03: AXDSKTP3,  # desktop 3 ALT-3
-			BTNG_04: AXDSKTP4,  # desktop 4 ALT-4
-			BTNG_13: AX_DEL,  # DEL on BTNG_07-BTNG_13
-			BTNGHAT_DN: AXXNVZOOMIN,  # XnViewer zoom to out/-
-			BTNGHAT_LT: AXXNVZOOMRESET,  # XnViewer zoom to default
-			BTNGHAT_RT: AXXNVZOOMFULL,  # XnViewer zoom to 1:1
-			BTNGHAT_UP: AXXNVZOOMOUT,  # XnViewer zoom to out/-
+			BTNG_01: [
+				AXDSKTP1,  # desktop 1 ALT-1
+			],
+			BTNG_02: [
+				AXDSKTP2,  # desktop 2 ALT-2
+			],
+			BTNG_03: [
+				AXDSKTP3,  # desktop 3 ALT-3
+			],
+			BTNG_04: [
+				AXDSKTP4,  # desktop 4 ALT-4
+			],
+			BTNG_13: [
+				AX_DEL,  # DEL on BTNG_07-BTNG_13
+			],
+			BTNGHAT_DN: [
+				AXXNVZOOMIN,  # XnViewer zoom to out/-
+			],
+			BTNGHAT_LT: [
+				AXXNVZOOMRESET,  # XnViewer zoom to default
+			],
+			BTNGHAT_RT: [
+				AXXNVZOOMFULL,  # XnViewer zoom to 1:1
+			],
+			BTNGHAT_UP: [
+				AXXNVZOOMOUT,  # XnViewer zoom to out/-
+			],
 		},
 		BTNG_08: {  # holdable button BTNG_08
-			BTNG_13: AX_DEL,  # DEL on BTNG_08-BTNG_13
-			BTNGHAT_DN: AX_CTRLPGDN,  # PGDN
-			BTNGHAT_LT: AX_ALTTAB,  # ALTTAB
-			BTNGHAT_RT: AX_CTRLTAB,  # CTRLTAB
-			BTNGHAT_UP: AX_CTRLPGUP,  # PGUP
+			BTNG_01: [
+				AX_ALT_T01,  # ALT press/release toggle on BTNG_08-BTNG_13
+				AX_ALT_T02,  # ALT press/release toggle on BTNG_08-BTNG_13
+			],
+			BTNG_02: [
+				AX_TAB,  # DEL on BTNG_08-BTNG_13
+			],
+			BTNG_03: [
+				AX_CTRL_T01,  # DEL on BTNG_08-BTNG_13
+				AX_CTRL_T02,  # DEL on BTNG_08-BTNG_13
+			],
+			BTNG_04: [
+				AX_DEL,  # DEL on BTNG_08-BTNG_13
+			],
+			BTNG_13: [
+				AX_DEL,  # DEL on BTNG_08-BTNG_13
+			],
+			BTNGHAT_DN: [
+				AX_CTRLPGDN,  # PGDN
+			],
+			BTNGHAT_LT: [
+				AX_ALTTAB,  # ALTTAB
+			],
+			BTNGHAT_RT: [
+				AX_CTRLTAB,  # CTRLTAB
+			],
+			BTNGHAT_UP: [
+				AX_CTRLPGUP,  # PGUP
+			],
 		},
-		BTNG_09: AX_ENTER,  # ENTER on BTNG_09
-		BTNG_10: AXXNVMOVE,  # XnViewer move
-		BTNG_11LTSTK: AXMSEBTNLT,  # left mouse button on same stick click
-		BTNG_12RTSTK: AXMSEBTNRT,  # right mouse button on same stick click
-		BTNG_13: AX_ENTER,  # ENTER on HOME/BTNG_13
+		BTNG_09: [
+			AX_ENTER,  # ENTER on BTNG_09
+		],
+		BTNG_10: [
+			AXXNVMOVE,  # XnViewer move
+		],
+		BTNG_11LTSTK: [
+			AXMSEBTNLT,  # left mouse button on same stick click
+		],
+		BTNG_12RTSTK: [
+			AXMSEBTNRT,  # right mouse button on same stick click
+		],
+		BTNG_13: [
+			AX_ENTER,  # ENTER on HOME/BTNG_13
+		],
 	},
 }
 
@@ -2108,10 +2330,9 @@ REPEATDICT = {
 		BTNG_04: DORPT_NOT,  # save/CTRL-S
 		BTNG_05: {  # holdable button BTNG_05
 			BTNG_01: DORPT_NOT,  # select all CTRL-A
+			BTNG_04: DORPT_NOT,  # select all CTRL-A
+			BTNG_02: DORPT_NOT,  # select all CTRL-A
 			BTNG_03: DORPT_NOT,  # XnViewer CROP
-			BTNG_06: {  # holdable buttons BTNG_05:BTNG_06
-				BTNG_01: DORPT_NOT,  # quit CTRL-Q
-			},
 			BTNG_13: DORPT_NOT,  # select to top SHIFT-HOME SHIFT-RT
 			BTNGHAT_DN: DORPT_CRSR,  # SHIFT-DN
 			BTNGHAT_DNLT: DORPT_CRSR,  # SHIFT-DNLT
@@ -2127,6 +2348,8 @@ REPEATDICT = {
 			BTNG_02: DORPT_NOT,  # QUIT CTRL-Q in many programs
 			BTNG_03: DORPT_NOT,  # ALT-D dismiss in some programs
 			BTNG_04: DORPT_NOT,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_11LTSTK: DORPT_NOT,  # click MSEBTNLT
+			BTNG_13: DORPT_NOT,  # gimp overwrite ALT-CTRL-SHIFT-O
 			BTNGHAT_DN: DORPT_NOT,  # PGDN
 			BTNGHAT_LT: DORPT_NOT,  # HOME
 			BTNGHAT_RT: DORPT_NOT,  # END
@@ -2144,6 +2367,10 @@ REPEATDICT = {
 			BTNGHAT_UP: DORPT_NOT,  # XnViewer zoom to out/-
 		},
 		BTNG_08: {  # holdable button BTNG_08
+			BTNG_01: DORPT_NOT,  # ALT press/release toggle on BTNG_08-BTNG_13
+			BTNG_02: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
+			BTNG_04: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
 			BTNG_13: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
 			BTNGHAT_DN: DORPT_NOT,  # PGDN
 			BTNGHAT_LT: DORPT_NOT,  # ALTTAB
@@ -2158,6 +2385,179 @@ REPEATDICT = {
 	},
 }
 
+BTNNDXDICT = {
+	MIMD: {
+		BTNGHAT_DN: 0,  # artificial button hat down DOWN
+		BTNGHAT_DNLT: 0,  # artificial button hat down DOWN
+		BTNGHAT_DNRT: 0,  # artificial button hat down DOWN
+		BTNGHAT_LT: 0,  # artificial button hat left LEFT
+		BTNGHAT_RT: 0,  # artificial button hat right RIGHT
+		BTNGHAT_UP: 0,  # artificial button hat up UP
+		BTNGHAT_UPLT: 0,  # artificial button hat up UP
+		BTNGHAT_UPRT: 0,  # artificial button hat up UP
+		BTNGLTSTK_DN: 0,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNLT: 0,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNRT: 0,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_LT: 0,  # artificial button left stick left MSE_LT
+		BTNGLTSTK_RT: 0,  # artificial button left stick right MSE_RT
+		BTNGLTSTK_UP: 0,  # left stick up MSE_UP
+		BTNGLTSTK_UPLT: 0,  # left stick up MSE_UP
+		BTNGLTSTK_UPRT: 0,  # left stick up MSE_UP
+		BTNGRTSTK_DN: 0,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNLT: 0,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNRT: 0,  # right stick down MSEWHL_DN
+		BTNGRTSTK_LT: 0,  # right stick left MSEWHL_LT
+		BTNGRTSTK_RT: 0,  # right stick right MSEWHL_RT
+		BTNGRTSTK_UP: 0,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPLT: 0,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPRT: 0,  # right stick up MSEWHL_UP
+		BTNG_01: 0,  # XnViewer flip horizontal
+		BTNG_02: 0,  # ESC key
+		BTNG_03: 0,  # press middle mouse button
+		BTNG_04: 0,  # save/CTRL-S
+		BTNG_05: {  # holdable button BTNG_05
+			BTNG_01: 0,  # select all CTRL-A
+			BTNG_04: 0,  # select all CTRL-A
+			BTNG_02: 0,  # select all CTRL-A
+			BTNG_03: 0,  # XnViewer CROP
+			BTNG_13: 0,  # select to top SHIFT-HOME SHIFT-RT
+			BTNGHAT_DN: 0,  # SHIFT-DN
+			BTNGHAT_DNLT: 0,  # SHIFT-DNLT
+			BTNGHAT_DNRT: 0,  # SHIFT-DNRT
+			BTNGHAT_LT: 0,  # SHIFT-LT
+			BTNGHAT_RT: 0,  # SHIFT-RT
+			BTNGHAT_UP: 0,  # SHIFT-UP
+			BTNGHAT_UPLT: 0,  # SHIFT-UPLT
+			BTNGHAT_UPRT: 0,  # SHIFT-UPRT
+		},
+		BTNG_06: {  # holdable button BTNG_06
+			BTNG_01: 0,  # QUIT Q in many programs
+			BTNG_02: 0,  # QUIT CTRL-Q in many programs
+			BTNG_03: 0,  # ALT-D dismiss in some programs
+			BTNG_04: 0,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_11LTSTK: 0,  # click MSEBTNLT
+			BTNG_13: 0,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNGHAT_DN: 0,  # PGDN
+			BTNGHAT_LT: 0,  # HOME
+			BTNGHAT_RT: 0,  # END
+			BTNGHAT_UP: 0,  # PGUP
+		},
+		BTNG_07: {  # holdable button BTNG_07
+			BTNG_01: 0,  # desktop 1 ALT-1
+			BTNG_02: 0,  # desktop 2 ALT-2
+			BTNG_03: 0,  # desktop 3 ALT-3
+			BTNG_04: 0,  # desktop 4 ALT-4
+			BTNG_13: 0,  # DEL on BTNG_07-BTNG_13
+			BTNGHAT_DN: 0,  # XnViewer zoom to out/-
+			BTNGHAT_LT: 0,  # XnViewer zoom to default
+			BTNGHAT_RT: 0,  # XnViewer zoom to 1:1
+			BTNGHAT_UP: 0,  # XnViewer zoom to out/-
+		},
+		BTNG_08: {  # holdable button BTNG_08
+			BTNG_01: 0,  # ALT press/release toggle on BTNG_08-BTNG_13
+			BTNG_02: 0,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: 0,  # DEL on BTNG_08-BTNG_13
+			BTNG_04: 0,  # DEL on BTNG_08-BTNG_13
+			BTNG_13: 0,  # DEL on BTNG_08-BTNG_13
+			BTNGHAT_DN: 0,  # PGDN
+			BTNGHAT_LT: 0,  # ALTTAB
+			BTNGHAT_RT: 0,  # CTRLTAB
+			BTNGHAT_UP: 0,  # PGUP
+		},
+		BTNG_09: 0,  # ENTER on BTNG_09
+		BTNG_10: 0,  # XnViewer move
+		BTNG_11LTSTK: 0,  # left mouse button on same stick click
+		BTNG_12RTSTK: 0,  # right mouse button on same stick click
+		BTNG_13: 0,  # ENTER on HOME/BTNG_13
+	},
+}
+
+BTNTYPEDICT = {
+	MIMD: {
+		BTNGHAT_DN: BTNAXTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_DNLT: BTNAXTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_DNRT: BTNAXTYPE_NORMAL,  # artificial button hat down DOWN
+		BTNGHAT_LT: BTNAXTYPE_NORMAL,  # artificial button hat left LEFT
+		BTNGHAT_RT: BTNAXTYPE_NORMAL,  # artificial button hat right RIGHT
+		BTNGHAT_UP: BTNAXTYPE_NORMAL,  # artificial button hat up UP
+		BTNGHAT_UPLT: BTNAXTYPE_NORMAL,  # artificial button hat up UP
+		BTNGHAT_UPRT: BTNAXTYPE_NORMAL,  # artificial button hat up UP
+		BTNGLTSTK_DN: BTNAXTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNLT: BTNAXTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_DNRT: BTNAXTYPE_NORMAL,  # artificial button left stick down MSE_DN
+		BTNGLTSTK_LT: BTNAXTYPE_NORMAL,  # artificial button left stick left MSE_LT
+		BTNGLTSTK_RT: BTNAXTYPE_NORMAL,  # artificial button left stick right MSE_RT
+		BTNGLTSTK_UP: BTNAXTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGLTSTK_UPLT: BTNAXTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGLTSTK_UPRT: BTNAXTYPE_NORMAL,  # left stick up MSE_UP
+		BTNGRTSTK_DN: BTNAXTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNLT: BTNAXTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_DNRT: BTNAXTYPE_NORMAL,  # right stick down MSEWHL_DN
+		BTNGRTSTK_LT: BTNAXTYPE_NORMAL,  # right stick left MSEWHL_LT
+		BTNGRTSTK_RT: BTNAXTYPE_NORMAL,  # right stick right MSEWHL_RT
+		BTNGRTSTK_UP: BTNAXTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPLT: BTNAXTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNGRTSTK_UPRT: BTNAXTYPE_NORMAL,  # right stick up MSEWHL_UP
+		BTNG_01: BTNAXTYPE_NORMAL,  # XnViewer flip horizontal
+		BTNG_02: BTNAXTYPE_NORMAL,  # ESC key
+		BTNG_03: BTNAXTYPE_NORMAL,  # press middle mouse button
+		BTNG_04: BTNAXTYPE_NORMAL,  # save/CTRL-S
+		BTNG_05: {  # holdable button BTNG_05
+			BTNG_01: BTNAXTYPE_NORMAL,  # select all CTRL-A
+			BTNG_04: BTNAXTYPE_NORMAL,  # select all CTRL-A
+			BTNG_02: BTNAXTYPE_NORMAL,  # select all CTRL-A
+			BTNG_03: BTNAXTYPE_NORMAL,  # XnViewer CROP
+			BTNG_13: BTNAXTYPE_NORMAL,  # select to top SHIFT-HOME SHIFT-RT
+			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # SHIFT-DN
+			BTNGHAT_DNLT: BTNAXTYPE_NORMAL,  # SHIFT-DNLT
+			BTNGHAT_DNRT: BTNAXTYPE_NORMAL,  # SHIFT-DNRT
+			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # SHIFT-LT
+			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # SHIFT-RT
+			BTNGHAT_UP: BTNAXTYPE_NORMAL,  # SHIFT-UP
+			BTNGHAT_UPLT: BTNAXTYPE_NORMAL,  # SHIFT-UPLT
+			BTNGHAT_UPRT: BTNAXTYPE_NORMAL,  # SHIFT-UPRT
+		},
+		BTNG_06: {  # holdable button BTNG_06
+			BTNG_01: BTNAXTYPE_NORMAL,  # QUIT Q in many programs
+			BTNG_02: BTNAXTYPE_NORMAL,  # QUIT CTRL-Q in many programs
+			BTNG_03: BTNAXTYPE_NORMAL,  # ALT-D dismiss in some programs
+			BTNG_04: BTNAXTYPE_NORMAL,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_11LTSTK: BTNAXTYPE_TOGGLE,  # click MSEBTNLT
+			BTNG_13: BTNAXTYPE_NORMAL,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # PGDN
+			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # HOME
+			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # END
+			BTNGHAT_UP: BTNAXTYPE_NORMAL,  # PGUP
+		},
+		BTNG_07: {  # holdable button BTNG_07
+			BTNG_01: BTNAXTYPE_NORMAL,  # desktop 1 ALT-1
+			BTNG_02: BTNAXTYPE_NORMAL,  # desktop 2 ALT-2
+			BTNG_03: BTNAXTYPE_NORMAL,  # desktop 3 ALT-3
+			BTNG_04: BTNAXTYPE_NORMAL,  # desktop 4 ALT-4
+			BTNG_13: BTNAXTYPE_NORMAL,  # DEL on BTNG_07-BTNG_13
+			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # XnViewer zoom to out/-
+			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # XnViewer zoom to default
+			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # XnViewer zoom to 1:1
+			BTNGHAT_UP: BTNAXTYPE_NORMAL,  # XnViewer zoom to out/-
+		},
+		BTNG_08: {  # holdable button BTNG_08
+			BTNG_01: BTNAXTYPE_TOGGLE,  # ALT press/release toggle on BTNG_08-BTNG_13
+			BTNG_02: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: BTNAXTYPE_TOGGLE,  # DEL on BTNG_08-BTNG_13
+			BTNG_04: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
+			BTNG_13: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
+			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # PGDN
+			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # ALTTAB
+			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # CTRLTAB
+			BTNGHAT_UP: BTNAXTYPE_NORMAL,  # PGUP
+		},
+		BTNG_09: BTNAXTYPE_NORMAL,  # ENTER on BTNG_09
+		BTNG_10: BTNAXTYPE_NORMAL,  # XnViewer move
+		BTNG_11LTSTK: BTNAXTYPE_NORMAL,  # left mouse button on same stick click
+		BTNG_12RTSTK: BTNAXTYPE_NORMAL,  # right mouse button on same stick click
+		BTNG_13: BTNAXTYPE_NORMAL,  # ENTER on HOME/BTNG_13
+	},
+}
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN46 device XLATE table
@@ -2270,10 +2670,7 @@ DIR2BTN = {
 #
 
 
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # isMatch
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def isMatch(eventCD1_, eventCD2_):
@@ -2283,29 +2680,137 @@ def isMatch(eventCD1_, eventCD2_):
 
 	if eventCD1_[0] == eventCD2_[0]:
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
-		# print(f"EQUAL")
+		return True
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 	elif eventCD1_[0] in DEVTDICT[LTSTK] and eventCD2_[0] in DEVTDICT[LTSTK]:
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
+		return True
 		# print(f"LTSTK")
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 	elif eventCD1_[0] in DEVTDICT[RTSTK] and eventCD2_[0] in DEVTDICT[RTSTK]:
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
+		return True
 		# print(f"RTSTK")
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 	elif eventCD1_[0] in DEVTDICT[HATS] and eventCD2_[0] in DEVTDICT[HATS]:
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		valToRtn_ = True
+		return True
 		# print(f"HATS")
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 	return valToRtn_
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+
+
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# deleteReleasedEvent
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def deleteReleasedEvent(queueIn_, eventIn_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	queueOut_ = []
+	if queueIn_ is None or queueIn_ == []:
+		return queueOut_
+	for thisEvent_ in queueIn_:
+		if not isMatch(thisEvent_, eventIn_):
+			queueOut_.append(thisEvent_)
+	return queueOut_
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+
+
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# fixQueue
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def fixQueue(queueIn_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	queueLen_ = len(queueIn_)
+
+	if queueLen_ == 1 and queueIn_[0][1] != KEYRLS:
+		return queueIn_
+	elif queueLen_ > 4 or (queueLen_ == 1 and queueIn_[0][1] == KEYRLS):
+		return []
+
+	for thisEvent_ in queueIn_:
+		if thisEvent_[1] == KEYRLS:
+			queueIn_ = deleteReleasedEvent(queueIn_, thisEvent_)
+
+	queueLen_ = len(queueIn_)
+	if queueLen_ == 1:
+		return queueIn_
+
+	elif queueLen_ == 0:
+		return []
+
+	queueOut_ = []
+	queueMaybe_ = []
+	for thisEvent_ in queueIn_:
+		if thisEvent_[1] == KEYHLD:
+			queueOut_.append(thisEvent_)
+		else:
+			queueMaybe_.append(thisEvent_)
+	if queueMaybe_ == []:
+		return queueOut_
+	queueMaybeLen_ = len(queueMaybe_)
+	if queueMaybeLen_ == 1:
+		queueOut_.append(queueMaybe_[0])
+		return queueOut_
+	elif queueMaybeLen_ > 2:
+		return []
+	elif (queueMaybe_[0][0] in DEVTDICT[HATS] and queueMaybe_[1][0] in DEVTDICT[HATS]) or \
+			(queueMaybe_[0][0] in DEVTDICT[LTSTK] and queueMaybe_[1][0] in DEVTDICT[LTSTK]) or \
+			(queueMaybe_[0][0] in DEVTDICT[RTSTK] and queueMaybe_[1][0] in DEVTDICT[RTSTK]):
+		queueOut_.append((queueMaybe_[1][0], queueMaybe_[1][1]))
+		return queueOut_
+	# print(f"DO.fixQueue not yet supported queue {queueIn_}")
+	return []
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+
+
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# setRptTime
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def setRptTime(thisDevice_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	thisQueue_ = DEVICES[thisDevice_][DEV_QUEUE]
+	if thisQueue_ is None:
+		thisQueue_ = []
+		DEVICES[thisDevice_][DEV_QUEUE] = []
+
+	if (thisQueue_ == []) or \
+			(thisQueue_[-1][1] == KEYHLD):
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIMEDELTA] = 0
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIME] = 0
+		DEVICES[thisDevice_][DEV_SPENT] = True
+		return
+	thisQueueLen_ = len(thisQueue_)
+	try:
+		if thisQueueLen_ == 1:
+			rptToSet_ = REPEATDICT[thisDevice_][thisQueue_[0][0]]
+		elif thisQueueLen_ == 2:
+			rptToSet_ = REPEATDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]]
+		elif thisQueueLen_ == 3:
+			rptToSet_ = REPEATDICT[thisDevice_][thisQueue_[0][0]][thisQueue_[1][0]][thisQueue_[2][0]]
+		else:
+			rptToSet_ = 0
+		if DEVICES[thisDevice_][DEV_PAUSED] is False:
+			DEVICES[thisDevice_][DEV_RPT_NEXTTIME] = CF.MTSPlus(rptToSet_ + DORPT_PAUSE)
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIMEDELTA] = rptToSet_
+		DEVICES[thisDevice_][DEV_SPENT] = False
+		return
+	except KeyError:
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIMEDELTA] = 0
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIME] = 0
+		DEVICES[thisDevice_][DEV_SPENT] = True
+		return
+	except TypeError:
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIMEDELTA] = 0
+		DEVICES[thisDevice_][DEV_RPT_NEXTTIME] = 0
+		DEVICES[thisDevice_][DEV_SPENT] = True
+		return
+	except KeyboardInterrupt:
+		exit()
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
@@ -2382,197 +2887,160 @@ def SPCL_(spclEvent_, spclVal_):
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# fixEvent
+# queueEvents
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-def fixEvent(thisDevice_, eventToFix_):
+def queueEvents(thisDevice_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	eventToRtn_ = (None, None)
-	# print(f"""{CF.getDebugInfo()} eventToFix_1 {eventToFix_} eventToRtn_ {eventToRtn_}""")
-	thisCode_ = eventToFix_.code
-	thisType_ = eventToFix_.type
-	thisValue_ = eventToFix_.value
-	dir1_ = DIRNOT_VAL
-	dir2_ = DIRNOT_VAL
-	dir3_ = DIRNOT_VAL
-	if thisCode_ not in DEVTDICT[ABSS] and thisCode_ not in DEVTDICT[RELS] and thisType_ != LD.EV_KEY:
-		return eventToRtn_
-	elif thisCode_ in DEVTDICT[HATS]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+	if DEVICES[thisDevice_][DEV_STATUS] != DEVICESTATUS_CONNECTED:
+		return
+	for eventToFix_ in DEVICES[thisDevice_][DEV_FD].events():
+		thisCode_ = eventToFix_.code
+		thisType_ = eventToFix_.type
+		thisValue_ = eventToFix_.value
+		if thisType_ not in DEVTDICT[RAW]:
+			continue
+		# CF.displayStats(10, 0, f"""queue events new event {eventToFix_}{CF.CLREOL}{CF.NEWLINE}{CF.MTSclr()}""")
+		eventToRtn_ = (None, None)
+		# print(f"""{CF.getDebugInfo()} eventToFix_1 {eventToFix_} eventToRtn_ {eventToRtn_}""")
+		if thisCode_ in DEVTDICT[HATS]:
+			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+			dir1_ = DEVICES[thisDevice_][DEV_ABSHAT_STATUS]
 
-		if thisValue_ == HATMIN:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_HAT0X:
-				eventToRtn_ = (BTNGHAT_LT, KEYPRS)
-			else:
-				eventToRtn_ = (BTNGHAT_UP, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+			if thisValue_ == HATMIN:
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ == DEVCD_HAT0X:
+					dir3_ = DIRLT_OR(DIRY_AND(dir1_))
+				else:
+					dir3_ = DIRUP_OR(DIRY_AND(dir1_))
+				pressRelease_ = KEYPRS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
 
-		elif thisValue_ == HATMAX:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_HAT0X:
-				eventToRtn_ = (BTNGHAT_RT, KEYPRS)
+			elif thisValue_ == HATMAX:
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ == DEVCD_HAT0X:
+					dir3_ = DIRRT_OR(dir1_)
+				else:
+					dir3_ = DIRDN_OR(dir1_)
+				pressRelease_ = KEYPRS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+
 			else:
-				eventToRtn_ = (BTNGHAT_DN, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ == DEVCD_HAT0X:
+					dir3_ = DIRY_AND(dir1_)
+				else:
+					dir3_ = DIRX_AND(dir1_)
+				pressRelease_ = KEYRLS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+
+			DEVICES[thisDevice_][DEV_ABSHAT_STATUS] = dir3_
+			dirBtn_ = DIR2BTN[HATS][dir3_]
+			eventToRtn_ = (dirBtn_, pressRelease_)
+			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+
+		elif thisCode_ in DEVTDICT[STICKS]:
+			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+			if thisCode_ in [DEVCD_ABSX, DEVCD_ABSY]:
+				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
+				stk1_ = DEV_ABSLTSTK_STATUS
+				stk2_ = LTSTK
+			else:
+				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
+				stk1_ = DEV_ABSRTSTK_STATUS
+				stk2_ = RTSTK
+
+			if thisValue_ < (JOYSTICKMID - JOYSTICKDEAD):
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ == DEVCD_ABSX:
+					dir3_ = DIRLT_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSY:
+					dir3_ = DIRUP_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSRZ:
+					dir3_ = DIRUP_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSZ:
+					dir3_ = DIRLT_OR(dir1_)
+				pressRelease_ = KEYPRS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+
+			elif thisValue_ > (JOYSTICKMID + JOYSTICKDEAD):
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ == DEVCD_ABSX:
+					dir3_ = DIRRT_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSY:
+					dir3_ = DIRDN_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSRZ:
+					dir3_ = DIRDN_OR(dir1_)
+				elif thisCode_ == DEVCD_ABSZ:
+					dir3_ = DIRRT_OR(dir1_)
+				pressRelease_ = KEYPRS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+
+			else:  # thisValue_ == JOYSTICKMID +- JOYSTICKDEAD
+				# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
+				if thisCode_ in DEVTDICT[LTSTK]:
+					if thisCode_ == DEVCD_ABSX:
+						dir3_ = DIRY_AND(dir1_)
+					else:
+						dir3_ = DIRY_AND(dir1_)
+				else:
+					if thisCode_ == DEVCD_ABSZ:
+						dir3_ = DIRX_AND(dir1_)
+					else:
+						dir3_ = DIRX_AND(dir1_)
+				pressRelease_ = KEYRLS
+				# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+
+			DEVICES[thisDevice_][stk1_] = dir3_
+			dirBtn_ = DIR2BTN[stk2_][dir3_]
+			eventToRtn_ = (dirBtn_, pressRelease_)
+			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+
+		elif thisType_ == LD.EV_KEY:
+			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+			if thisValue_ == KEYPRS:
+				eventToRtn_ = (fixBtn(thisCode_), KEYPRS)
+				if eventToRtn_[0] in BTNSHOLDABLELIST:
+					eventToRtn_ = (eventToRtn_[0], KEYHLD)
+			elif thisValue_ == KEYRLS:
+				eventToRtn_ = (fixBtn(thisCode_), KEYRLS)
+			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 		else:
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			eventToRtn_ = (BTNGHAT_RLS, KEYRLS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
+			return
 
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
-	elif thisCode_ in DEVTDICT[STICKS]:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+		setRptTime(thisDevice_)
+		queueToFix_ = DEVICES[thisDevice_][DEV_QUEUE]
+		queueToFix_.append(eventToRtn_)
+		queueToRtn_ = fixQueue(queueToFix_)
+		setRptTime(thisDevice_)
+		thisDeviceType_ = DEVICES[thisDevice_][DEV_DEVICETYPE]
+		if queueToRtn_ == []:
+			DEVICES[thisDevice_][DEV_PAUSED] = False
+			DEVICES[thisDevice_][DEV_RPT_NEXTTIME] = 0
+			DEVICES[thisDevice_][DEV_RPT_NEXTTIMEDELTA] = 0
+			if thisDeviceType_ == DEVICETYPE_GAMEPAD:
+				DEVICES[thisDevice_][DEV_ABSHAT_STATUS] = DIRNOT_VAL
+				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = DIRNOT_VAL
+				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = DIRNOT_VAL
+			elif thisDeviceType_ == DEVICETYPE_MOUSE:
+				DEVICES[thisDevice_][DEV_RELMSE_STATUS] = DIRNOT_VAL
+				DEVICES[thisDevice_][DEV_RELMW_STATUS] = DIRNOT_VAL
+		# CF.displayStats(15, 0, f"""queueEvents exit queue {queueToRtn_}{CF.CLREOL}{CF.NEWLINE}{CF.MTSclr()}""")
+		DEVICES[thisDevice_][DEV_QUEUE] = queueToRtn_
+		# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
-		if thisValue_ < JOYSTICKMID: # (JOYSTICKMID - JOYSTICKDEAD):
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_ABSX:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRLT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSY:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRUP_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSRZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRUP_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRLT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
 
-		elif thisValue_ > JOYSTICKMID:  # (JOYSTICKMID + JOYSTICKDEAD):
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ == DEVCD_ABSX:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRRT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSY:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-				dir2_ = DIRY_AND(dir1_)
-				dir3_ = DIRDN_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[LTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSRZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRDN_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			elif thisCode_ == DEVCD_ABSZ:
-				dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-				dir2_ = DIRX_AND(dir1_)
-				dir3_ = DIRRT_OR(dir2_)
-				DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS] = dir3_
-				DEVICES[thisDevice_][DEV_SPENT] = False
-				dirToRtn_ = DIR2BTN[RTSTK][dir3_]
-				if dirToRtn_ == DIRNOT_VAL:
-					eventToRtn_ = (dirToRtn_, KEYRLS)
-				else:
-					eventToRtn_ = (dirToRtn_, KEYPRS)
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		else:  # thisValue_ == JOYSTICKMID +- JOYSTICKDEAD
-			# fold here ⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3⥥3
-			if thisCode_ in DEVTDICT[LTSTK]:
-				# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-				if thisCode_ == DEVCD_ABSX:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-					dir2_ = DIRY_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[LTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				else:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSLTSTK_STATUS]
-					dir2_ = DIRY_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[LTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-			elif thisCode_ in DEVTDICT[RTSTK]:
-				# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-				if thisCode_ == DEVCD_ABSZ:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-					dir2_ = DIRX_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[RTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				else:
-					# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
-					dir1_ = DEVICES[thisDevice_][DEV_ABSRTSTK_STATUS]
-					dir2_ = DIRX_AND(dir1_)
-					eventToRtn_ = (DIR2BTN[RTSTK][dir2_], KEYRLS)
-					DEVICES[thisDevice_][DEV_SPENT] = False
-					# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-				# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-			# fold here ⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3⥣3
-
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	elif thisType_ == LD.EV_KEY:
-		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		if thisValue_ == KEYPRS:
-			eventToRtn_ = (fixBtn(thisCode_), KEYPRS)
-			if eventToRtn_[0] in BTNSHOLDABLELIST:
-				eventToRtn_ = (eventToRtn_[0], KEYHLD)
-		elif thisValue_ == KEYRLS:
-			eventToRtn_ = (fixBtn(thisCode_), KEYRLS)
-		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-
-	# CF.displayStats(15, 0, f"""fixEvent eventToFix_ {eventToFix_} eventToRtn_ {eventToRtn_} dir1_ {dir1_} dir2_ {dir2_}  dir3_ {dir3_}{CF.CLREOL}""")
-	return eventToRtn_
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# incNdx
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def incNdx(AXLst_, currentNDX_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	AXLstLen_ = len(AXLst_)
+	currentNDX_ += 1
+	if currentNDX_ == AXLstLen_:
+		currentNDX_ = 0
+	return currentNDX_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
