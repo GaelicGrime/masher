@@ -110,10 +110,12 @@ CFBTM_NAME = f"{CONFIGDIR}CFBTM.py"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
 CLRALL = "\033[2J"
-CLREOL = "\033[K"
 CLRDOWN = "\033[J"
+CLREOL = "\033[K"
 CMNTLINE = "# * " + "#*" * CMNTLEN
 DBSQLT_NAME = "newDBSQLT.py"
+DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
+DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
 EEOL = "\033[K"
 _EMPTY_DICT_ = {}
@@ -130,6 +132,19 @@ FOLD2STARTHERE = "# fold here " + "⥥2" * FOLDLEN
 FOLD3ENDHERE = "# fold here " + "⥣3" * FOLDLEN
 FOLD3STARTHERE = "# fold here " + "⥣3" * FOLDLEN
 FO_NAME = "newFO.py"
+HASH_blake2b = HL.blake2b()  # define blake2b value
+HASH_blake2s = HL.blake2s()  # define blake2s value
+HASHER = "HASHER"  # HASHER key
+HASH_md5 = HL.md5()  # define md5 value
+HASH_sha1 = HL.sha1()  # define sha1 value
+HASH_sha224 = HL.sha224()  # define sha224 value
+HASH_sha256 = HL.sha256()  # define sha256 value
+HASH_sha3_224 = HL.sha3_224()  # define sha3_224 value
+HASH_sha3_256 = HL.sha3_256()  # define sha3_256 value
+HASH_sha3_384 = HL.sha3_384()  # define sha3_384 value
+HASH_sha3_512 = HL.sha3_512()  # define sha3_512 value
+HASH_sha384 = HL.sha384()  # define sha384 value
+HASH_sha512 = HL.sha512()  # define sha512 value
 HBI_NAME = "newHBI.py"
 HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
@@ -139,6 +154,7 @@ IMPORTANTSTR = "# * " + "!-" * CMNTLEN  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
+KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
 LINESUP = lambda NUM_:  f"\033[{NUM_}A"
 MARK1END = "# " + "⥣1 " * CMNTLEN
 MARK1MID = "# " + "1⥣⥥1 " * (CMNTLEN // 2)
@@ -167,7 +183,13 @@ MARK8START = "# " + "⥥8 " * CMNTLEN
 MARK9END = "# " + "⥣9 " * CMNTLEN
 MARK9MID = "# " + "9⥣⥥9 " * (CMNTLEN // 2)
 MARK9START = "# " + "⥥9 " * CMNTLEN
+MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
 MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
+NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
+NOTMEDIAFILES = "MEDIAFILES"  # NOTMEDIAFILES key
+NOTRECURSE = "RECURSE"  # NOTRECURSE key
+NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
+NOTUNKNOWNFILES = "UNKNOWNFILES"  # NOTUNKNOWNFILES key
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
 QTSET = ['"', "'", "`"]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
@@ -422,6 +444,7 @@ FMDO_SCTN43AXDEFCMNTDICT = {}  # SCTN23 output actions AX comments
 FMDO_SCTN43AXDEFDICT = {}  # SCTN23 output actions AX
 FMDO_SCTN44DEVICESCMNTDICT = {}  # SCTN24 device comments
 FMDO_SCTN44DEVICESDICT = {}  # SCTN24 devices dict
+FMDO_SCTN45BTNNDXDICT = {}  # SCTN25 device BTNTYPE dict
 FMDO_SCTN45BTNTYPEDICT = {}  # SCTN25 device BTNTYPE dict
 FMDO_SCTN45PROFDICT = {}  # SCTN25 device profile dict
 FMDO_SCTN45RPTDICT = {}  # SCTN25 device RPT dict
@@ -486,6 +509,7 @@ FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
 		FMDO_SCTN43AXDEFDICT, \
 		FMDO_SCTN44DEVICESCMNTDICT, \
 		FMDO_SCTN44DEVICESDICT, \
+		FMDO_SCTN45BTNNDXDICT, \
 		FMDO_SCTN45BTNTYPEDICT, \
 		FMDO_SCTN45PROFDICT, \
 		FMDO_SCTN45RPTDICT, \
