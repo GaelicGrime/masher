@@ -33,7 +33,13 @@ import pickle as PD
 # * def getDebugInfo():
 # * def gmdate(dtObj=DT.now()):
 # * def ISO2TS(ISOStrIn):
+# * def isPast(timeToChk_):
+# * def MTS():
+# * def MTSclr():
+# * def MTSPlus(numToAdd_):
+# * def mySleep(fToSleep_):
 # * def mysql2LocalTime(SQLTIMEZ):
+# * def myTimestamp(dtObj=DT.now()):
 # * def now():
 # * def nowStr(dtObj=DT.now()):
 # * def nowStrSql(dtObj=DT.now()):
@@ -66,6 +72,7 @@ import pickle as PD
 # * def yesterdayStr(dtObj=yesterday(DT.today())):
 
 
+
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN01 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
@@ -95,7 +102,6 @@ TABSTR = "\t"  # TAB
 
 
 BIN32 = lambda X: f"{X:032b}"
-CFBTM_NAME = f"{CONFIGDIR}CFBTM.py"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
 CLRALL = "\033[2J"
@@ -106,6 +112,7 @@ DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
+DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
 EEOL = "\033[K"
 _EMPTY_DICT_ = {}
 _EMPTY_LIST_ = []
@@ -114,16 +121,23 @@ EMPTYSTRLST = [None, "", DBLQT, DBLQT + DBLQT, "'", "''", "`", "None", "\r", "\n
 _EMPTY_TUPLE_ = ()
 ESC = "\x1b"
 FM_NAME = "newFM.py"
-FOLD1ENDHERE = "# fold here " + "⥣1" * FOLDLEN
-FOLD1STARTHERE = "# fold here " + "⥥1" * FOLDLEN
-FOLD2ENDHERE = "# fold here " + "⥣2" * FOLDLEN
-FOLD2STARTHERE = "# fold here " + "⥥2" * FOLDLEN
-FOLD3ENDHERE = "# fold here " + "⥣3" * FOLDLEN
-FOLD3STARTHERE = "# fold here " + "⥣3" * FOLDLEN
+FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
+FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
+FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
+FOLD1STARTHERELN = f"""# fold here {"⥥1" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD2ENDHERE = f"""# fold here {"⥣2" * (FOLDLEN // 2)}"""
+FOLD2ENDHERELN = f"""# fold here {"⥣2" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD2STARTHERE = f"""# fold here {"⥥2" * (FOLDLEN // 2)}"""
+FOLD2STARTHERELN = f"""# fold here {"⥥2" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD3ENDHERE = f"""# fold here {"⥣3" * (FOLDLEN // 2)}"""
+FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
+FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
+HASHER = "HASHER"  # HASHER key
 HASH_blake2b = HL.blake2b()  # define blake2b value
 HASH_blake2s = HL.blake2s()  # define blake2s value
-HASHER = "HASHER"  # HASHER key
 HASH_md5 = HL.md5()  # define md5 value
 HASH_sha1 = HL.sha1()  # define sha1 value
 HASH_sha224 = HL.sha224()  # define sha224 value
@@ -134,7 +148,9 @@ HASH_sha3_384 = HL.sha3_384()  # define sha3_384 value
 HASH_sha3_512 = HL.sha3_512()  # define sha3_512 value
 HASH_sha384 = HL.sha384()  # define sha384 value
 HASH_sha512 = HL.sha512()  # define sha512 value
+HBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
 HBI_NAME = "newHBI.py"
+HBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
 HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
 HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
@@ -145,33 +161,60 @@ INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
 KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
 LINESUP = lambda NUM_:  f"\033[{NUM_}A"
-MARK1END = "# " + "⥣1 " * CMNTLEN
-MARK1MID = "# " + "1⥣⥥1 " * (CMNTLEN // 2)
-MARK1START = "# " + "⥥1 " * CMNTLEN
-MARK2END = "# " + "⥣2 " * CMNTLEN
-MARK2MID = "# " + "2⥣⥥2 " * (CMNTLEN // 2)
-MARK2START = "# " + "⥥2 " * CMNTLEN
-MARK3END = "# " + "⥣3 " * CMNTLEN
-MARK3MID = "# " + "3⥣⥥3 " * (CMNTLEN // 2)
-MARK3START = "# " + "⥥3 " * CMNTLEN
-MARK4END = "# " + "⥣4 " * CMNTLEN
-MARK4MID = "# " + "4⥣⥥4 " * (CMNTLEN // 2)
-MARK4START = "# " + "⥥4 " * CMNTLEN
-MARK5END = "# " + "⥣5 " * CMNTLEN
-MARK5MID = "# " + "5⥣⥥5 " * (CMNTLEN // 2)
-MARK5START = "# " + "⥥5 " * CMNTLEN
-MARK6END = "# " + "⥣6 " * CMNTLEN
-MARK6MID = "# " + "6⥣⥥6 " * (CMNTLEN // 2)
-MARK6START = "# " + "⥥6 " * CMNTLEN
-MARK7END = "# " + "⥣7 " * CMNTLEN
-MARK7MID = "# " + "7⥣⥥7 " * (CMNTLEN // 2)
-MARK7START = "# " + "⥥7 " * CMNTLEN
-MARK8END = "# " + "⥣8 " * CMNTLEN
-MARK8MID = "# " + "8⥣⥥8 " * (CMNTLEN // 2)
-MARK8START = "# " + "⥥8 " * CMNTLEN
-MARK9END = "# " + "⥣9 " * CMNTLEN
-MARK9MID = "# " + "9⥣⥥9 " * (CMNTLEN // 2)
-MARK9START = "# " + "⥥9 " * CMNTLEN
+MARK1END = f"""# {"⥣1 " * (CMNTLEN // 3)}"""
+MARK1ENDLN = f"""# {"⥣1 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK1MID = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}"""
+MARK1MIDLN = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK1START = f"""# {"1⥥ " * (CMNTLEN // 3)}"""
+MARK1STARTLN = f"""# {"1⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK2END = f"""# {"⥣2 " * (CMNTLEN // 3)}"""
+MARK2ENDLN = f"""# {"⥣2 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK2MID = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}"""
+MARK2MIDLN = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK2START = f"""# {"2⥥ " * (CMNTLEN // 3)}"""
+MARK2STARTLN = f"""# {"2⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK3END = f"""# {"⥣3 " * (CMNTLEN // 3)}"""
+MARK3ENDLN = f"""# {"⥣3 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK3MID = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}"""
+MARK3MIDLN = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK3START = f"""# {"3⥥ " * (CMNTLEN // 3)}"""
+MARK3STARTLN = f"""# {"3⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK4END = f"""# {"⥣4 " * (CMNTLEN // 3)}"""
+MARK4ENDLN = f"""# {"⥣4 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK4MID = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}"""
+MARK4MIDLN = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK4START = f"""# {"4⥥ " * (CMNTLEN // 3)}"""
+MARK4STARTLN = f"""# {"4⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK5END = f"""# {"⥣5 " * (CMNTLEN // 3)}"""
+MARK5ENDLN = f"""# {"⥣5 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK5MID = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}"""
+MARK5MIDLN = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK5START = f"""# {"5⥥ " * (CMNTLEN // 3)}"""
+MARK5STARTLN = f"""# {"5⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK6END = f"""# {"⥣6 " * (CMNTLEN // 3)}"""
+MARK6ENDLN = f"""# {"⥣6 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK6MID = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}"""
+MARK6MIDLN = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK6START = f"""# {"6⥥ " * (CMNTLEN // 3)}"""
+MARK6STARTLN = f"""# {"6⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK7END = f"""# {"⥣7 " * (CMNTLEN // 3)}"""
+MARK7ENDLN = f"""# {"⥣7 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK7MID = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}"""
+MARK7MIDLN = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK7START = f"""# {"7⥥ " * (CMNTLEN // 3)}"""
+MARK7STARTLN = f"""# {"7⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK8END = f"""# {"⥣8 " * (CMNTLEN // 3)}"""
+MARK8ENDLN = f"""# {"⥣8 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK8MID = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}"""
+MARK8MIDLN = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK8START = f"""# {"8⥥ " * (CMNTLEN // 3)}"""
+MARK8STARTLN = f"""# {"8⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK9END = f"""# {"⥣9 " * (CMNTLEN // 3)}"""
+MARK9ENDLN = f"""# {"⥣9 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK9MID = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}"""
+MARK9MIDLN = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK9START = f"""# {"9⥥ " * (CMNTLEN // 3)}"""
+MARK9STARTLN = f"""# {"9⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
 MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
 MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
 NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
@@ -203,15 +246,6 @@ PARMSDICT = {
 
 OPTIONSDICT = {
 }
-
-
-#
-#
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# end of managed sections of CF.py
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
-#
 
 
 #

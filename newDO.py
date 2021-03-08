@@ -44,6 +44,9 @@ AXMCSEL = "AXMCSEL"  # MC select INS
 AXMSEBTNBAK = "AXMSEBTNBAK"  # MSE BTN BACK
 AXMSEBTNFWD = "AXMSEBTNFWD"  # MSE BTN FWD
 AXMSEBTNLT = "AXMSEBTNLT"  # MSE BTN LEFT
+AXMSEBTNLT_L00 = "AXMSEBTNLT_L00"  # MSE BTN LEFT
+AXMSEBTNLT_L01 = "AXMSEBTNLT_L01"  # MSE BTN LEFT_1 pressed
+AXMSEBTNLT_L02 = "AXMSEBTNLT_L02"  # MSE BTN LEFT_2 released
 AXMSEBTNLT_T01 = "AXMSEBTNLT_T01"  # MSE BTN LEFT_1 pressed
 AXMSEBTNLT_T02 = "AXMSEBTNLT_T02"  # MSE BTN LEFT_2 released
 AXMSEBTNMID = "AXMSEBTNMID"  # MSE BTN MIDDLE
@@ -53,11 +56,15 @@ AXMSEBTNRT_T02 = "AXMSEBTNRT_T02"  # MSE BTN LEFT_2 released
 AXMSEBTNSIDE = "AXMSEBTNSIDE"  # MSE BTN SIDE
 AXMSEBTNTASK = "AXMSEBTNTASK"  # MSE BTN TASK
 AXMSEDN = "AXMSEDN"  # MSE DOWN
+AXMSEDNA = "AXMSEDNA"  # MSE DOWN
 AXMSEDNLT = "AXMSEDNLT"  # MSE DOWNLT
 AXMSEDNRT = "AXMSEDNRT"  # MSE DOWNRT
 AXMSELT = "AXMSELT"  # MSE LEFT
+AXMSELTA = "AXMSELTA"  # MSE LEFT
 AXMSERT = "AXMSERT"  # MSE RIGHT
+AXMSERTA = "AXMSERTA"  # MSE RIGHT
 AXMSEUP = "AXMSEUP"  # MSE UP
+AXMSEUPA = "AXMSEUPA"  # MSE UP
 AXMSEUPLT = "AXMSEUPLT"  # MSE UPLT
 AXMSEUPRT = "AXMSEUPRT"  # MSE UPRT
 AXMSEWHLDN = "AXMSEWHLDN"  # wheel DOWN
@@ -126,6 +133,8 @@ AX_SHIFTUP = "AX_SHIFTUP"  # SHIFT-UP
 AX_SHIFTUPLT = "AX_SHIFTUPLT"  # SHIFT-UPLT
 AX_SHIFTUPRT = "AX_SHIFTUPRT"  # SHIFT-UPRT
 AX_SHIFTX = "AX_SHIFTX"  # SHIFT-X
+AX_SHIFT_T01 = "AX_SHIFT_T01"  # SHIFT toggle actions
+AX_SHIFT_T02 = "AX_SHIFT_T02"  # SHIFT toggle actions
 AX_SPACE = "AX_SPACE"  # SPACE
 AX_TAB = "AX_TAB"  # TAB
 AX_Y = "AX_Y"  # Y
@@ -191,11 +200,15 @@ BTNM_10 = "BTNM_10"  # BTNM_10 on mice
 BTNM_11 = "BTNM_11"  # BTNM_11 on mice
 BTNM_12 = "BTNM_12"  # BTNM_12/SE most on mice
 BTNM_MDN = "BTNM_MDN"  # BTNMDN/MSE_DN on mice
+BTNM_MDNA = "BTNM_MDNA"  # BTNMDN/MSE_DN on mice
 BTNM_MDNLT = "BTNM_MDNLT"  # BTNMDN/MSE_DNLT on mice
 BTNM_MDNRT = "BTNM_MDNRT"  # BTNMDN/MSE_DNRT on mice
 BTNM_MLT = "BTNM_MLT"  # BTNMLT/MSE_LT on mice
+BTNM_MLTA = "BTNM_MLTA"  # BTNMLT/MSE_LT on mice
 BTNM_MRT = "BTNM_MRT"  # BTNMRT/MSE_RT on mice
+BTNM_MRTA = "BTNM_MRTA"  # BTNMRT/MSE_RT on mice
 BTNM_MUP = "BTNM_MUP"  # BTNMUP/MSE_UP on mice
+BTNM_MUPA = "BTNM_MUPA"  # BTNMUP/MSE_UP on mice
 BTNM_MUPLT = "BTNM_MUPLT"  # BTNMUP/MSE_UPLT on mice
 BTNM_MUPRT = "BTNM_MUPRT"  # BTNMUP/MSE_UPRT on mice
 BTNM_WHDN = "BTNM_WHDN"  # BTNMDN/MSE_DN on mice
@@ -206,6 +219,8 @@ BTNM_WHRT = "BTNM_WHRT"  # BTNMRT/MSE_RT on mice
 BTNM_WHUP = "BTNM_WHUP"  # BTNMUP/MSE_UP on mice
 BTNM_WHUPLT = "BTNM_WHUPLT"  # BTNMUP/MSE_UPLT on mice
 BTNM_WHUPRT = "BTNM_WHUPRT"  # BTNMUP/MSE_UPRT on mice
+BTNS_MODE1 = "BTNS_MODE1"  # switch through MODE1 move/wheel for mouse actions
+BTNS_MODE2 = "BTNS_MODE2"  # switch through MODE2 normal/draglock for mouse actions
 ABSDEADWIDTH = "ABSDEADWIDTH"  # key for stick dead width
 ABSMAX = "ABSMAX"  # key for stick max
 ABSMAXVAL = 0XFFFFFFFFFFFFFFFF  # key for stick max val
@@ -220,10 +235,10 @@ ABS_X = "ABS_X"  # key for stick 0 X
 ABS_Y = "ABS_Y"  # key for stick 0 Y
 ABS_Z = "ABS_Z"  # key for stick 1 X
 BTNAXTYPE_LOCKING = "BTNAXTYPE_LOCKING"  # action type NORMAL key
+BTNAXTYPE_MODED = "BTNAXTYPE_MODED"  # action type NORMAL key
 BTNAXTYPE_NORMAL = "BTNAXTYPE_NORMAL"  # action type NORMAL key
-BTNAXTYPE_PUSHRELEASE = "BTNAXTYPE_PUSHRELEASE"  # action type key
+BTNAXTYPE_SPCL = "BTNAXTYPE_SPCL"  # action type key
 BTNAXTYPE_TOGGLE = "BTNAXTYPE_TOGGLE"  # action type key
-BTNAXTYPE_WITHPAUSE = "BTNAXTYPE_WITHPAUSE"  # action type key
 BTNS00 = 0B00000001  # FLAG LD.EV_KEY holdable BTN0 GPM
 BTNS05 = 0B00000010  # FLAG LD.EV_KEY holdable BTN5 gamepads
 BTNS06 = 0B00000100  # FLAG LD.EV_KEY holdable BTN6 gamepads
@@ -237,6 +252,7 @@ BTNTYPE = "BTNTYPE"  # action type key
 BTNTYPE_HOLDABLE = "BTNTYPE_HOLDABLE"  # HOLDABLE button
 BTNTYPE_NOTHOLDABLE = "BTNTYPE_NOTHOLDABLE"  # NOTHOLDABLE button
 BTNTYPE_SIMABS = "BTNTYPE_SIMABS"  # simulated ABS button
+BTNTYPE_SIMKEY = "BTNTYPE_SIMKEY"  # simulated REL button
 BTNTYPE_SIMREL = "BTNTYPE_SIMREL"  # simulated REL button
 DEFT = "DEFT"  # define the DEFT trackball
 DEVCD_ABSRZ = LD.EV_ABS.ABS_RZ  # shortcut to ABS_RZ
@@ -305,13 +321,19 @@ DEVCD_BTNM_10 = BTNM_10  # shortcut to BTNM_10
 DEVCD_BTNM_11 = BTNM_11  # shortcut to BTNM_11
 DEVCD_BTNM_12 = BTNM_12  # shortcut to BTNM_12
 DEVCD_BTNM_MDN = BTNM_MDN  # shortcut to BTNM_05WHDN
+DEVCD_BTNM_MDNA = BTNM_MDNA  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MDNLT = BTNM_MDNLT  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MDNRT = BTNM_MDNRT  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MLT = BTNM_MLT  # shortcut to BTNM_06WHLT
+DEVCD_BTNM_MLTA = BTNM_MLTA  # shortcut to BTNM_06WHLT
 DEVCD_BTNM_MRT = BTNM_MRT  # shortcut to BTNM_07WHRT
+DEVCD_BTNM_MRTA = BTNM_MRTA  # shortcut to BTNM_07WHRT
 DEVCD_BTNM_MUP = BTNM_MUP  # shortcut to BTNM_04WHUP
+DEVCD_BTNM_MUPA = BTNM_MUPA  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPLT = BTNM_MUPLT  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPRT = BTNM_MUPRT  # shortcut to BTNM_04WHUP
+DEVCD_BTNS_MODE1 = BTNS_MODE1  # shortcut to special mode 1 button
+DEVCD_BTNS_MODE2 = BTNS_MODE2  # shortcut to special mode 1 button
 DEVCD_HAT0X = LD.EV_ABS.ABS_HAT0X  # shortcut to ABS_HAT0X
 DEVCD_HAT0Y = LD.EV_ABS.ABS_HAT0Y  # shortcut to ABS_HAT0Y
 DEVCD_RELHRHWHL = LD.EV_REL.REL_HWHEEL_HI_RES  # shortcut to REL_HWHEEL_HI_RES
@@ -342,7 +364,7 @@ DEV_FD = "DEV_FD"  # FD (file descriptor) of the device
 DEV_GRAB = "DEV_GRAB"  # GRAB shal the device be grabbed exclusively or not
 DEV_MYNAME = "DEV_MYNAME"  # device normal name_
 DEV_NAME = "DEV_NAME"  # NAME of device returned by uvdev/evdev/etc
-DEV_PAUSED = "DEV_PAUSED"  # PAUSED
+DEV_HASPAUSED = "DEV_HASPAUSED"  # PAUSED
 DEV_QUEUE = "DEV_QUEUE"  # QUEUE holding EVENT as they come in to the device handler
 DEV_RELMSE_STATUS = "DEV_RELMSE_STATUS"  # ABS status flags key
 DEV_RELMW_STATUS = "DEV_RELMW_STATUS"  # ABS status flags key
@@ -421,7 +443,7 @@ DIRY_VAL = 0B0101  # UP/DN directions
 DORPT_CRSR = 200  # cursor repeat
 DORPT_MSE = 10  # mouse repeat
 DORPT_NOT = 0  # no repeat
-DORPT_PAUSE = 500  # pause before repeating
+DORPT_PAUSE = 250  # pause before repeating
 DORPT_WHL = 100  # mouse  wheelrepeat
 ERRORNOT = 0X00000000  # FLAG NOTHING is ERROR
 ERRORTDELTA = 30000  # FLAG NOTHING is ERROR
@@ -439,6 +461,7 @@ KEYRLS = 0X00  # KEY released
 LOGITECH = "LOGITECH"  # device Logitech trackman marble
 MIMD = "MIMD"  # define MIMD gamepad
 MOUSEDISTANCE = 2  # how far to move the mouse per event
+MOUSEDISTANCEARB = 2  # how far to move the mouse per event
 OBJMODE_CLASS = "OBJMODE_CLASS"  # dict key for class internal []{}
 OBJMODE_STANDALONE = "OBJMODE_STANDALONE"  # dict key for standalone []{}
 OBJMODE_STANDALONECLASS = "OBJMODE_STANDALONECLASS"  # dict key for a class []{}
@@ -1032,9 +1055,13 @@ MSEWHL_LT = IE(LD.EV_REL.REL_HWHEEL, -WHEELDISTANCE)  # move MSE WHL left WHEELD
 MSEWHL_RT = IE(LD.EV_REL.REL_HWHEEL, WHEELDISTANCE)  # move MSE WHL right WHEELDISTANCE
 MSEWHL_UP = IE(LD.EV_REL.REL_WHEEL, WHEELDISTANCE)  # move MSE WHL up WHEELDISTANCE
 MSE_DN = IE(LD.EV_REL.REL_Y, MOUSEDISTANCE)  # how far to move the mouse per event
+MSE_DNA = IE(LD.EV_REL.REL_Y, MOUSEDISTANCEARB)  # how far to move the mouse per event
 MSE_LT = IE(LD.EV_REL.REL_X, -MOUSEDISTANCE)  # move MSE left -MOUSEDISTANCE
+MSE_LTA = IE(LD.EV_REL.REL_X, -MOUSEDISTANCEARB)  # move MSE left -MOUSEDISTANCE
 MSE_RT = IE(LD.EV_REL.REL_X, MOUSEDISTANCE)  # move mouse right MOUSEDISTANCE
+MSE_RTA = IE(LD.EV_REL.REL_X, MOUSEDISTANCEARB)  # move mouse right MOUSEDISTANCE
 MSE_UP = IE(LD.EV_REL.REL_Y, -MOUSEDISTANCE)  # move mouse up MOUSEDISTANCE
+MSE_UPA = IE(LD.EV_REL.REL_Y, -MOUSEDISTANCEARB)  # move mouse up MOUSEDISTANCE
 SYNREPORT = IE(LD.EV_SYN.SYN_REPORT, 0)  # send a sync report 0
 
 
@@ -1083,10 +1110,13 @@ ACTIONS = {
 
 	AXGIMPOVWRT: [  # GIMP overwrite imported file
 		KBDALTLT_PRS,  # press ALT
+		SYNREPORT,  # SYNREPORT
 		KBDCTRLLT_PRS,  # press LCTRL
+		SYNREPORT,  # SYNREPORT
 		KBDSHIFTLT_PRS,  # press LSHIFT
-		KBD4_PRS,  # press 4
-		KBD4_RLS,  # release 4
+		SYNREPORT,  # SYNREPORT
+		KBDO_PRS,  # press O
+		KBDO_RLS,  # release O
 		KBDSHIFTLT_RLS,  # release LSHIFT
 		KBDCTRLLT_RLS,  # release LCTRL
 		KBDALTLT_RLS,  # release ALT
@@ -1158,6 +1188,23 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AXMSEBTNLT_L00: [  # MSE BTN LEFT
+		MSEBTNLT_PRSHLD,  # press MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+		MSEBTNLT_RLS,  # release MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNLT_L01: [  # MSE BTN LEFT_1 pressed
+		MSEBTNLT_PRSHLD,  # press MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNLT_L02: [  # MSE BTN LEFT_2 released
+		MSEBTNLT_RLS,  # release MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEBTNLT_T01: [  # MSE BTN LEFT_1 pressed
 		MSEBTNLT_PRSHLD,  # press MSEBTNLT
 		SYNREPORT,  # SYNREPORT
@@ -1211,6 +1258,11 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AXMSEDNA: [  # MSE DOWN
+		MSE_DNA,  # MSE_DN by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEDNLT: [  # MSE DOWNLT
 		MSE_DN,  # MSE_DN by MOUSEDISTANCE
 		MSE_LT,  # MSE_LT by MOUSEDISTANCE
@@ -1228,13 +1280,28 @@ ACTIONS = {
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AXMSELTA: [  # MSE LEFT
+		MSE_LTA,  # MSE_LT by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSERT: [  # MSE RIGHT
 		MSE_RT,  # MSE_RT by MOUSEDISTANCE
 		SYNREPORT,  # SYNREPORT
 	],
 
+	AXMSERTA: [  # MSE RIGHT
+		MSE_RTA,  # MSE_RT by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEUP: [  # MSE UP
 		MSE_UP,  # MSE_UP by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEUPA: [  # MSE UP
+		MSE_UPA,  # MSE_UP by MOUSEDISTANCE
 		SYNREPORT,  # SYNREPORT
 	],
 
@@ -1502,8 +1569,8 @@ ACTIONS = {
 
 	AX_CTRLPGUP: [  # CTRLPGUP
 		KBDCTRLLT_PRS,  # press CTRL
-		KBDPGDN_PRS,  # press PGDN
-		KBDPGDN_RLS,  # release PGDN
+		KBDPGUP_PRS,  # press PGUP
+		KBDPGUP_RLS,  # release PGUP
 		KBDCTRLLT_RLS,  # release CTRL
 		SYNREPORT,  # SYNREPORT
 	],
@@ -1541,12 +1608,12 @@ ACTIONS = {
 	],
 
 	AX_CTRL_T01: [  # CTRL toggle actions
-		KBDALTLT_PRS,  # press ALT
+		KBDCTRLLT_PRS,  # press CTRL
 		SYNREPORT,  # SYNREPORT
 	],
 
 	AX_CTRL_T02: [  # CTRL toggle actions
-		KBDALTLT_RLS,  # release ALT
+		KBDCTRLLT_RLS,  # release CTRL
 		SYNREPORT,  # SYNREPORT
 	],
 
@@ -1716,6 +1783,16 @@ ACTIONS = {
 		KBDSHIFTLT_PRS,  # press SHIFT
 		KBDX_PRS,  # press X
 		KBDX_RLS,  # release X
+		KBDSHIFTLT_RLS,  # release SHIFT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_SHIFT_T01: [  # SHIFT toggle actions
+		KBDSHIFTLT_PRS,  # press SHIFT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_SHIFT_T02: [  # SHIFT toggle actions
 		KBDSHIFTLT_RLS,  # release SHIFT
 		SYNREPORT,  # SYNREPORT
 	],
@@ -2024,8 +2101,8 @@ DEVICES = {  # define SCTN44 DEVICES
 		DEV_ERR_NEXTTIME: 0,  # DEFT next time to check error status, 
 		DEV_FD: None,  # file descriptor for DEFT, 
 		DEV_GRAB: True,  # grab the device, 
+		DEV_HASPAUSED: False,  # DEFT name, 
 		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name, 
-		DEV_PAUSED: False,  # DEFT name, 
 		DEV_QUEUE: [],  # DEFT queue, 
 		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status, 
 		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status, 
@@ -2045,8 +2122,8 @@ DEVICES = {  # define SCTN44 DEVICES
 		DEV_ERR_NEXTTIME: 0,  # MIMD next time to check error status, 
 		DEV_FD: None,  # MIMD file descriptor, 
 		DEV_GRAB: True,  # grab the MIMD, 
+		DEV_HASPAUSED: False,  # MIMD name, 
 		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name, 
-		DEV_PAUSED: False,  # MIMD name, 
 		DEV_QUEUE: [],  # MIMD queue, 
 		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status, 
 		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat, 
@@ -2061,91 +2138,155 @@ DEVICES = {  # define SCTN44 DEVICES
 # * SCTN45 device profile and REPEATDICT
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 PROFILE = {  # device profile defined
+	DEFT: {
+		BTNM_01LT: [
+			AXMSEBTNLT_L00,  # mouse left button
+			AXMSEBTNLT_L01,  # mouse left button
+			AXMSEBTNLT_L02,  # mouse left button
+		],
+
+		BTNM_03RT: [
+			AXMSEBTNRT,  # mouse right button
+		],
+
+		BTNM_11: [
+			AXMSEBTNMID,  # mouse mid button
+		],
+
+		BTNM_MDN: [
+			AXMSEDN,  # mouse move down button sim
+			AXMSEWHLDN,  # mouse move down button sim
+		],
+
+		BTNM_MLT: [
+			AXMSELT,  # mouse move left button sim
+			AXMSEWHLLT,  # mouse move left button sim
+		],
+
+		BTNM_MRT: [
+			AXMSERT,  # mouse move right button sim
+			AXMSEWHLRT,  # mouse move right button sim
+		],
+
+		BTNM_MUP: [
+			AXMSEUP,  # mouse move up button sim
+			AXMSEWHLUP,  # mouse move up button sim
+		],
+
+	},
 	MIMD: {
 		BTNGHAT_DN: [
 			AX_CRSRDN,  # artificial button hat down DOWN
 		],
+
 		BTNGHAT_DNLT: [
 			AX_CRSRDNLT,  # artificial button hat down DOWN
 		],
+
 		BTNGHAT_DNRT: [
 			AX_CRSRDNRT,  # artificial button hat down DOWN
 		],
+
 		BTNGHAT_LT: [
 			AX_CRSRLT,  # artificial button hat left LEFT
 		],
+
 		BTNGHAT_RT: [
 			AX_CRSRRT,  # artificial button hat right RIGHT
 		],
+
 		BTNGHAT_UP: [
 			AX_CRSRUP,  # artificial button hat up UP
 		],
+
 		BTNGHAT_UPLT: [
 			AX_CRSRUPLT,  # artificial button hat up UP
 		],
+
 		BTNGHAT_UPRT: [
 			AX_CRSRUPRT,  # artificial button hat up UP
 		],
+
 		BTNGLTSTK_DN: [
 			AXMSEDN,  # artificial button left stick down MSE_DN
 		],
+
 		BTNGLTSTK_DNLT: [
 			AXMSEDNLT,  # artificial button left stick down MSE_DN
 		],
+
 		BTNGLTSTK_DNRT: [
 			AXMSEDNRT,  # artificial button left stick down MSE_DN
 		],
+
 		BTNGLTSTK_LT: [
 			AXMSELT,  # artificial button left stick left MSE_LT
 		],
+
 		BTNGLTSTK_RT: [
 			AXMSERT,  # artificial button left stick right MSE_RT
 		],
+
 		BTNGLTSTK_UP: [
 			AXMSEUP,  # left stick up MSE_UP
 		],
+
 		BTNGLTSTK_UPLT: [
 			AXMSEUPLT,  # left stick up MSE_UP
 		],
+
 		BTNGLTSTK_UPRT: [
 			AXMSEUPRT,  # left stick up MSE_UP
 		],
+
 		BTNGRTSTK_DN: [
 			AXMSEWHLDN,  # right stick down MSEWHL_DN
 		],
+
 		BTNGRTSTK_DNLT: [
 			AXMSEWHLDNLT,  # right stick down MSEWHL_DN
 		],
+
 		BTNGRTSTK_DNRT: [
 			AXMSEWHLDNRT,  # right stick down MSEWHL_DN
 		],
+
 		BTNGRTSTK_LT: [
 			AXMSEWHLLT,  # right stick left MSEWHL_LT
 		],
+
 		BTNGRTSTK_RT: [
 			AXMSEWHLRT,  # right stick right MSEWHL_RT
 		],
+
 		BTNGRTSTK_UP: [
 			AXMSEWHLUP,  # right stick up MSEWHL_UP
 		],
+
 		BTNGRTSTK_UPLT: [
 			AXMSEWHLUPLT,  # right stick up MSEWHL_UP
 		],
+
 		BTNGRTSTK_UPRT: [
 			AXMSEWHLUPRT,  # right stick up MSEWHL_UP
 		],
+
 		BTNG_01: [
 			AXXNVFLIPH,  # XnViewer flip horizontal
 		],
+
 		BTNG_02: [
 			AX_ESC,  # ESC key
 		],
+
 		BTNG_03: [
 			AXMSEBTNMID,  # press middle mouse button
 		],
+
 		BTNG_04: [
 			AX_CTRLS,  # save/CTRL-S
 		],
+
 		BTNG_05: {  # holdable button BTNG_05
 			BTNG_01: [
 				AX_CTRLA,  # select all CTRL-A
@@ -2199,13 +2340,13 @@ PROFILE = {  # device profile defined
 			],
 			BTNG_04: [
 				AXGIMPOVWRT,  # gimp overwrite ALT-CTRL-SHIFT-O
+				AX_ENTER,  # gimp overwrite ENTER
+				AX_CTRLQ,  # gimp overwrite CTRL-Q
+				AX_ALTD,  # gimp overwrite ALT-D
 			],
 			BTNG_11LTSTK: [
 				AXMSEBTNLT_T01,  # click MSEBTNLT
 				AXMSEBTNLT_T02,  # click MSEBTNLT
-			],
-			BTNG_13: [
-				AX_DEL,  # gimp overwrite ALT-CTRL-SHIFT-O
 			],
 			BTNGHAT_DN: [
 				AX_PGDN,  # PGDN
@@ -2234,7 +2375,8 @@ PROFILE = {  # device profile defined
 				AXDSKTP4,  # desktop 4 ALT-4
 			],
 			BTNG_13: [
-				AX_DEL,  # DEL on BTNG_07-BTNG_13
+				AX_DEL,  # DEL on BTNG_0713_T01
+				AX_ENTER,  # ENTER on BTNG_0713_T02
 			],
 			BTNGHAT_DN: [
 				AXXNVZOOMIN,  # XnViewer zoom to out/-
@@ -2255,17 +2397,19 @@ PROFILE = {  # device profile defined
 				AX_ALT_T02,  # ALT press/release toggle on BTNG_08-BTNG_13
 			],
 			BTNG_02: [
-				AX_TAB,  # DEL on BTNG_08-BTNG_13
+				AX_CTRL_T01,  # DEL on BTNG_08-BTNG_13
+				AX_CTRL_T01,  # DEL on BTNG_08-BTNG_13
 			],
 			BTNG_03: [
-				AX_CTRL_T01,  # DEL on BTNG_08-BTNG_13
-				AX_CTRL_T02,  # DEL on BTNG_08-BTNG_13
+				AX_SHIFT_T01,  # SHIFT on BTNG_0804_T01
+				AX_SHIFT_T02,  # SHIFT on BTNG_0804_T02
 			],
 			BTNG_04: [
-				AX_DEL,  # DEL on BTNG_08-BTNG_13
+				AX_TAB,  # SHIFT on BTNG_0804_T02
 			],
 			BTNG_13: [
-				AX_DEL,  # DEL on BTNG_08-BTNG_13
+				AX_DEL,  # DEL on BTNG_0813_T01
+				AX_ENTER,  # ENTER on BTNG_0813_T02
 			],
 			BTNGHAT_DN: [
 				AX_CTRLPGDN,  # PGDN
@@ -2283,22 +2427,36 @@ PROFILE = {  # device profile defined
 		BTNG_09: [
 			AX_ENTER,  # ENTER on BTNG_09
 		],
+
 		BTNG_10: [
 			AXXNVMOVE,  # XnViewer move
 		],
+
 		BTNG_11LTSTK: [
 			AXMSEBTNLT,  # left mouse button on same stick click
 		],
+
 		BTNG_12RTSTK: [
 			AXMSEBTNRT,  # right mouse button on same stick click
 		],
+
 		BTNG_13: [
-			AX_ENTER,  # ENTER on HOME/BTNG_13
+			AX_ENTER,  # ENTER on BTNG_0813
 		],
+
 	},
 }
 
 REPEATDICT = {
+	DEFT: {
+		BTNM_01LT: DORPT_NOT,  # mouse left button
+		BTNM_03RT: DORPT_NOT,  # mouse right button
+		BTNM_11: DORPT_NOT,  # mouse mid button
+		BTNM_MDN: DORPT_NOT,  # mouse move down button sim
+		BTNM_MLT: DORPT_NOT,  # mouse move left button sim
+		BTNM_MRT: DORPT_NOT,  # mouse move right button sim
+		BTNM_MUP: DORPT_NOT,  # mouse move up button sim
+	},
 	MIMD: {
 		BTNGHAT_DN: DORPT_CRSR,  # artificial button hat down DOWN
 		BTNGHAT_DNLT: DORPT_CRSR,  # artificial button hat down DOWN
@@ -2347,9 +2505,8 @@ REPEATDICT = {
 			BTNG_01: DORPT_NOT,  # QUIT Q in many programs
 			BTNG_02: DORPT_NOT,  # QUIT CTRL-Q in many programs
 			BTNG_03: DORPT_NOT,  # ALT-D dismiss in some programs
-			BTNG_04: DORPT_NOT,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_04: DORPT_NOT,  # gimp overwrite ALT-D
 			BTNG_11LTSTK: DORPT_NOT,  # click MSEBTNLT
-			BTNG_13: DORPT_NOT,  # gimp overwrite ALT-CTRL-SHIFT-O
 			BTNGHAT_DN: DORPT_NOT,  # PGDN
 			BTNGHAT_LT: DORPT_NOT,  # HOME
 			BTNGHAT_RT: DORPT_NOT,  # END
@@ -2360,7 +2517,7 @@ REPEATDICT = {
 			BTNG_02: DORPT_NOT,  # desktop 2 ALT-2
 			BTNG_03: DORPT_NOT,  # desktop 3 ALT-3
 			BTNG_04: DORPT_NOT,  # desktop 4 ALT-4
-			BTNG_13: DORPT_NOT,  # DEL on BTNG_07-BTNG_13
+			BTNG_13: DORPT_NOT,  # ENTER on BTNG_0713_T02
 			BTNGHAT_DN: DORPT_NOT,  # XnViewer zoom to out/-
 			BTNGHAT_LT: DORPT_NOT,  # XnViewer zoom to default
 			BTNGHAT_RT: DORPT_NOT,  # XnViewer zoom to 1:1
@@ -2369,9 +2526,9 @@ REPEATDICT = {
 		BTNG_08: {  # holdable button BTNG_08
 			BTNG_01: DORPT_NOT,  # ALT press/release toggle on BTNG_08-BTNG_13
 			BTNG_02: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
-			BTNG_03: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
-			BTNG_04: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
-			BTNG_13: DORPT_NOT,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: DORPT_NOT,  # SHIFT on BTNG_0804_T02
+			BTNG_04: DORPT_NOT,  # SHIFT on BTNG_0804_T02
+			BTNG_13: DORPT_NOT,  # ENTER on BTNG_0813_T02
 			BTNGHAT_DN: DORPT_NOT,  # PGDN
 			BTNGHAT_LT: DORPT_NOT,  # ALTTAB
 			BTNGHAT_RT: DORPT_NOT,  # CTRLTAB
@@ -2381,11 +2538,20 @@ REPEATDICT = {
 		BTNG_10: DORPT_NOT,  # XnViewer move
 		BTNG_11LTSTK: DORPT_NOT,  # left mouse button on same stick click
 		BTNG_12RTSTK: DORPT_NOT,  # right mouse button on same stick click
-		BTNG_13: DORPT_NOT,  # ENTER on HOME/BTNG_13
+		BTNG_13: DORPT_NOT,  # ENTER on BTNG_0813
 	},
 }
 
 BTNNDXDICT = {
+	DEFT: {
+		BTNM_01LT: 0,  # mouse left button
+		BTNM_03RT: 0,  # mouse right button
+		BTNM_11: 0,  # mouse mid button
+		BTNM_MDN: 0,  # mouse move down button sim
+		BTNM_MLT: 0,  # mouse move left button sim
+		BTNM_MRT: 0,  # mouse move right button sim
+		BTNM_MUP: 0,  # mouse move up button sim
+	},
 	MIMD: {
 		BTNGHAT_DN: 0,  # artificial button hat down DOWN
 		BTNGHAT_DNLT: 0,  # artificial button hat down DOWN
@@ -2434,9 +2600,8 @@ BTNNDXDICT = {
 			BTNG_01: 0,  # QUIT Q in many programs
 			BTNG_02: 0,  # QUIT CTRL-Q in many programs
 			BTNG_03: 0,  # ALT-D dismiss in some programs
-			BTNG_04: 0,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_04: 0,  # gimp overwrite ALT-D
 			BTNG_11LTSTK: 0,  # click MSEBTNLT
-			BTNG_13: 0,  # gimp overwrite ALT-CTRL-SHIFT-O
 			BTNGHAT_DN: 0,  # PGDN
 			BTNGHAT_LT: 0,  # HOME
 			BTNGHAT_RT: 0,  # END
@@ -2447,7 +2612,7 @@ BTNNDXDICT = {
 			BTNG_02: 0,  # desktop 2 ALT-2
 			BTNG_03: 0,  # desktop 3 ALT-3
 			BTNG_04: 0,  # desktop 4 ALT-4
-			BTNG_13: 0,  # DEL on BTNG_07-BTNG_13
+			BTNG_13: 0,  # ENTER on BTNG_0713_T02
 			BTNGHAT_DN: 0,  # XnViewer zoom to out/-
 			BTNGHAT_LT: 0,  # XnViewer zoom to default
 			BTNGHAT_RT: 0,  # XnViewer zoom to 1:1
@@ -2456,9 +2621,9 @@ BTNNDXDICT = {
 		BTNG_08: {  # holdable button BTNG_08
 			BTNG_01: 0,  # ALT press/release toggle on BTNG_08-BTNG_13
 			BTNG_02: 0,  # DEL on BTNG_08-BTNG_13
-			BTNG_03: 0,  # DEL on BTNG_08-BTNG_13
-			BTNG_04: 0,  # DEL on BTNG_08-BTNG_13
-			BTNG_13: 0,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: 0,  # SHIFT on BTNG_0804_T02
+			BTNG_04: 0,  # SHIFT on BTNG_0804_T02
+			BTNG_13: 0,  # ENTER on BTNG_0813_T02
 			BTNGHAT_DN: 0,  # PGDN
 			BTNGHAT_LT: 0,  # ALTTAB
 			BTNGHAT_RT: 0,  # CTRLTAB
@@ -2468,11 +2633,20 @@ BTNNDXDICT = {
 		BTNG_10: 0,  # XnViewer move
 		BTNG_11LTSTK: 0,  # left mouse button on same stick click
 		BTNG_12RTSTK: 0,  # right mouse button on same stick click
-		BTNG_13: 0,  # ENTER on HOME/BTNG_13
+		BTNG_13: 0,  # ENTER on BTNG_0813
 	},
 }
 
 BTNTYPEDICT = {
+	DEFT: {
+		BTNM_01LT: BTNAXTYPE_LOCKING,  # mouse left button
+		BTNM_03RT: BTNAXTYPE_NORMAL,  # mouse right button
+		BTNM_11: BTNAXTYPE_NORMAL,  # mouse mid button
+		BTNM_MDN: BTNAXTYPE_MODED,  # mouse move down button sim
+		BTNM_MLT: BTNAXTYPE_MODED,  # mouse move left button sim
+		BTNM_MRT: BTNAXTYPE_MODED,  # mouse move right button sim
+		BTNM_MUP: BTNAXTYPE_MODED,  # mouse move up button sim
+	},
 	MIMD: {
 		BTNGHAT_DN: BTNAXTYPE_NORMAL,  # artificial button hat down DOWN
 		BTNGHAT_DNLT: BTNAXTYPE_NORMAL,  # artificial button hat down DOWN
@@ -2521,9 +2695,8 @@ BTNTYPEDICT = {
 			BTNG_01: BTNAXTYPE_NORMAL,  # QUIT Q in many programs
 			BTNG_02: BTNAXTYPE_NORMAL,  # QUIT CTRL-Q in many programs
 			BTNG_03: BTNAXTYPE_NORMAL,  # ALT-D dismiss in some programs
-			BTNG_04: BTNAXTYPE_NORMAL,  # gimp overwrite ALT-CTRL-SHIFT-O
+			BTNG_04: BTNAXTYPE_TOGGLE,  # gimp overwrite ALT-D
 			BTNG_11LTSTK: BTNAXTYPE_TOGGLE,  # click MSEBTNLT
-			BTNG_13: BTNAXTYPE_NORMAL,  # gimp overwrite ALT-CTRL-SHIFT-O
 			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # PGDN
 			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # HOME
 			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # END
@@ -2534,7 +2707,7 @@ BTNTYPEDICT = {
 			BTNG_02: BTNAXTYPE_NORMAL,  # desktop 2 ALT-2
 			BTNG_03: BTNAXTYPE_NORMAL,  # desktop 3 ALT-3
 			BTNG_04: BTNAXTYPE_NORMAL,  # desktop 4 ALT-4
-			BTNG_13: BTNAXTYPE_NORMAL,  # DEL on BTNG_07-BTNG_13
+			BTNG_13: BTNAXTYPE_TOGGLE,  # ENTER on BTNG_0713_T02
 			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # XnViewer zoom to out/-
 			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # XnViewer zoom to default
 			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # XnViewer zoom to 1:1
@@ -2543,9 +2716,9 @@ BTNTYPEDICT = {
 		BTNG_08: {  # holdable button BTNG_08
 			BTNG_01: BTNAXTYPE_TOGGLE,  # ALT press/release toggle on BTNG_08-BTNG_13
 			BTNG_02: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
-			BTNG_03: BTNAXTYPE_TOGGLE,  # DEL on BTNG_08-BTNG_13
-			BTNG_04: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
-			BTNG_13: BTNAXTYPE_NORMAL,  # DEL on BTNG_08-BTNG_13
+			BTNG_03: BTNAXTYPE_TOGGLE,  # SHIFT on BTNG_0804_T02
+			BTNG_04: BTNAXTYPE_TOGGLE,  # SHIFT on BTNG_0804_T02
+			BTNG_13: BTNAXTYPE_TOGGLE,  # ENTER on BTNG_0813_T02
 			BTNGHAT_DN: BTNAXTYPE_NORMAL,  # PGDN
 			BTNGHAT_LT: BTNAXTYPE_NORMAL,  # ALTTAB
 			BTNGHAT_RT: BTNAXTYPE_NORMAL,  # CTRLTAB
@@ -2555,7 +2728,7 @@ BTNTYPEDICT = {
 		BTNG_10: BTNAXTYPE_NORMAL,  # XnViewer move
 		BTNG_11LTSTK: BTNAXTYPE_NORMAL,  # left mouse button on same stick click
 		BTNG_12RTSTK: BTNAXTYPE_NORMAL,  # right mouse button on same stick click
-		BTNG_13: BTNAXTYPE_NORMAL,  # ENTER on HOME/BTNG_13
+		BTNG_13: BTNAXTYPE_NORMAL,  # ENTER on BTNG_0813
 	},
 }
 
