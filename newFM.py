@@ -1,80 +1,26 @@
 #!/usr/bin/python
 
+
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# sections
-#
-# SCTN0x CF/FM  CF and FM stuff
-# SCTN1x FM     file maker FM.py
-# SCTN2x CF     common features CF.py
-# SCTN3x FO     file operations FO.py
-# SCTN4x DO     device operations DO.py
-# SCTN5x HBI    hot beef injection output definition
-# SCTN6x SP     SP.py sections (subprocess)
-# SCTN7x DB*    DB*.py sections where SQLT=sqlite, MDB=MariaDB
-#
-# SCTN01 CF/FM  character constants loaded from rcr/00-common into CF and FM
-# SCTN02 CF/FM  the remainder of the constants loaded from rcr/00-common into CF and FM
-# SCTN03 CF/FM  _TYPES_ created in FM.py into CF.py and FM.py
-# SCTN04 DO/FM  buttons list and holdables etc
-#
-# SCTN11 FM     file maker FMAX all in
-# SCTN12 FM     file maker _STR_, _VAL_
-# SCTN13 FM     file maker _DICT_
-# SCTN14 FM     file maker _LIST_
-# SCTN15 FM     file maker TBGLST
-#
-# SCTN20 CF     CF top
-# SCTN21 CF     CF alone defines
-# SCTN22 CF     options structures ('-a[=]', 'OPTNAME: VAL')
-# SCTN23 CF     dict defines <DICTMODE>==['STRIN':KEY | KEY: VAL|'STR'] STRIN|KEYIN
-# SCTN24 CF     list defines
-#
-# SCTN30 FO     file operations top
-# SCTN31 FO     file operations dict
-#
-# SCTN41 DO     device defines
-# SCTN47 DO     buttons lists DO FM
-# SCTN42 DO     LD.IE
-# SCTN43 DO     device actions
-# SCTN44 DO     device entries
-# SCTN45 DO     device profile
-# SCTN46 DO     device to common translation table
-# SCTN48 DO     event type dict and list
-# SCTN49 DO     DO translate ABS/REL to sim buttons
-
-#
-# SCTN50 HBI    HBI.py hot beef injector builder ABS lines
-# SCTN51 HBI    HBI.py hot beef injector builder BTN lines
-# SCTN52 HBI    HBI.py hot beef injector builder KEY lines
-# SCTN53 HBI    HBI.py hot beef injector builder REL lines
-#
-# SCTN60 SP     SP.py defines
-# SCTN61 SP     SP.py dicts
-# SCTN62 SP     SP.py lists
-# SCTN63 SP     SP.py tuple dict function sets
-#
-# SCTN70 DB*    DB defines
-# SCTN71 DB*    DB dict
-#
+# modules defined in FM.py
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-
-
-
-
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * modules defined in this file
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 # * def doErrorItem(message_, itemToError_):
 # * def explodeItem(itemToExplode_):
 # * def makeAComment(comment_):
+# * def makeAWideComment(comment_):
 # * def makeCF():
 # * def makeDO():
 # * def makeFM():
-# * def parseTBGLST():
+# * def makeHBI():
+# * def makeSP():
+# * def parseTBGLST(FDTBGLST):
 # * def readFileToStr(FILENAME_):
+#
 # * def __main__():
 
+
+import hashlib as HL
 
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
@@ -106,7 +52,6 @@ TABSTR = "\t"  # TAB
 
 
 BIN32 = lambda X: f"{X:032b}"
-CFBTM_NAME = f"{CONFIGDIR}CFBTM.py"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
 CLRALL = "\033[2J"
@@ -117,6 +62,7 @@ DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
+DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
 EEOL = "\033[K"
 _EMPTY_DICT_ = {}
 _EMPTY_LIST_ = []
@@ -125,16 +71,23 @@ EMPTYSTRLST = [None, "", DBLQT, DBLQT + DBLQT, "'", "''", "`", "None", "\r", "\n
 _EMPTY_TUPLE_ = ()
 ESC = "\x1b"
 FM_NAME = "newFM.py"
-FOLD1ENDHERE = "# fold here " + "⥣1" * FOLDLEN
-FOLD1STARTHERE = "# fold here " + "⥥1" * FOLDLEN
-FOLD2ENDHERE = "# fold here " + "⥣2" * FOLDLEN
-FOLD2STARTHERE = "# fold here " + "⥥2" * FOLDLEN
-FOLD3ENDHERE = "# fold here " + "⥣3" * FOLDLEN
-FOLD3STARTHERE = "# fold here " + "⥣3" * FOLDLEN
+FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
+FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
+FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
+FOLD1STARTHERELN = f"""# fold here {"⥥1" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD2ENDHERE = f"""# fold here {"⥣2" * (FOLDLEN // 2)}"""
+FOLD2ENDHERELN = f"""# fold here {"⥣2" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD2STARTHERE = f"""# fold here {"⥥2" * (FOLDLEN // 2)}"""
+FOLD2STARTHERELN = f"""# fold here {"⥥2" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD3ENDHERE = f"""# fold here {"⥣3" * (FOLDLEN // 2)}"""
+FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
+FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
+FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
+HASHER = "HASHER"  # HASHER key
 HASH_blake2b = HL.blake2b()  # define blake2b value
 HASH_blake2s = HL.blake2s()  # define blake2s value
-HASHER = "HASHER"  # HASHER key
 HASH_md5 = HL.md5()  # define md5 value
 HASH_sha1 = HL.sha1()  # define sha1 value
 HASH_sha224 = HL.sha224()  # define sha224 value
@@ -145,7 +98,9 @@ HASH_sha3_384 = HL.sha3_384()  # define sha3_384 value
 HASH_sha3_512 = HL.sha3_512()  # define sha3_512 value
 HASH_sha384 = HL.sha384()  # define sha384 value
 HASH_sha512 = HL.sha512()  # define sha512 value
+HBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
 HBI_NAME = "newHBI.py"
+HBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
 HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
 HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
@@ -156,33 +111,60 @@ INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
 KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
 LINESUP = lambda NUM_:  f"\033[{NUM_}A"
-MARK1END = "# " + "⥣1 " * CMNTLEN
-MARK1MID = "# " + "1⥣⥥1 " * (CMNTLEN // 2)
-MARK1START = "# " + "⥥1 " * CMNTLEN
-MARK2END = "# " + "⥣2 " * CMNTLEN
-MARK2MID = "# " + "2⥣⥥2 " * (CMNTLEN // 2)
-MARK2START = "# " + "⥥2 " * CMNTLEN
-MARK3END = "# " + "⥣3 " * CMNTLEN
-MARK3MID = "# " + "3⥣⥥3 " * (CMNTLEN // 2)
-MARK3START = "# " + "⥥3 " * CMNTLEN
-MARK4END = "# " + "⥣4 " * CMNTLEN
-MARK4MID = "# " + "4⥣⥥4 " * (CMNTLEN // 2)
-MARK4START = "# " + "⥥4 " * CMNTLEN
-MARK5END = "# " + "⥣5 " * CMNTLEN
-MARK5MID = "# " + "5⥣⥥5 " * (CMNTLEN // 2)
-MARK5START = "# " + "⥥5 " * CMNTLEN
-MARK6END = "# " + "⥣6 " * CMNTLEN
-MARK6MID = "# " + "6⥣⥥6 " * (CMNTLEN // 2)
-MARK6START = "# " + "⥥6 " * CMNTLEN
-MARK7END = "# " + "⥣7 " * CMNTLEN
-MARK7MID = "# " + "7⥣⥥7 " * (CMNTLEN // 2)
-MARK7START = "# " + "⥥7 " * CMNTLEN
-MARK8END = "# " + "⥣8 " * CMNTLEN
-MARK8MID = "# " + "8⥣⥥8 " * (CMNTLEN // 2)
-MARK8START = "# " + "⥥8 " * CMNTLEN
-MARK9END = "# " + "⥣9 " * CMNTLEN
-MARK9MID = "# " + "9⥣⥥9 " * (CMNTLEN // 2)
-MARK9START = "# " + "⥥9 " * CMNTLEN
+MARK1END = f"""# {"⥣1 " * (CMNTLEN // 3)}"""
+MARK1ENDLN = f"""# {"⥣1 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK1MID = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}"""
+MARK1MIDLN = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK1START = f"""# {"1⥥ " * (CMNTLEN // 3)}"""
+MARK1STARTLN = f"""# {"1⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK2END = f"""# {"⥣2 " * (CMNTLEN // 3)}"""
+MARK2ENDLN = f"""# {"⥣2 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK2MID = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}"""
+MARK2MIDLN = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK2START = f"""# {"2⥥ " * (CMNTLEN // 3)}"""
+MARK2STARTLN = f"""# {"2⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK3END = f"""# {"⥣3 " * (CMNTLEN // 3)}"""
+MARK3ENDLN = f"""# {"⥣3 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK3MID = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}"""
+MARK3MIDLN = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK3START = f"""# {"3⥥ " * (CMNTLEN // 3)}"""
+MARK3STARTLN = f"""# {"3⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK4END = f"""# {"⥣4 " * (CMNTLEN // 3)}"""
+MARK4ENDLN = f"""# {"⥣4 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK4MID = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}"""
+MARK4MIDLN = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK4START = f"""# {"4⥥ " * (CMNTLEN // 3)}"""
+MARK4STARTLN = f"""# {"4⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK5END = f"""# {"⥣5 " * (CMNTLEN // 3)}"""
+MARK5ENDLN = f"""# {"⥣5 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK5MID = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}"""
+MARK5MIDLN = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK5START = f"""# {"5⥥ " * (CMNTLEN // 3)}"""
+MARK5STARTLN = f"""# {"5⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK6END = f"""# {"⥣6 " * (CMNTLEN // 3)}"""
+MARK6ENDLN = f"""# {"⥣6 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK6MID = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}"""
+MARK6MIDLN = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK6START = f"""# {"6⥥ " * (CMNTLEN // 3)}"""
+MARK6STARTLN = f"""# {"6⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK7END = f"""# {"⥣7 " * (CMNTLEN // 3)}"""
+MARK7ENDLN = f"""# {"⥣7 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK7MID = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}"""
+MARK7MIDLN = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK7START = f"""# {"7⥥ " * (CMNTLEN // 3)}"""
+MARK7STARTLN = f"""# {"7⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK8END = f"""# {"⥣8 " * (CMNTLEN // 3)}"""
+MARK8ENDLN = f"""# {"⥣8 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK8MID = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}"""
+MARK8MIDLN = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK8START = f"""# {"8⥥ " * (CMNTLEN // 3)}"""
+MARK8STARTLN = f"""# {"8⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK9END = f"""# {"⥣9 " * (CMNTLEN // 3)}"""
+MARK9ENDLN = f"""# {"⥣9 " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK9MID = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}"""
+MARK9MIDLN = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
+MARK9START = f"""# {"9⥥ " * (CMNTLEN // 3)}"""
+MARK9STARTLN = f"""# {"9⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
 MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
 MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
 NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
@@ -294,6 +276,7 @@ BTNM_MDN = "BTNM_MDN"  # BTNMDN/MSE_DN on mice
 BTNM_MDNLT = "BTNM_MDNLT"  # BTNMDN/MSE_DNLT on mice
 BTNM_MDNRT = "BTNM_MDNRT"  # BTNMDN/MSE_DNRT on mice
 BTNM_MLT = "BTNM_MLT"  # BTNMLT/MSE_LT on mice
+BTNM_MRLS = "BTNM_MRLS"  # MSE_MRLS on mice
 BTNM_MRT = "BTNM_MRT"  # BTNMRT/MSE_RT on mice
 BTNM_MUP = "BTNM_MUP"  # BTNMUP/MSE_UP on mice
 BTNM_MUPLT = "BTNM_MUPLT"  # BTNMUP/MSE_UPLT on mice
@@ -306,6 +289,8 @@ BTNM_WHRT = "BTNM_WHRT"  # BTNMRT/MSE_RT on mice
 BTNM_WHUP = "BTNM_WHUP"  # BTNMUP/MSE_UP on mice
 BTNM_WHUPLT = "BTNM_WHUPLT"  # BTNMUP/MSE_UPLT on mice
 BTNM_WHUPRT = "BTNM_WHUPRT"  # BTNMUP/MSE_UPRT on mice
+BTNS_MODE1 = "BTNS_MODE1"  # switch through MODE1 move/wheel for mouse actions
+BTNS_MODE2 = "BTNS_MODE2"  # switch through MODE2 normal/draglock for mouse actions
 
 
 BTNSHOLDABLELIST = [
@@ -345,6 +330,7 @@ FMAXDO_SCTN44DEVICEENTRYVALADD = "FMAXDO_SCTN44DEVICEENTRYVALADD"  # define an e
 FMAXDO_SCTN45HOLDABLEADD1 = "FMAXDO_SCTN45HOLDABLEADD1"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
 FMAXDO_SCTN45HOLDABLEADD2 = "FMAXDO_SCTN45HOLDABLEADD2"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
 FMAXDO_SCTN45NOTHOLDABLEADD1 = "FMAXDO_SCTN45NOTHOLDABLEADD1"  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
+FMAXDO_SCTN45NOTHOLDABLEMODEDADD1 = "FMAXDO_SCTN45NOTHOLDABLEMODEDADD1"  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
 FMAXDO_SCTN46XLATEADD = "FMAXDO_SCTN46XLATEADD"  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
 FMAXDO_SCTN47BTNSDEF = "FMAXDO_SCTN47BTNSDEF"  # define buttons all around <NAC><BTNNAME><HOLDABLE>
 FMAXDO_SCTN48EVTYPEDEF = "FMAXDO_SCTN48EVTYPEDEF"  # define a device type list type<NAC>
@@ -396,6 +382,7 @@ FMAXFM_AXLST = [
 	FMAXDO_SCTN45HOLDABLEADD1,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
 	FMAXDO_SCTN45HOLDABLEADD2,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
 	FMAXDO_SCTN45NOTHOLDABLEADD1,  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
+	FMAXDO_SCTN45NOTHOLDABLEMODEDADD1,  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
 	FMAXDO_SCTN46XLATEADD,  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
 	FMAXDO_SCTN47BTNSDEF,  # define buttons all around <NAC><BTNNAME><HOLDABLE>
 	FMAXDO_SCTN48EVTYPEDEF,  # define a device type list type<NAC>
