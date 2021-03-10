@@ -34,7 +34,7 @@ CMNTLEN = 150
 CONFIGDIR = "/home/will/.config/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
-FOLDLEN = 75
+FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
@@ -111,60 +111,60 @@ INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
 KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
 LINESUP = lambda NUM_:  f"\033[{NUM_}A"
-MARK1END = f"""# {"⥣1 " * (CMNTLEN // 3)}"""
-MARK1ENDLN = f"""# {"⥣1 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK1MID = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}"""
-MARK1MIDLN = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK1START = f"""# {"1⥥ " * (CMNTLEN // 3)}"""
-MARK1STARTLN = f"""# {"1⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK2END = f"""# {"⥣2 " * (CMNTLEN // 3)}"""
-MARK2ENDLN = f"""# {"⥣2 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK2MID = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}"""
-MARK2MIDLN = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK2START = f"""# {"2⥥ " * (CMNTLEN // 3)}"""
-MARK2STARTLN = f"""# {"2⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK3END = f"""# {"⥣3 " * (CMNTLEN // 3)}"""
-MARK3ENDLN = f"""# {"⥣3 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK3MID = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}"""
-MARK3MIDLN = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK3START = f"""# {"3⥥ " * (CMNTLEN // 3)}"""
-MARK3STARTLN = f"""# {"3⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK4END = f"""# {"⥣4 " * (CMNTLEN // 3)}"""
-MARK4ENDLN = f"""# {"⥣4 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK4MID = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}"""
-MARK4MIDLN = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK4START = f"""# {"4⥥ " * (CMNTLEN // 3)}"""
-MARK4STARTLN = f"""# {"4⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK5END = f"""# {"⥣5 " * (CMNTLEN // 3)}"""
-MARK5ENDLN = f"""# {"⥣5 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK5MID = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}"""
-MARK5MIDLN = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK5START = f"""# {"5⥥ " * (CMNTLEN // 3)}"""
-MARK5STARTLN = f"""# {"5⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK6END = f"""# {"⥣6 " * (CMNTLEN // 3)}"""
-MARK6ENDLN = f"""# {"⥣6 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK6MID = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}"""
-MARK6MIDLN = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK6START = f"""# {"6⥥ " * (CMNTLEN // 3)}"""
-MARK6STARTLN = f"""# {"6⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK7END = f"""# {"⥣7 " * (CMNTLEN // 3)}"""
-MARK7ENDLN = f"""# {"⥣7 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK7MID = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}"""
-MARK7MIDLN = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK7START = f"""# {"7⥥ " * (CMNTLEN // 3)}"""
-MARK7STARTLN = f"""# {"7⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK8END = f"""# {"⥣8 " * (CMNTLEN // 3)}"""
-MARK8ENDLN = f"""# {"⥣8 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK8MID = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}"""
-MARK8MIDLN = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK8START = f"""# {"8⥥ " * (CMNTLEN // 3)}"""
-MARK8STARTLN = f"""# {"8⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK9END = f"""# {"⥣9 " * (CMNTLEN // 3)}"""
-MARK9ENDLN = f"""# {"⥣9 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK9MID = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}"""
-MARK9MIDLN = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK9START = f"""# {"9⥥ " * (CMNTLEN // 3)}"""
-MARK9STARTLN = f"""# {"9⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
+MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
+MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK1MIDLN = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK1START = lambda TAG_: f"""# {"1⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK1STARTLN = lambda TAG_: f"""# {"1⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK2END = lambda TAG_: f"""# {"⥣2 " * (CMNTLEN // 3)} {TAG_}"""
+MARK2ENDLN = lambda TAG_: f"""# {"⥣2 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK2MID = lambda TAG_: f"""# {"⥣2⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK2MIDLN = lambda TAG_: f"""# {"⥣2⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK2START = lambda TAG_: f"""# {"2⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK2STARTLN = lambda TAG_: f"""# {"2⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK3END = lambda TAG_: f"""# {"⥣3 " * (CMNTLEN // 3)} {TAG_}"""
+MARK3ENDLN = lambda TAG_: f"""# {"⥣3 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK3MID = lambda TAG_: f"""# {"⥣3⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK3MIDLN = lambda TAG_: f"""# {"⥣3⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK3START = lambda TAG_: f"""# {"3⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK3STARTLN = lambda TAG_: f"""# {"3⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK4END = lambda TAG_: f"""# {"⥣4 " * (CMNTLEN // 3)} {TAG_}"""
+MARK4ENDLN = lambda TAG_: f"""# {"⥣4 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK4MID = lambda TAG_: f"""# {"⥣4⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK4MIDLN = lambda TAG_: f"""# {"⥣4⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK4START = lambda TAG_: f"""# {"4⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK4STARTLN = lambda TAG_: f"""# {"4⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK5END = lambda TAG_: f"""# {"⥣5 " * (CMNTLEN // 3)} {TAG_}"""
+MARK5ENDLN = lambda TAG_: f"""# {"⥣5 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK5MID = lambda TAG_: f"""# {"⥣5⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK5MIDLN = lambda TAG_: f"""# {"⥣5⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK5START = lambda TAG_: f"""# {"5⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK5STARTLN = lambda TAG_: f"""# {"5⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK6END = lambda TAG_: f"""# {"⥣6 " * (CMNTLEN // 3)} {TAG_}"""
+MARK6ENDLN = lambda TAG_: f"""# {"⥣6 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK6MID = lambda TAG_: f"""# {"⥣6⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK6MIDLN = lambda TAG_: f"""# {"⥣6⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK6START = lambda TAG_: f"""# {"6⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK6STARTLN = lambda TAG_: f"""# {"6⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK7END = lambda TAG_: f"""# {"⥣7 " * (CMNTLEN // 3)} {TAG_}"""
+MARK7ENDLN = lambda TAG_: f"""# {"⥣7 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK7MID = lambda TAG_: f"""# {"⥣7⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK7MIDLN = lambda TAG_: f"""# {"⥣7⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK7START = lambda TAG_: f"""# {"7⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK7STARTLN = lambda TAG_: f"""# {"7⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK8END = lambda TAG_: f"""# {"⥣8 " * (CMNTLEN // 3)} {TAG_}"""
+MARK8ENDLN = lambda TAG_: f"""# {"⥣8 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK8MID = lambda TAG_: f"""# {"⥣8⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK8MIDLN = lambda TAG_: f"""# {"⥣8⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK8START = lambda TAG_: f"""# {"8⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK8STARTLN = lambda TAG_: f"""# {"8⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK9END = lambda TAG_: f"""# {"⥣9 " * (CMNTLEN // 3)} {TAG_}"""
+MARK9ENDLN = lambda TAG_: f"""# {"⥣9 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
 MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
 NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
@@ -610,33 +610,33 @@ TBGLST = [
 	("DEVT_ABSS1D", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0X", "code for hat X entries",),
 	("DEVT_ABSS1E", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0Y", "code for hat Y entries",),
 	("DEVT_BTNS00", FMAXDO_SCTN48EVTYPEDEF, "BTNS", "EV type list BTNS entry",),
-	("DEVT_BTNS01", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS02", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
-	("DEVT_BTNS03", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
-	("DEVT_BTNS04", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
-	("DEVT_BTNS05", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
-	("DEVT_BTNS06", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
-	("DEVT_BTNS07", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
-	("DEVT_BTNS08", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
-	("DEVT_BTNS09", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
-	("DEVT_BTNS0A", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
-	("DEVT_BTNS0B", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS0C", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS0D", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
-	("DEVT_BTNS0E", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS0F", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
-	("DEVT_BTNS10", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
-	("DEVT_BTNS11", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS12", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
-	("DEVT_BTNS13", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
-	("DEVT_BTNS14", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS15", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS16", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
-	("DEVT_BTNS17", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS18", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
-	("DEVT_BTNS19", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
-	("DEVT_BTNS1A", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS1B", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS01", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS02", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
+	("DEVT_BTNS03", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
+	("DEVT_BTNS04", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
+	("DEVT_BTNS05", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
+	("DEVT_BTNS06", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
+	("DEVT_BTNS07", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
+	("DEVT_BTNS08", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
+	("DEVT_BTNS09", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
+	("DEVT_BTNS0A", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
+	("DEVT_BTNS0B", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS0C", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS0D", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
+	("DEVT_BTNS0E", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS0F", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
+	("DEVT_BTNS10", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
+	("DEVT_BTNS11", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS12", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS13", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
+	("DEVT_BTNS14", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS15", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS16", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
+	("DEVT_BTNS17", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS18", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
+	("DEVT_BTNS19", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
+	("DEVT_BTNS1A", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS1B", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
 	("DEVT_BTNS1C", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_01", "DEVCD_BTNG_01 entry in BTNS",),
 	("DEVT_BTNS1D", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_02", "DEVCD_BTNG_02 entry in BTNS",),
 	("DEVT_BTNS1E", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_03", "DEVCD_BTNG_03 entry in BTNS",),
@@ -678,6 +678,12 @@ TBGLST = [
 	("DEVT_RAW01", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_ABS", "raw code for ABS",),
 	("DEVT_RAW02", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_KEY", "raw code for KEY",),
 	("DEVT_RAW03", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_REL", "raw code for REL",),
+	("DEVT_RELEASES00", FMAXDO_SCTN48EVTYPEDEF, "RELEASES", "EV type for RELEASES supported",),
+	("DEVT_RELEASES01", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGHAT_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES02", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGLTSTK_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES03", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGRTSTK_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES04", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNMWH_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES05", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNM_MRLS", "BTNMWHLDN/MSE_DN on mice",),
 	("DEVT_RELS00", FMAXDO_SCTN48EVTYPEDEF, "RELS", "EV type for RELS supported",),
 	("DEVT_RELS01", FMAXDO_SCTN48EVTYPELST, "RELS", "DEVCD_BTNMWH_DN", "BTNMWHLDN/MSE_DN on mice",),
 	("DEVT_RELS02", FMAXDO_SCTN48EVTYPELST, "RELS", "DEVCD_BTNMWH_DNLT", "BTNMWHLDN/MSE_DNLT on mice",),
@@ -1681,14 +1687,6 @@ TBGLST = [
 	("D_MIMD__BTNG_0503", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_03", "AXXNVCROP", "XnViewer CROP",),
 	("D_MIMD__BTNG_0504", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_04", "AXXNVROTLT", "select all CTRL-A",),
 	("D_MIMD__BTNG_0513", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_13", "AXXNVSEL2TOP", "select to top SHIFT-HOME SHIFT-RT",),
-	("D_MIMD__BTNG_05HATDN", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DN", "AX_SHIFTDN", "SHIFT-DN",),
-	("D_MIMD__BTNG_05HATDNLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DNLT", "AX_SHIFTDNLT", "SHIFT-DNLT",),
-	("D_MIMD__BTNG_05HATDNRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DNRT", "AX_SHIFTDNRT", "SHIFT-DNRT",),
-	("D_MIMD__BTNG_05HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_LT", "AX_SHIFTLT", "SHIFT-LT",),
-	("D_MIMD__BTNG_05HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_RT", "AX_SHIFTRT", "SHIFT-RT",),
-	("D_MIMD__BTNG_05HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UP", "AX_SHIFTUP", "SHIFT-UP",),
-	("D_MIMD__BTNG_05HATUPLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UPLT", "AX_SHIFTUPLT", "SHIFT-UPLT",),
-	("D_MIMD__BTNG_05HATUPRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UPRT", "AX_SHIFTUPRT", "SHIFT-UPRT",),
 	("D_MIMD__BTNG_0601", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_01", "AX_Q", "QUIT Q in many programs",),
 	("D_MIMD__BTNG_0602", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_02", "AX_CTRLQ", "QUIT CTRL-Q in many programs",),
 	("D_MIMD__BTNG_0603", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_03", "AX_ALTD", "ALT-D dismiss in some programs",),
@@ -1712,19 +1710,15 @@ TBGLST = [
 	("D_MIMD__BTNG_07HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_LT", "AXXNVZOOMRESET", "XnViewer zoom to default",),
 	("D_MIMD__BTNG_07HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_RT", "AXXNVZOOMFULL", "XnViewer zoom to 1:1",),
 	("D_MIMD__BTNG_07HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_UP", "AXXNVZOOMOUT", "XnViewer zoom to out/-",),
-	("D_MIMD__BTNG_0801_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T01", "ALT press/release toggle on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0801_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T02", "ALT press/release toggle on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0802_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "DEL on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "DEL on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0803_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T01", "SHIFT on BTNG_0804_T01",),
-	("D_MIMD__BTNG_0803_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T02", "SHIFT on BTNG_0804_T02",),
-	("D_MIMD__BTNG_0804", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_04", "AX_TAB", "SHIFT on BTNG_0804_T02",),
+	("D_MIMD__BTNG_0801_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T01", "ALT press on BTNG0801_T01",),
+	("D_MIMD__BTNG_0801_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T02", "ALT release on BTNG0801_T02",),
+	("D_MIMD__BTNG_0802_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL press on BTNG_0802_T01",),
+	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL release on BTNG_0802_T02",),
+	("D_MIMD__BTNG_0803_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T01", "SHIFT press on BTNG_0803_T01",),
+	("D_MIMD__BTNG_0803_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T02", "SHIFT release on BTNG_0803_T02",),
+	("D_MIMD__BTNG_0804", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_04", "AX_TAB", "TAB on BTNG0804",),
 	("D_MIMD__BTNG_0813_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_13", "AX_DEL", "DEL on BTNG_0813_T01",),
 	("D_MIMD__BTNG_0813_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_13", "AX_ENTER", "ENTER on BTNG_0813_T02",),
-	("D_MIMD__BTNG_08HATDN", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_DN", "AX_CTRLPGDN", "PGDN",),
-	("D_MIMD__BTNG_08HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_LT", "AX_ALTTAB", "ALTTAB",),
-	("D_MIMD__BTNG_08HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_RT", "AX_CTRLTAB", "CTRLTAB",),
-	("D_MIMD__BTNG_08HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_UP", "AX_CTRLPGUP", "PGUP",),
 	("D_MIMD__BTNG_09", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_09", "AX_ENTER", "ENTER on BTNG_09",),
 	("D_MIMD__BTNG_10", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_10", "AXXNVMOVE", "XnViewer move",),
 	("D_MIMD__BTNG_11LTSTK", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_11LTSTK", "AXMSEBTNLT", "left mouse button on same stick click",),
@@ -2818,25 +2812,25 @@ def makeDO():
 	for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 		# 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 		BC1 = f""" {thisDEV_MYNAME_}:"""
-		MK1 = f"""{NTAB(1)}{MARK1MID} {BC1}{NEWLINE}"""
-		strToRtn_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2START}{BC1}{NEWLINE}"""
-		strToRtn1_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2START}{BC1}{NEWLINE}"""
-		strToRtn2_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2START}{BC1}{NEWLINE}"""
-		strToRtn3_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2START}{BC1}{NEWLINE}"""
+		MK1 = f"""{NTAB(1)}{MARK1MIDLN(BC1)}"""
+		strToRtn_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn1_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn2_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn3_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 		for thisBTNName1_, thisVal2_ in thisVal1_.items():
 			# 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥
 			BC2 = f"""{BC1}{thisBTNName1_}:"""
-			MK2 = F"""{MK1}{NTAB(2)}{MARK2MID}{BC2}{NEWLINE}"""
+			MK2 = F"""{MK1}{NTAB(2)}{MARK2MIDLN(BC2)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
 			if thisBTNName1_ not in BTNSHOLDABLELIST:
 				# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
-				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRKT}{NEWLINE}{NTAB(3)}{MARK3START}{BC2}AX{NEWLINE}{thisVal2_}{NTAB(2)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3END}{BC2}AX{NEWLINE}{NEWLINE}{MK2}"""
+				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRKT}{NEWLINE}{NTAB(3)}{MARK3STARTLN(f"{BC2}AX")}{thisVal2_}{NTAB(2)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3ENDLN(f"{BC2}AX")}{NEWLINE}{MK2}"""
 				strToRtn1_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
 				strToRtn2_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
 				strToRtn3_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
@@ -2847,10 +2841,10 @@ def makeDO():
 			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
 			elif thisBTNName1_ in BTNSHOLDABLELIST:
 				# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
-				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3START}{BC2}{NEWLINE}"""
-				strToRtn1_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3START}{BC2}{NEWLINE}"""
-				strToRtn2_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3START}{BC2}{NEWLINE}"""
-				strToRtn3_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3START}{BC2}{NEWLINE}"""
+				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn1_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn2_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn3_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
@@ -2859,7 +2853,7 @@ def makeDO():
 				for thisBTNName2_, thisVal3 in thisVal2_.items():
 					# ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5
 					BC3 = f"""{BC2}{thisBTNName2_}:"""
-					MK3 = f"""{MK2}{NTAB(3)}{MARK3MID}{BC3}{NEWLINE}"""
+					MK3 = f"""{MK2}{NTAB(3)}{MARK3MIDLN(BC3)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
@@ -2868,7 +2862,7 @@ def makeDO():
 					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
 					if thisBTNName2_ not in BTNSHOLDABLELIST:
 						# ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6
-						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRKT}{NEWLINE}{NTAB(4)}{MARK4START}{BC3}{NEWLINE}{thisVal3}{NTAB(3)}{CBRKT},{NEWLINE}{NTAB(4)}{MARK4END}{BC3}{NEWLINE}{NEWLINE}{MK3}"""
+						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRKT}{NEWLINE}{NTAB(4)}{MARK4STARTLN(BC3)}{thisVal3}{NTAB(3)}{CBRKT},{NEWLINE}{NTAB(4)}{MARK4ENDLN(BC3)}{NEWLINE}{MK3}"""
 						strToRtn1_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
 						strToRtn2_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
 						strToRtn3_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
@@ -2881,10 +2875,10 @@ def makeDO():
 					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
 					elif thisBTNName2_ in BTNSHOLDABLELIST:
 						# 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥
-						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2START}{NEWLINE}"""
-						strToRtn1_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2START}{NEWLINE}"""
-						strToRtn2_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2START}{NEWLINE}"""
-						strToRtn3_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2START}{NEWLINE}"""
+						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn1_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn2_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn3_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
@@ -2894,7 +2888,7 @@ def makeDO():
 						# ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣
 						for thisBTNName3_, thisAX_ in thisVal3.items():
 							# 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥
-							strToRtn_ += f"""{NTAB(4)}{thisBTNName3_}: {OBRKT}{NEWLINE}{NTAB(5)}{MARK3START}{NEWLINE}{thisAX_}{NTAB(4)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3END}{NEWLINE}"""
+							strToRtn_ += f"""{NTAB(4)}{thisBTNName3_}: {OBRKT}{NEWLINE}{NTAB(5)}{MARK3STARTLN(thisAX_)}{thisAX_}{NTAB(4)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3ENDLN(thisAX_)}"""
 							strToRtn1_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
 							strToRtn2_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
 							strToRtn3_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
@@ -2906,10 +2900,10 @@ def makeDO():
 				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
 					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
 						# ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣
-						strToRtn_ += f"""{NTAB(2)}{MARK2END}{BC2}{NEWLINE}{NTAB(3)}{CBRCE},{NEWLINE}{thisDEV_MYNAME_}{NEWLINE}"""
-						strToRtn1_ += f"""{NTAB(2)}{MARK2END}{BC2}{NEWLINE}{NTAB(3)}{CBRCE},{NEWLINE}"""
-						strToRtn2_ += f"""{NTAB(2)}{MARK2END}{BC2}{NEWLINE}{NTAB(3)}{CBRCE},{NEWLINE}"""
-						strToRtn3_ += f"""{NTAB(2)}{MARK2END}{BC2}{NEWLINE}{NTAB(3)}{CBRCE},{NEWLINE}"""
+						strToRtn_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}{thisDEV_MYNAME_}{NEWLINE}"""
+						strToRtn1_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
+						strToRtn2_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
+						strToRtn3_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
 
 						# ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6
 					# ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5
@@ -2918,10 +2912,10 @@ def makeDO():
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
 				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
-				strToRtn_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3END}{BC2}{NEWLINE}{NEWLINE}{MK2}"""
-				strToRtn1_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3END}{BC2}{NEWLINE}{NEWLINE}{MK2}"""
-				strToRtn2_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3END}{BC2}{NEWLINE}{NEWLINE}{MK2}"""
-				strToRtn3_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3END}{BC2}{NEWLINE}{NEWLINE}{MK2}"""
+				strToRtn_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn1_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn2_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn3_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
 
 				# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
 			# ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3
