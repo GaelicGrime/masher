@@ -1,129 +1,83 @@
 #!/usr/bin/python
 
+
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# sections
-#
-# SCTN0x CF/FM  CF and FM stuff
-# SCTN1x FM     file maker FM.py
-# SCTN2x CF     common features CF.py
-# SCTN3x FO     file operations FO.py
-# SCTN4x DO     device operations DO.py
-# SCTN5x HBI    hot beef injection output definition
-# SCTN6x SP     SP.py sections (subprocess)
-# SCTN7x DB*    DB*.py sections where SQLT=sqlite, MDB=MariaDB
-#
-# SCTN01 CF/FM  character constants loaded from rcr/00-common into CF and FM
-# SCTN02 CF/FM  the remainder of the constants loaded from rcr/00-common into CF and FM
-# SCTN03 CF/FM  _TYPES_ created in FM.py into CF.py and FM.py
-# SCTN04 DO/FM  buttons list and holdables etc
-#
-# SCTN11 FM     file maker FMAX all in
-# SCTN12 FM     file maker _STR_, _VAL_
-# SCTN13 FM     file maker _DICT_
-# SCTN14 FM     file maker _LIST_
-# SCTN15 FM     file maker TBGLST
-#
-# SCTN20 CF     CF top
-# SCTN21 CF     CF alone defines
-# SCTN22 CF     options structures ('-a[=]', 'OPTNAME: VAL')
-# SCTN23 CF     dict defines <DICTMODE>==['STRIN':KEY | KEY: VAL|'STR'] STRIN|KEYIN
-# SCTN24 CF     list defines
-#
-# SCTN30 FO     file operations top
-# SCTN31 FO     file operations dict
-#
-# SCTN41 DO     device defines
-# SCTN47 DO     buttons lists DO FM
-# SCTN42 DO     LD.IE
-# SCTN43 DO     device actions
-# SCTN44 DO     device entries
-# SCTN45 DO     device profile
-# SCTN46 DO     device to common translation table
-# SCTN48 DO     event type dict and list
-# SCTN49 DO     DO translate ABS/REL to sim buttons
-
-#
-# SCTN50 HBI    HBI.py hot beef injector builder ABS lines
-# SCTN51 HBI    HBI.py hot beef injector builder BTN lines
-# SCTN52 HBI    HBI.py hot beef injector builder KEY lines
-# SCTN53 HBI    HBI.py hot beef injector builder REL lines
-#
-# SCTN60 SP     SP.py defines
-# SCTN61 SP     SP.py dicts
-# SCTN62 SP     SP.py lists
-# SCTN63 SP     SP.py tuple dict function sets
-#
-# SCTN70 DB*    DB defines
-# SCTN71 DB*    DB dict
-#
+# modules defined in FM.py
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-
-
-
-
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * modules defined in this file
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-#
+# FM.py is copied, along with the appropriate FMxxxxxx.py file from CONFIGDIR to local by pythonUnitsLink.py
+# make sure if you change the modules, you also update the stored copy FMxxxxxx.py TBGLST file when you update FM.py
+# CF.py is always linked, make sure to update CFTOP.py and SCTN0102 when FM.py or CF.py are changed
+# all other units are loaded dynamically by pythonUnitsLink.py using the SCTN16 structure, FMSCTNENABLED.py file locally, etc.
 # * def doErrorItem(message_, itemToError_):
 # * def explodeItem(itemToExplode_):
 # * def makeAComment(comment_):
+# * def makeAWideComment(comment_):
 # * def makeCF():
 # * def makeDO():
 # * def makeFM():
-# * def parseTBGLST():
+# * def makeHBI():
+# * def makeSP():
+# * def parseTBGLST(FDTBGLST):
 # * def readFileToStr(FILENAME_):
+#
 # * def __main__():
 
 
+import hashlib as HL
+
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN01 _CHR_ _CONST_
+# * SCTN001 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
 CBRCE = "}"  # CLOSEBRACE
 CBRKT = "]"  # CLOSEBRACKET
 CMNTLEN = 150
-CONFIGDIR = "/home/will/.config/python/"
+CONFIGDIR = "/rcr/0-units/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
-FOLDLEN = 75
+ESC = "\x1b"
+FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
 TABSTR = "\t"  # TAB
+TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 
 #
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN02 value_ constants
+# * SCTN002 value_ constants
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
+BIN04 = lambda X: f"{X:04b}"
+BIN08 = lambda X: f"{X:08b}"
+BIN16 = lambda X: f"{X:016b}"
 BIN32 = lambda X: f"{X:032b}"
+BIN64 = lambda X: f"{X:064b}"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
-CLRALL = "\033[2J"
-CLRDOWN = "\033[J"
-CLREOL = "\033[K"
-CMNTLINE = "# * " + "#*" * CMNTLEN
+CLRALL = f"{ESC}[2J"
+CLRDOWN = f"{ESC}[J"
+CLREOL = f"{ESC}[K"
+CMNTLINE = f"""# * {"#*" * CMNTLEN}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
 DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
-EEOL = "\033[K"
-_EMPTY_DICT_ = {}
-_EMPTY_LIST_ = []
-_EMPTY_STR_ = ""
-EMPTYSTRLST = [None, "", DBLQT, DBLQT + DBLQT, "'", "''", "`", "None", "\r", "\n", "\r\n", "\n\r", ]
-_EMPTY_TUPLE_ = ()
-ESC = "\x1b"
+EEOL = "{ESC}[K"
+EMPTY_DICT = {}
+EMPTY_LIST = []
+EMPTY_STR = ""
+EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", "'", "''", "`", "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
 FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
@@ -159,80 +113,84 @@ HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
 HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
 HEX64 = lambda X_: f"{X_:016H}"   # {thisComment_}
-IMPORTANTSTR = "# * " + "!-" * CMNTLEN  # important line marker
+IMPORTANTSTR = f"""# * {"!-" * CMNTLEN}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
-KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
-LINESUP = lambda NUM_:  f"\033[{NUM_}A"
-MARK1END = f"""# {"⥣1 " * (CMNTLEN // 3)}"""
-MARK1ENDLN = f"""# {"⥣1 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK1MID = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}"""
-MARK1MIDLN = f"""# {"⥣1⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK1START = f"""# {"1⥥ " * (CMNTLEN // 3)}"""
-MARK1STARTLN = f"""# {"1⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK2END = f"""# {"⥣2 " * (CMNTLEN // 3)}"""
-MARK2ENDLN = f"""# {"⥣2 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK2MID = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}"""
-MARK2MIDLN = f"""# {"⥣2⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK2START = f"""# {"2⥥ " * (CMNTLEN // 3)}"""
-MARK2STARTLN = f"""# {"2⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK3END = f"""# {"⥣3 " * (CMNTLEN // 3)}"""
-MARK3ENDLN = f"""# {"⥣3 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK3MID = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}"""
-MARK3MIDLN = f"""# {"⥣3⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK3START = f"""# {"3⥥ " * (CMNTLEN // 3)}"""
-MARK3STARTLN = f"""# {"3⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK4END = f"""# {"⥣4 " * (CMNTLEN // 3)}"""
-MARK4ENDLN = f"""# {"⥣4 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK4MID = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}"""
-MARK4MIDLN = f"""# {"⥣4⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK4START = f"""# {"4⥥ " * (CMNTLEN // 3)}"""
-MARK4STARTLN = f"""# {"4⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK5END = f"""# {"⥣5 " * (CMNTLEN // 3)}"""
-MARK5ENDLN = f"""# {"⥣5 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK5MID = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}"""
-MARK5MIDLN = f"""# {"⥣5⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK5START = f"""# {"5⥥ " * (CMNTLEN // 3)}"""
-MARK5STARTLN = f"""# {"5⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK6END = f"""# {"⥣6 " * (CMNTLEN // 3)}"""
-MARK6ENDLN = f"""# {"⥣6 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK6MID = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}"""
-MARK6MIDLN = f"""# {"⥣6⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK6START = f"""# {"6⥥ " * (CMNTLEN // 3)}"""
-MARK6STARTLN = f"""# {"6⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK7END = f"""# {"⥣7 " * (CMNTLEN // 3)}"""
-MARK7ENDLN = f"""# {"⥣7 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK7MID = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}"""
-MARK7MIDLN = f"""# {"⥣7⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK7START = f"""# {"7⥥ " * (CMNTLEN // 3)}"""
-MARK7STARTLN = f"""# {"7⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK8END = f"""# {"⥣8 " * (CMNTLEN // 3)}"""
-MARK8ENDLN = f"""# {"⥣8 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK8MID = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}"""
-MARK8MIDLN = f"""# {"⥣8⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK8START = f"""# {"8⥥ " * (CMNTLEN // 3)}"""
-MARK8STARTLN = f"""# {"8⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK9END = f"""# {"⥣9 " * (CMNTLEN // 3)}"""
-MARK9ENDLN = f"""# {"⥣9 " * (CMNTLEN // 3)}{NEWLINE}"""
-MARK9MID = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}"""
-MARK9MIDLN = f"""# {"⥣9⥥ " * (CMNTLEN // 4)}{NEWLINE}"""
-MARK9START = f"""# {"9⥥ " * (CMNTLEN // 3)}"""
-MARK9STARTLN = f"""# {"9⥥ " * (CMNTLEN // 3)}{NEWLINE}"""
-MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
-MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
-NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
-NOTMEDIAFILES = "MEDIAFILES"  # NOTMEDIAFILES key
+LINESUP = lambda NUM_:  f"{ESC}[{NUM_}A"
+MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
+MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK1MIDLN = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK1START = lambda TAG_: f"""# {"1⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK1STARTLN = lambda TAG_: f"""# {"1⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK2END = lambda TAG_: f"""# {"⥣2 " * (CMNTLEN // 3)} {TAG_}"""
+MARK2ENDLN = lambda TAG_: f"""# {"⥣2 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK2MID = lambda TAG_: f"""# {"⥣2⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK2MIDLN = lambda TAG_: f"""# {"⥣2⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK2START = lambda TAG_: f"""# {"2⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK2STARTLN = lambda TAG_: f"""# {"2⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK3END = lambda TAG_: f"""# {"⥣3 " * (CMNTLEN // 3)} {TAG_}"""
+MARK3ENDLN = lambda TAG_: f"""# {"⥣3 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK3MID = lambda TAG_: f"""# {"⥣3⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK3MIDLN = lambda TAG_: f"""# {"⥣3⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK3START = lambda TAG_: f"""# {"3⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK3STARTLN = lambda TAG_: f"""# {"3⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK4END = lambda TAG_: f"""# {"⥣4 " * (CMNTLEN // 3)} {TAG_}"""
+MARK4ENDLN = lambda TAG_: f"""# {"⥣4 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK4MID = lambda TAG_: f"""# {"⥣4⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK4MIDLN = lambda TAG_: f"""# {"⥣4⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK4START = lambda TAG_: f"""# {"4⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK4STARTLN = lambda TAG_: f"""# {"4⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK5END = lambda TAG_: f"""# {"⥣5 " * (CMNTLEN // 3)} {TAG_}"""
+MARK5ENDLN = lambda TAG_: f"""# {"⥣5 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK5MID = lambda TAG_: f"""# {"⥣5⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK5MIDLN = lambda TAG_: f"""# {"⥣5⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK5START = lambda TAG_: f"""# {"5⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK5STARTLN = lambda TAG_: f"""# {"5⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK6END = lambda TAG_: f"""# {"⥣6 " * (CMNTLEN // 3)} {TAG_}"""
+MARK6ENDLN = lambda TAG_: f"""# {"⥣6 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK6MID = lambda TAG_: f"""# {"⥣6⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK6MIDLN = lambda TAG_: f"""# {"⥣6⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK6START = lambda TAG_: f"""# {"6⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK6STARTLN = lambda TAG_: f"""# {"6⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK7END = lambda TAG_: f"""# {"⥣7 " * (CMNTLEN // 3)} {TAG_}"""
+MARK7ENDLN = lambda TAG_: f"""# {"⥣7 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK7MID = lambda TAG_: f"""# {"⥣7⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK7MIDLN = lambda TAG_: f"""# {"⥣7⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK7START = lambda TAG_: f"""# {"7⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK7STARTLN = lambda TAG_: f"""# {"7⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK8END = lambda TAG_: f"""# {"⥣8 " * (CMNTLEN // 3)} {TAG_}"""
+MARK8ENDLN = lambda TAG_: f"""# {"⥣8 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK8MID = lambda TAG_: f"""# {"⥣8⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK8MIDLN = lambda TAG_: f"""# {"⥣8⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK8START = lambda TAG_: f"""# {"8⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK8STARTLN = lambda TAG_: f"""# {"8⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK9END = lambda TAG_: f"""# {"⥣9 " * (CMNTLEN // 3)} {TAG_}"""
+MARK9ENDLN = lambda TAG_: f"""# {"⥣9 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
+MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
+MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
+MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
+MOVETO = lambda LN_, COL_: f"\{ESC}[{LN_};{COL_}H"
 NOTRECURSE = "RECURSE"  # NOTRECURSE key
 NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
-NOTUNKNOWNFILES = "UNKNOWNFILES"  # NOTUNKNOWNFILES key
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
 QTSET = ['"', "'", "`"]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
 SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
 SP_NAME = "newSP.py"
+SPTOP_NAME = f"{CONFIGDIR}SPTOP.py"
 TBGLST_NAME = "TBGLST.py"
-TRIQT = DBLQT + DBLQT + DBLQT  # works most of the time triple quote
+
+
+CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from 'text' strings like color codes"}
+	f"{ESC}[0m",  # entry for ESC-[0m
+	f"{ESC}[1m",  # entry for ESC-[1m
+	f"{ESC}[32m",  # entry for ESC-[32m
+	f"{ESC}[35m",  # entry for ESC-[35m
+	f"{ESC}[36m",  # entry for ESC-[36m
+]
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
@@ -331,7 +289,7 @@ BTNM_MDNA = "BTNM_MDNA"  # BTNMDN/MSE_DN on mice
 BTNM_MDNLT = "BTNM_MDNLT"  # BTNMDN/MSE_DNLT on mice
 BTNM_MDNRT = "BTNM_MDNRT"  # BTNMDN/MSE_DNRT on mice
 BTNM_MLT = "BTNM_MLT"  # BTNMLT/MSE_LT on mice
-BTNM_MLTA = "BTNM_MLTA"  # BTNMLT/MSE_LT on mice
+BTNM_MRLS = "BTNM_MRLS"  # MSE_MRLS on mice
 BTNM_MRT = "BTNM_MRT"  # BTNMRT/MSE_RT on mice
 BTNM_MRTA = "BTNM_MRTA"  # BTNMRT/MSE_RT on mice
 BTNM_MUP = "BTNM_MUP"  # BTNMUP/MSE_UP on mice
@@ -532,6 +490,15 @@ FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
 #
 
 
+#
+#
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * start of not managed portions of FM.py
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+#
+#
+
+
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
@@ -542,612 +509,9 @@ FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 
+
 TBGLST = [
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	("AXDSKTP1", FMAXDO_SCTN43AXDEF, "desktop #1",),
-	("AXDSKTP101", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBDALTLT_PRS", "press ALT",),
-	("AXDSKTP102", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBD1_PRS", "press 1",),
-	("AXDSKTP103", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBD1_RLS", "release 1",),
-	("AXDSKTP104", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBDALTLT_RLS", "release ALT",),
-	("AXDSKTP105", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "SYNREPORT", "SYNREPORT",),
-	("AXDSKTP2", FMAXDO_SCTN43AXDEF, "desktop #2",),
-	("AXDSKTP201", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBDALTLT_PRS", "press ALT",),
-	("AXDSKTP202", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBD2_PRS", "press 2",),
-	("AXDSKTP203", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBD2_RLS", "release 2",),
-	("AXDSKTP204", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBDALTLT_RLS", "release ALT",),
-	("AXDSKTP205", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "SYNREPORT", "SYNREPORT",),
-	("AXDSKTP3", FMAXDO_SCTN43AXDEF, "desktop #3",),
-	("AXDSKTP301", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBDALTLT_PRS", "press ALT",),
-	("AXDSKTP302", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBD3_PRS", "press 3",),
-	("AXDSKTP303", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBD3_RLS", "release 3",),
-	("AXDSKTP304", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBDALTLT_RLS", "release ALT",),
-	("AXDSKTP305", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "SYNREPORT", "SYNREPORT",),
-	("AXDSKTP4", FMAXDO_SCTN43AXDEF, "desktop #4",),
-	("AXDSKTP401", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBDALTLT_PRS", "press ALT",),
-	("AXDSKTP402", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBD4_PRS", "press 4",),
-	("AXDSKTP403", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBD4_RLS", "release 4",),
-	("AXDSKTP404", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBDALTLT_RLS", "release ALT",),
-	("AXDSKTP405", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "SYNREPORT", "SYNREPORT",),
-	("AXGIMPOVWRT", FMAXDO_SCTN43AXDEF, "GIMP overwrite imported file",),
-	("AXGIMPOVWRT01", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDALTLT_PRS", "press ALT",),
-	("AXGIMPOVWRT02", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
-	("AXGIMPOVWRT03", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDCTRLLT_PRS", "press LCTRL",),
-	("AXGIMPOVWRT04", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
-	("AXGIMPOVWRT05", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDSHIFTLT_PRS", "press LSHIFT",),
-	("AXGIMPOVWRT06", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
-	("AXGIMPOVWRT07", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDO_PRS", "press O",),
-	("AXGIMPOVWRT08", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDO_RLS", "release O",),
-	("AXGIMPOVWRT09", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDSHIFTLT_RLS", "release LSHIFT",),
-	("AXGIMPOVWRT0A", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDCTRLLT_RLS", "release LCTRL",),
-	("AXGIMPOVWRT0B", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDALTLT_RLS", "release ALT",),
-	("AXGIMPOVWRT0C", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
-	("AXHRHWLDN", FMAXDO_SCTN43AXDEF, "high rez wheel DOWN",),
-	("AXHRHWLDN00", FMAXDO_SCTN43AXVALADD, "AXHRHWLDN", "MSEWHL_DN", "move WHL down 1 unit",),
-	("AXHRHWLDN01", FMAXDO_SCTN43AXVALADD, "AXHRHWLDN", "SYNREPORT", "SYNREPORT",),
-	("AXHRHWLLT", FMAXDO_SCTN43AXDEF, "high rez wheel LEFT",),
-	("AXHRHWLLT00", FMAXDO_SCTN43AXVALADD, "AXHRHWLLT", "MSEWHL_LT", "move WHL left 1 unit",),
-	("AXHRHWLLT01", FMAXDO_SCTN43AXVALADD, "AXHRHWLLT", "SYNREPORT", "SYNREPORT",),
-	("AXHRHWLRT", FMAXDO_SCTN43AXDEF, "high rez wheel RIGHT",),
-	("AXHRHWLRT00", FMAXDO_SCTN43AXVALADD, "AXHRHWLRT", "MSEWHL_RT", "move WHL right 1 unit",),
-	("AXHRHWLRT01", FMAXDO_SCTN43AXVALADD, "AXHRHWLRT", "SYNREPORT", "SYNREPORT",),
-	("AXHRHWLUP", FMAXDO_SCTN43AXDEF, "high rez wheel UP",),
-	("AXHRHWLUP00", FMAXDO_SCTN43AXVALADD, "AXHRHWLUP", "MSEWHL_UP", "move WHL up 1 unit",),
-	("AXHRHWLUP01", FMAXDO_SCTN43AXVALADD, "AXHRHWLUP", "SYNREPORT", "SYNREPORT",),
-	("AXMCCOPY", FMAXDO_SCTN43AXDEF, "MC copy F5, ENTER",),
-	("AXMCCOPY01", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "KBDF5_PRS", "press F5",),
-	("AXMCCOPY02", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "KBDF5_RLS", "release F5",),
-	("AXMCCOPY03", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "SYNREPORT", "SYNREPORT",),
-	("AXMCDEL", FMAXDO_SCTN43AXDEF, "MC del F8, ENTER",),
-	("AXMCDEL01", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "KBDF8_PRS", "press F8",),
-	("AXMCDEL02", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "KBDF8_RLS", "release F8",),
-	("AXMCDEL03", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "SYNREPORT", "SYNREPORT",),
-	("AXMCMOVE", FMAXDO_SCTN43AXDEF, "MC move F6, ENTER",),
-	("AXMCMOVE01", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "KBDF6_PRS", "press F6",),
-	("AXMCMOVE02", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "KBDF6_RLS", "release F6",),
-	("AXMCMOVE03", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "SYNREPORT", "SYNREPORT",),
-	("AXMCSEL", FMAXDO_SCTN43AXDEF, "MC select INS",),
-	("AXMCSEL01", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "KBDINSERT_PRS", "press INSERT",),
-	("AXMCSEL02", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "KBDINSERT_RLS", "release INSERT",),
-	("AXMCSEL03", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNBAK", FMAXDO_SCTN43AXDEF, "MSE BTN BACK",),
-	("AXMSEBTNBAK01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "MSEBTNBAK_PRSHLD", "press MSEBTNBAK",),
-	("AXMSEBTNBAK02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNBAK03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "MSEBTNBAK_RLS", "release MSEBTNBAK",),
-	("AXMSEBTNBAK04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNFWD", FMAXDO_SCTN43AXDEF, "MSE BTN FWD",),
-	("AXMSEBTNFWD01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "MSEBTNFWD_PRSHLD", "press MSEBTNFWD",),
-	("AXMSEBTNFWD02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNFWD03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "MSEBTNFWD_RLS", "release MSEBTNFWD",),
-	("AXMSEBTNFWD04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT",),
-	("AXMSEBTNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
-	("AXMSEBTNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "MSEBTNLT_RLS", "release MSEBTNLT",),
-	("AXMSEBTNLT04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_L00", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT",),
-	("AXMSEBTNLT_L00_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
-	("AXMSEBTNLT_L00_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_L00_03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "MSEBTNLT_RLS", "release MSEBTNLT",),
-	("AXMSEBTNLT_L00_04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_L01", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_1 pressed",),
-	("AXMSEBTNLT_L01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L01", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
-	("AXMSEBTNLT_L01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L01", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_L02", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_2 released",),
-	("AXMSEBTNLT_L02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L02", "MSEBTNLT_RLS", "release MSEBTNLT",),
-	("AXMSEBTNLT_L02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L02", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_T01", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_1 pressed",),
-	("AXMSEBTNLT_T01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T01", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
-	("AXMSEBTNLT_T01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T01", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNLT_T02", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_2 released",),
-	("AXMSEBTNLT_T02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T02", "MSEBTNLT_RLS", "release MSEBTNLT",),
-	("AXMSEBTNLT_T02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T02", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNMID", FMAXDO_SCTN43AXDEF, "MSE BTN MIDDLE",),
-	("AXMSEBTNMID01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "MSEBTNMID_PRSHLD", "press MSEBTNMID",),
-	("AXMSEBTNMID02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNMID03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "MSEBTNMID_RLS", "release MSEBTNMID",),
-	("AXMSEBTNMID04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNRT", FMAXDO_SCTN43AXDEF, "MSE BTN RIGHT",),
-	("AXMSEBTNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "MSEBTNRT_PRSHLD", "press MSEBTNRT",),
-	("AXMSEBTNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "MSEBTNRT_RLS", "release MSEBTNRT",),
-	("AXMSEBTNRT04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNRT_T01", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_1 pressed",),
-	("AXMSEBTNRT_T01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T01", "MSEBTNRT_PRSHLD", "press MSEBTNRT",),
-	("AXMSEBTNRT_T01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T01", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNRT_T02", FMAXDO_SCTN43AXDEF, "MSE BTN LEFT_2 released",),
-	("AXMSEBTNRT_T02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T02", "MSEBTNRT_RLS", "release MSEBTNRT",),
-	("AXMSEBTNRT_T02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T02", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNSIDE", FMAXDO_SCTN43AXDEF, "MSE BTN SIDE",),
-	("AXMSEBTNSIDE01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "MSEBTNSIDE_PRSHLD", "press MSEBTNSIDE",),
-	("AXMSEBTNSIDE02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNSIDE03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "MSEBTNSIDE_RLS", "release MSEBTNSIDE",),
-	("AXMSEBTNSIDE04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNTASK", FMAXDO_SCTN43AXDEF, "MSE BTN TASK",),
-	("AXMSEBTNTASK01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "MSEBTNTASK_PRSHLD", "press MSEBTNTASK",),
-	("AXMSEBTNTASK02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "SYNREPORT", "SYNREPORT",),
-	("AXMSEBTNTASK03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "MSEBTNTASK_RLS", "release MSEBTNTASK",),
-	("AXMSEBTNTASK04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "SYNREPORT", "SYNREPORT",),
-	("AXMSEDN", FMAXDO_SCTN43AXDEF, "MSE DOWN",),
-	("AXMSEDN01", FMAXDO_SCTN43AXVALADD, "AXMSEDN", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
-	("AXMSEDN02", FMAXDO_SCTN43AXVALADD, "AXMSEDN", "SYNREPORT", "SYNREPORT",),
-	("AXMSEDNA", FMAXDO_SCTN43AXDEF, "MSE DOWN",),
-	("AXMSEDNA01", FMAXDO_SCTN43AXVALADD, "AXMSEDNA", "MSE_DNA", "MSE_DN by MOUSEDISTANCE",),
-	("AXMSEDNA02", FMAXDO_SCTN43AXVALADD, "AXMSEDNA", "SYNREPORT", "SYNREPORT",),
-	("AXMSEDNLT", FMAXDO_SCTN43AXDEF, "MSE DOWNLT",),
-	("AXMSEDNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
-	("AXMSEDNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
-	("AXMSEDNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEDNRT", FMAXDO_SCTN43AXDEF, "MSE DOWNRT",),
-	("AXMSEDNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
-	("AXMSEDNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
-	("AXMSEDNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSELT", FMAXDO_SCTN43AXDEF, "MSE LEFT",),
-	("AXMSELT01", FMAXDO_SCTN43AXVALADD, "AXMSELT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
-	("AXMSELT02", FMAXDO_SCTN43AXVALADD, "AXMSELT", "SYNREPORT", "SYNREPORT",),
-	("AXMSELTA", FMAXDO_SCTN43AXDEF, "MSE LEFT",),
-	("AXMSELTA01", FMAXDO_SCTN43AXVALADD, "AXMSELTA", "MSE_LTA", "MSE_LT by MOUSEDISTANCE",),
-	("AXMSELTA02", FMAXDO_SCTN43AXVALADD, "AXMSELTA", "SYNREPORT", "SYNREPORT",),
-	("AXMSERT", FMAXDO_SCTN43AXDEF, "MSE RIGHT",),
-	("AXMSERT01", FMAXDO_SCTN43AXVALADD, "AXMSERT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
-	("AXMSERT02", FMAXDO_SCTN43AXVALADD, "AXMSERT", "SYNREPORT", "SYNREPORT",),
-	("AXMSERTA", FMAXDO_SCTN43AXDEF, "MSE RIGHT",),
-	("AXMSERTA01", FMAXDO_SCTN43AXVALADD, "AXMSERTA", "MSE_RTA", "MSE_RT by MOUSEDISTANCE",),
-	("AXMSERTA02", FMAXDO_SCTN43AXVALADD, "AXMSERTA", "SYNREPORT", "SYNREPORT",),
-	("AXMSEUP", FMAXDO_SCTN43AXDEF, "MSE UP",),
-	("AXMSEUP01", FMAXDO_SCTN43AXVALADD, "AXMSEUP", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
-	("AXMSEUP02", FMAXDO_SCTN43AXVALADD, "AXMSEUP", "SYNREPORT", "SYNREPORT",),
-	("AXMSEUPA", FMAXDO_SCTN43AXDEF, "MSE UP",),
-	("AXMSEUPA01", FMAXDO_SCTN43AXVALADD, "AXMSEUPA", "MSE_UPA", "MSE_UP by MOUSEDISTANCE",),
-	("AXMSEUPA02", FMAXDO_SCTN43AXVALADD, "AXMSEUPA", "SYNREPORT", "SYNREPORT",),
-	("AXMSEUPLT", FMAXDO_SCTN43AXDEF, "MSE UPLT",),
-	("AXMSEUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
-	("AXMSEUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
-	("AXMSEUPLT02", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEUPRT", FMAXDO_SCTN43AXDEF, "MSE UPRT",),
-	("AXMSEUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
-	("AXMSEUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
-	("AXMSEUPRT02", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLDN", FMAXDO_SCTN43AXDEF, "wheel DOWN",),
-	("AXMSEWHLDN01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDN", "MSEWHL_DN", "wheel DOWN",),
-	("AXMSEWHLDN02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDN", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLDNLT", FMAXDO_SCTN43AXDEF, "wheel DNLT",),
-	("AXMSEWHLDNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "MSEWHL_DN", "wheel DOWN",),
-	("AXMSEWHLDNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "MSEWHL_LT", "wheel LEFT",),
-	("AXMSEWHLDNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLDNRT", FMAXDO_SCTN43AXDEF, "wheel DNRT",),
-	("AXMSEWHLDNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "MSEWHL_DN", "wheel DOWN",),
-	("AXMSEWHLDNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "MSEWHL_RT", "wheel RIGHT",),
-	("AXMSEWHLDNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLLT", FMAXDO_SCTN43AXDEF, "wheel LEFT",),
-	("AXMSEWHLLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLLT", "MSEWHL_LT", "wheel LEFT",),
-	("AXMSEWHLLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLRT", FMAXDO_SCTN43AXDEF, "wheel RIGHT",),
-	("AXMSEWHLRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLRT", "MSEWHL_RT", "wheel RIGHT",),
-	("AXMSEWHLRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLRT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLUP", FMAXDO_SCTN43AXDEF, "wheel UP",),
-	("AXMSEWHLUP01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUP", "MSEWHL_UP", "wheel UP",),
-	("AXMSEWHLUP02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUP", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLUPLT", FMAXDO_SCTN43AXDEF, "wheel UPLT",),
-	("AXMSEWHLUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "MSEWHL_UP", "wheel UP",),
-	("AXMSEWHLUPLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "MSEWHL_LT", "wheel LEFT",),
-	("AXMSEWHLUPLT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "SYNREPORT", "SYNREPORT",),
-	("AXMSEWHLUPRT", FMAXDO_SCTN43AXDEF, "wheel UPRT",),
-	("AXMSEWHLUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "MSEWHL_UP", "wheel UP",),
-	("AXMSEWHLUPRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "MSEWHL_RT", "wheel RIGHT",),
-	("AXMSEWHLUPRT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "SYNREPORT", "SYNREPORT",),
-	("AXSAVE", FMAXDO_SCTN43AXDEF, "save CTRL-S",),
-	("AXSAVE01", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDCTRLLT_PRS", "press CTRL",),
-	("AXSAVE02", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDS_PRS", "press S",),
-	("AXSAVE03", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDS_RLS", "release S",),
-	("AXSAVE04", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDCTRLLT_RLS", "release CTRL",),
-	("AXSAVE05", FMAXDO_SCTN43AXVALADD, "AXSAVE", "SYNREPORT", "SYNREPORT",),
-	("AXXNVCOPYTO", FMAXDO_SCTN43AXDEF, "XnViewer COPYTO ALT-C",),
-	("AXXNVCOPYTO01", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDALTLT_PRS", "press ALT",),
-	("AXXNVCOPYTO02", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDS_PRS", "press S",),
-	("AXXNVCOPYTO03", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDS_RLS", "release S",),
-	("AXXNVCOPYTO04", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDALTLT_RLS", "release ALT",),
-	("AXXNVCOPYTO05", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "SYNREPORT", "SYNREPORT",),
-	("AXXNVCROP", FMAXDO_SCTN43AXDEF, "XnViewer CROP SHIFT-X",),
-	("AXXNVCROP01", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AXXNVCROP02", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDX_PRS", "press X",),
-	("AXXNVCROP03", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDX_RLS", "release X",),
-	("AXXNVCROP04", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AXXNVCROP05", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "SYNREPORT", "SYNREPORT",),
-	("AXXNVFLIPH", FMAXDO_SCTN43AXDEF, "XnViewer FLIP horizontal ALT-F",),
-	("AXXNVFLIPH01", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDALTLT_PRS", "press ALT",),
-	("AXXNVFLIPH02", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDF_PRS", "press F",),
-	("AXXNVFLIPH03", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDF_RLS", "release F",),
-	("AXXNVFLIPH04", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDALTLT_RLS", "release ALT",),
-	("AXXNVFLIPH05", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "SYNREPORT", "SYNREPORT",),
-	("AXXNVMOVE", FMAXDO_SCTN43AXDEF, "XnViewer MOVE ALT-M",),
-	("AXXNVMOVE01", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDALTLT_PRS", "press ALT",),
-	("AXXNVMOVE02", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDM_PRS", "press M",),
-	("AXXNVMOVE03", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDM_RLS", "release M",),
-	("AXXNVMOVE04", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDALTLT_RLS", "release ALT",),
-	("AXXNVMOVE05", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "SYNREPORT", "SYNREPORT",),
-	("AXXNVROTLT", FMAXDO_SCTN43AXDEF, "XnViewer ROT LEFT CTRL-SHIFT-L",),
-	("AXXNVROTLT01", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AXXNVROTLT02", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDCTRLLT_PRS", "press CTRL",),
-	("AXXNVROTLT03", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDL_PRS", "press L",),
-	("AXXNVROTLT04", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDL_RLS", "release L",),
-	("AXXNVROTLT05", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDCTRLLT_RLS", "release CTRL",),
-	("AXXNVROTLT06", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AXXNVROTLT07", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "SYNREPORT", "SYNREPORT",),
-	("AXXNVROTRT", FMAXDO_SCTN43AXDEF, "XnViewer ROT RIGHT CTRL-SHIFT-R",),
-	("AXXNVROTRT01", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AXXNVROTRT02", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDCTRLLT_PRS", "press CTRL",),
-	("AXXNVROTRT03", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDR_PRS", "press R",),
-	("AXXNVROTRT04", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDR_RLS", "release R",),
-	("AXXNVROTRT05", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDCTRLLT_RLS", "release CTRL",),
-	("AXXNVROTRT06", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AXXNVROTRT07", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "SYNREPORT", "SYNREPORT",),
-	("AXXNVSEL2TOP", FMAXDO_SCTN43AXDEF, "XnViewer SELECT to top SHIFT-HOME, SHIFT-RIGHT",),
-	("AXXNVSEL2TOP01", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AXXNVSEL2TOP02", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDHOME_PRS", "press HOME",),
-	("AXXNVSEL2TOP03", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDHOME_RLS", "release HOME",),
-	("AXXNVSEL2TOP04", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDRT_PRS", "press RIGHT",),
-	("AXXNVSEL2TOP05", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDRT_RLS", "release RIGHT",),
-	("AXXNVSEL2TOP06", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AXXNVSEL2TOP07", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "SYNREPORT", "SYNREPORT",),
-	("AXXNVZOOMFULL", FMAXDO_SCTN43AXDEF, "XnViewer zoom 1:1",),
-	("AXXNVZOOMFULL01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "KBDSPLAT_PRS", "press *",),
-	("AXXNVZOOMFULL02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "KBDSPLAT_RLS", "release *",),
-	("AXXNVZOOMFULL03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "SYNREPORT", "SYNREPORT",),
-	("AXXNVZOOMIN", FMAXDO_SCTN43AXDEF, "XnViewer zoom in/+",),
-	("AXXNVZOOMIN01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "KBDPLUS_PRS", "press +",),
-	("AXXNVZOOMIN02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "KBDPLUS_RLS", "release +",),
-	("AXXNVZOOMIN03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "SYNREPORT", "SYNREPORT",),
-	("AXXNVZOOMOUT", FMAXDO_SCTN43AXDEF, "XnViewer zoom out/-",),
-	("AXXNVZOOMOUT01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "KBDMINUS_PRS", "press -",),
-	("AXXNVZOOMOUT02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "KBDMINUS_RLS", "release -",),
-	("AXXNVZOOMOUT03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "SYNREPORT", "SYNREPORT",),
-	("AXXNVZOOMRESET", FMAXDO_SCTN43AXDEF, "reset XnViewer zoom by back, forward, forward, back",),
-	("AXXNVZOOMRESET01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_PRS", "press KBDLT",),
-	("AXXNVZOOMRESET02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_RLS", "press KBDLT",),
-	("AXXNVZOOMRESET03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_PRS", "press KBDLT",),
-	("AXXNVZOOMRESET04", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_RLS", "press KBDLT",),
-	("AXXNVZOOMRESET05", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_PRS", "press KBDLT",),
-	("AXXNVZOOMRESET06", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_RLS", "press KBDLT",),
-	("AXXNVZOOMRESET07", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_PRS", "press KBDLT",),
-	("AXXNVZOOMRESET08", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_RLS", "press KBDLT",),
-	("AXXNVZOOMRESET09", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "SYNREPORT", "SYNREPORT",),
-	("AX_ALTC", FMAXDO_SCTN43AXDEF, "ALT-C",),
-	("AX_ALTC01", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDALTLT_PRS", "press ALT",),
-	("AX_ALTC02", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDC_PRS", "press C",),
-	("AX_ALTC03", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDC_RLS", "release C",),
-	("AX_ALTC04", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDALTLT_RLS", "release ALT",),
-	("AX_ALTC05", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "SYNREPORT", "SYNREPORT",),
-	("AX_ALTD", FMAXDO_SCTN43AXDEF, "ALT-D",),
-	("AX_ALTD01", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDALTLT_PRS", "press ALT",),
-	("AX_ALTD02", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDD_PRS", "press D",),
-	("AX_ALTD03", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDD_RLS", "release D",),
-	("AX_ALTD04", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDALTLT_RLS", "release ALT",),
-	("AX_ALTD05", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "SYNREPORT", "SYNREPORT",),
-	("AX_ALTTAB", FMAXDO_SCTN43AXDEF, "ALT-TAB",),
-	("AX_ALTTAB01", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDALTLT_PRS", "press ALT",),
-	("AX_ALTTAB02", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDTAB_PRS", "press TAB",),
-	("AX_ALTTAB03", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDTAB_RLS", "release TAB",),
-	("AX_ALTTAB04", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDALTLT_RLS", "release ALT",),
-	("AX_ALTTAB05", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "SYNREPORT", "SYNREPORT",),
-	("AX_ALT_T01", FMAXDO_SCTN43AXDEF, "ALT-C",),
-	("AX_ALT_T0101", FMAXDO_SCTN43AXVALADD, "AX_ALT_T01", "KBDALTLT_PRS", "press ALT",),
-	("AX_ALT_T0102", FMAXDO_SCTN43AXVALADD, "AX_ALT_T01", "SYNREPORT", "SYNREPORT",),
-	("AX_ALT_T02", FMAXDO_SCTN43AXDEF, "ALT-C",),
-	("AX_ALT_T0201", FMAXDO_SCTN43AXVALADD, "AX_ALT_T02", "KBDALTLT_RLS", "release ALT",),
-	("AX_ALT_T0202", FMAXDO_SCTN43AXVALADD, "AX_ALT_T02", "SYNREPORT", "SYNREPORT",),
-	("AX_CRSRDN", FMAXDO_SCTN43AXDEF, "DOWN",),
-	("AX_CRSRDN01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "KBDDN_PRS", "press DOWN",),
-	("AX_CRSRDN02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "KBDDN_RLS", "release DOWN",),
-	("AX_CRSRDN03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "SYNREPORT", "SYNREPORT",),
-	("AX_CRSRDNLT", FMAXDO_SCTN43AXDEF, "DOWN",),
-	("AX_CRSRDNLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDDN_PRS", "press DOWN",),
-	("AX_CRSRDNLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDDN_RLS", "release DOWN",),
-	("AX_CRSRDNLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDLT_PRS", "press LEFT",),
-	("AX_CRSRDNLT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDLT_RLS", "release LEFT",),
-	("AX_CRSRDNLT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "SYNREPORT", "SYNREPORT",),
-	("AX_CRSRDNRT", FMAXDO_SCTN43AXDEF, "DOWN",),
-	("AX_CRSRDNRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDDN_PRS", "press DOWN",),
-	("AX_CRSRDNRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDDN_RLS", "release DOWN",),
-	("AX_CRSRDNRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDRT_PRS", "press RIGHT",),
-	("AX_CRSRDNRT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDRT_RLS", "release RIGHT",),
-	("AX_CRSRDNRT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "SYNREPORT", "SYNREPORT",),
-	("AX_CRSRLT", FMAXDO_SCTN43AXDEF, "LEFT",),
-	("AX_CRSRLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "KBDLT_PRS", "press LEFT",),
-	("AX_CRSRLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "KBDLT_RLS", "press LEFT",),
-	("AX_CRSRLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "SYNREPORT", "press LEFT",),
-	("AX_CRSRRT", FMAXDO_SCTN43AXDEF, "RIGHT",),
-	("AX_CRSRRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "KBDRT_PRS", "press RIGHT",),
-	("AX_CRSRRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "KBDRT_RLS", "release RIGHT",),
-	("AX_CRSRRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "SYNREPORT", "press RIGHT",),
-	("AX_CRSRUP", FMAXDO_SCTN43AXDEF, "UP",),
-	("AX_CRSRUP01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "KBDUP_PRS", "press UP",),
-	("AX_CRSRUP02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "KBDUP_RLS", "press UP",),
-	("AX_CRSRUP03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "SYNREPORT", "press UP",),
-	("AX_CRSRUPLT", FMAXDO_SCTN43AXDEF, "UPLT",),
-	("AX_CRSRUPLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDUP_PRS", "press UP",),
-	("AX_CRSRUPLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDUP_RLS", "press UP",),
-	("AX_CRSRUPLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDLT_PRS", "press LT",),
-	("AX_CRSRUPLT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDLT_RLS", "press LT",),
-	("AX_CRSRUPLT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "SYNREPORT", "press UP",),
-	("AX_CRSRUPRT", FMAXDO_SCTN43AXDEF, "UPRT",),
-	("AX_CRSRUPRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDUP_PRS", "press UP",),
-	("AX_CRSRUPRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDUP_RLS", "press UP",),
-	("AX_CRSRUPRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDRT_PRS", "press RT",),
-	("AX_CRSRUPRT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDRT_RLS", "press RT",),
-	("AX_CRSRUPRT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "SYNREPORT", "press UP",),
-	("AX_CTRLA", FMAXDO_SCTN43AXDEF, "CTRL-A",),
-	("AX_CTRLA01", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLA02", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDA_PRS", "press A",),
-	("AX_CTRLA03", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDA_RLS", "release A",),
-	("AX_CTRLA04", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLA05", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLPGDN", FMAXDO_SCTN43AXDEF, "CTRLPGDN",),
-	("AX_CTRLPGDN01", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLPGDN02", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDPGDN_PRS", "press PGDN",),
-	("AX_CTRLPGDN03", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDPGDN_RLS", "release PGDN",),
-	("AX_CTRLPGDN04", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLPGDN05", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLPGUP", FMAXDO_SCTN43AXDEF, "CTRLPGUP",),
-	("AX_CTRLPGUP01", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLPGUP02", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDPGUP_PRS", "press PGUP",),
-	("AX_CTRLPGUP03", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDPGUP_RLS", "release PGUP",),
-	("AX_CTRLPGUP04", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLPGUP05", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLQ", FMAXDO_SCTN43AXDEF, "CTRL-Q",),
-	("AX_CTRLQ01", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLQ02", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDQ_PRS", "press Q",),
-	("AX_CTRLQ03", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDQ_RLS", "release Q",),
-	("AX_CTRLQ04", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLQ05", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLS", FMAXDO_SCTN43AXDEF, "CTRL-S",),
-	("AX_CTRLS01", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLS02", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDS_PRS", "press S",),
-	("AX_CTRLS03", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDS_RLS", "release S",),
-	("AX_CTRLS04", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLS05", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLTAB", FMAXDO_SCTN43AXDEF, "CTRL-TAB",),
-	("AX_CTRLTAB01", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLTAB02", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDTAB_PRS", "press TAB",),
-	("AX_CTRLTAB03", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDTAB_RLS", "release TAB",),
-	("AX_CTRLTAB04", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLTAB05", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRLW", FMAXDO_SCTN43AXDEF, "CTRL-W",),
-	("AX_CTRLW01", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRLW02", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDW_PRS", "press W",),
-	("AX_CTRLW03", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDW_RLS", "release W",),
-	("AX_CTRLW04", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRLW05", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRL_T01", FMAXDO_SCTN43AXDEF, "CTRL toggle actions",),
-	("AX_CTRL_T0101", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T01", "KBDCTRLLT_PRS", "press CTRL",),
-	("AX_CTRL_T0102", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T01", "SYNREPORT", "SYNREPORT",),
-	("AX_CTRL_T02", FMAXDO_SCTN43AXDEF, "CTRL toggle actions",),
-	("AX_CTRL_T0201", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T02", "KBDCTRLLT_RLS", "release CTRL",),
-	("AX_CTRL_T0202", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T02", "SYNREPORT", "SYNREPORT",),
-	("AX_DEL", FMAXDO_SCTN43AXDEF, "DEL",),
-	("AX_DEL01", FMAXDO_SCTN43AXVALADD, "AX_DEL", "KBDDEL_PRS", "press DEL",),
-	("AX_DEL02", FMAXDO_SCTN43AXVALADD, "AX_DEL", "KBDDEL_RLS", "release DEL",),
-	("AX_DEL03", FMAXDO_SCTN43AXVALADD, "AX_DEL", "SYNREPORT", "SYNREPORT",),
-	("AX_END", FMAXDO_SCTN43AXDEF, "END",),
-	("AX_END01", FMAXDO_SCTN43AXVALADD, "AX_END", "KBDEND_PRS", "press END",),
-	("AX_END02", FMAXDO_SCTN43AXVALADD, "AX_END", "KBDEND_RLS", "release END",),
-	("AX_END03", FMAXDO_SCTN43AXVALADD, "AX_END", "SYNREPORT", "SYNREPORT",),
-	("AX_ENTER", FMAXDO_SCTN43AXDEF, "ENTER",),
-	("AX_ENTER01", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "KBDENTER_PRS", "press ENTER",),
-	("AX_ENTER02", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "KBDENTER_RLS", "release ENTER",),
-	("AX_ENTER03", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "SYNREPORT", "SYNREPORT",),
-	("AX_ESC", FMAXDO_SCTN43AXDEF, "ESC",),
-	("AX_ESC01", FMAXDO_SCTN43AXVALADD, "AX_ESC", "KBDESC_PRS", "press ESC",),
-	("AX_ESC02", FMAXDO_SCTN43AXVALADD, "AX_ESC", "KBDESC_RLS", "release ESC",),
-	("AX_ESC03", FMAXDO_SCTN43AXVALADD, "AX_ESC", "SYNREPORT", "SYNREPORT",),
-	("AX_F", FMAXDO_SCTN43AXDEF, "F",),
-	("AX_F01", FMAXDO_SCTN43AXVALADD, "AX_F", "KBDF_PRS", "press F",),
-	("AX_F02", FMAXDO_SCTN43AXVALADD, "AX_F", "KBDF_RLS", "release F",),
-	("AX_F03", FMAXDO_SCTN43AXVALADD, "AX_F", "SYNREPORT", "SYNREPORT",),
-	("AX_F10", FMAXDO_SCTN43AXDEF, "F10",),
-	("AX_F1001", FMAXDO_SCTN43AXVALADD, "AX_F10", "KBDF10_PRS", "press F10",),
-	("AX_F1002", FMAXDO_SCTN43AXVALADD, "AX_F10", "KBDF10_RLS", "release F10",),
-	("AX_F1003", FMAXDO_SCTN43AXVALADD, "AX_F10", "SYNREPORT", "SYNREPORT",),
-	("AX_F5", FMAXDO_SCTN43AXDEF, "F5",),
-	("AX_F501", FMAXDO_SCTN43AXVALADD, "AX_F5", "KBDF5_PRS", "press F5",),
-	("AX_F502", FMAXDO_SCTN43AXVALADD, "AX_F5", "KBDF5_RLS", "release F5",),
-	("AX_F503", FMAXDO_SCTN43AXVALADD, "AX_F5", "SYNREPORT", "SYNREPORT",),
-	("AX_F6", FMAXDO_SCTN43AXDEF, "F6",),
-	("AX_F601", FMAXDO_SCTN43AXVALADD, "AX_F6", "KBDF6_PRS", "press F6",),
-	("AX_F602", FMAXDO_SCTN43AXVALADD, "AX_F6", "KBDF6_RLS", "release F6",),
-	("AX_F603", FMAXDO_SCTN43AXVALADD, "AX_F6", "SYNREPORT", "SYNREPORT",),
-	("AX_HOME", FMAXDO_SCTN43AXDEF, "HOME",),
-	("AX_HOME01", FMAXDO_SCTN43AXVALADD, "AX_HOME", "KBDHOME_PRS", "press HOME",),
-	("AX_HOME02", FMAXDO_SCTN43AXVALADD, "AX_HOME", "KBDHOME_RLS", "release HOME",),
-	("AX_HOME03", FMAXDO_SCTN43AXVALADD, "AX_HOME", "SYNREPORT", "SYNREPORT",),
-	("AX_INS", FMAXDO_SCTN43AXDEF, "MC select INS",),
-	("AX_INS01", FMAXDO_SCTN43AXVALADD, "AX_INS", "KBDINSERT_PRS", "press INSERT",),
-	("AX_INS02", FMAXDO_SCTN43AXVALADD, "AX_INS", "KBDINSERT_RLS", "release INSERT",),
-	("AX_INS03", FMAXDO_SCTN43AXVALADD, "AX_INS", "SYNREPORT", "SYNREPORT",),
-	("AX_N", FMAXDO_SCTN43AXDEF, "N",),
-	("AX_N01", FMAXDO_SCTN43AXVALADD, "AX_N", "KBDN_PRS", "press N",),
-	("AX_N02", FMAXDO_SCTN43AXVALADD, "AX_N", "KBDN_RLS", "release N",),
-	("AX_N03", FMAXDO_SCTN43AXVALADD, "AX_N", "SYNREPORT", "SYNREPORT",),
-	("AX_PGDN", FMAXDO_SCTN43AXDEF, "PGDN",),
-	("AX_PGDN01", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "KBDPGDN_PRS", "press PGDN",),
-	("AX_PGDN02", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "KBDPGDN_RLS", "release PGDN",),
-	("AX_PGDN03", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "SYNREPORT", "SYNREPORT",),
-	("AX_PGUP", FMAXDO_SCTN43AXDEF, "PGUP",),
-	("AX_PGUP01", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "KBDPGUP_PRS", "press PGUP",),
-	("AX_PGUP02", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "KBDPGUP_RLS", "release PGUP",),
-	("AX_PGUP03", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "SYNREPORT", "SYNREPORT",),
-	("AX_Q", FMAXDO_SCTN43AXDEF, "Q",),
-	("AX_Q01", FMAXDO_SCTN43AXVALADD, "AX_Q", "KBDQ_PRS", "press Q",),
-	("AX_Q02", FMAXDO_SCTN43AXVALADD, "AX_Q", "KBDQ_RLS", "release Q",),
-	("AX_Q03", FMAXDO_SCTN43AXVALADD, "AX_Q", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTDN", FMAXDO_SCTN43AXDEF, "SHIFT-DN",),
-	("AX_SHIFTDN01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTDN02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDDN_PRS", "press DN",),
-	("AX_SHIFTDN03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDDN_RLS", "release DN",),
-	("AX_SHIFTDN04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTDN05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTDNLT", FMAXDO_SCTN43AXDEF, "SHIFT-DNLT",),
-	("AX_SHIFTDNLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTDNLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDDN_PRS", "press DN",),
-	("AX_SHIFTDNLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDDN_RLS", "release DN",),
-	("AX_SHIFTDNLT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTDNLT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTDNRT", FMAXDO_SCTN43AXDEF, "SHIFT-DNRT",),
-	("AX_SHIFTDNRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTDNRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDDN_PRS", "press DN",),
-	("AX_SHIFTDNRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDDN_RLS", "release DN",),
-	("AX_SHIFTDNRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDRT_PRS", "press RT",),
-	("AX_SHIFTDNRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDRT_RLS", "release RT",),
-	("AX_SHIFTDNRT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTDNRT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTLT", FMAXDO_SCTN43AXDEF, "SHIFT-LT",),
-	("AX_SHIFTLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDLT_PRS", "press LT",),
-	("AX_SHIFTLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDLT_RLS", "release LT",),
-	("AX_SHIFTLT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTLT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTLTLT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDLT_PRS", "press LT",),
-	("AX_SHIFTLTLT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDLT_PRS", "press LT",),
-	("AX_SHIFTLTLT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDLT_RLS", "release LT",),
-	("AX_SHIFTLTLT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDLT_RLS", "release LT",),
-	("AX_SHIFTRT", FMAXDO_SCTN43AXDEF, "SHIFT-RT",),
-	("AX_SHIFTRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDRT_PRS", "press RT",),
-	("AX_SHIFTRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDRT_RLS", "release RT",),
-	("AX_SHIFTRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTTAB", FMAXDO_SCTN43AXDEF, "ALT-SHIFT-TAB",),
-	("AX_SHIFTTAB01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTTAB02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDTAB_PRS", "press TAB",),
-	("AX_SHIFTTAB03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDTAB_RLS", "release TAB",),
-	("AX_SHIFTTAB04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTTAB05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTUP", FMAXDO_SCTN43AXDEF, "SHIFT-UP",),
-	("AX_SHIFTUP01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTUP02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDUP_PRS", "press UP",),
-	("AX_SHIFTUP03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDUP_RLS", "release UP",),
-	("AX_SHIFTUP04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTUP05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTUPLT", FMAXDO_SCTN43AXDEF, "SHIFT-UPLT",),
-	("AX_SHIFTUPLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTUPLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDUP_PRS", "press UP",),
-	("AX_SHIFTUPLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDUP_RLS", "release UP",),
-	("AX_SHIFTUPLT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTUPLT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTUPRT", FMAXDO_SCTN43AXDEF, "SHIFT-UPRT",),
-	("AX_SHIFTUPRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDSHIFTRT_PRS", "press SHIFT",),
-	("AX_SHIFTUPRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDUP_PRS", "press UP",),
-	("AX_SHIFTUPRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDUP_RLS", "release UP",),
-	("AX_SHIFTUPRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDRT_PRS", "press RT",),
-	("AX_SHIFTUPRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDRT_RLS", "release RT",),
-	("AX_SHIFTUPRT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDSHIFTRT_RLS", "release SHIFT",),
-	("AX_SHIFTUPRT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFTX", FMAXDO_SCTN43AXDEF, "SHIFT-X",),
-	("AX_SHIFTX01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFTX02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDX_PRS", "press X",),
-	("AX_SHIFTX03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDX_RLS", "release X",),
-	("AX_SHIFTX04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFTX05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFT_T01", FMAXDO_SCTN43AXDEF, "SHIFT toggle actions",),
-	("AX_SHIFT_T0101", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T01", "KBDSHIFTLT_PRS", "press SHIFT",),
-	("AX_SHIFT_T0102", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T01", "SYNREPORT", "SYNREPORT",),
-	("AX_SHIFT_T02", FMAXDO_SCTN43AXDEF, "SHIFT toggle actions",),
-	("AX_SHIFT_T0201", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T02", "KBDSHIFTLT_RLS", "release SHIFT",),
-	("AX_SHIFT_T0202", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T02", "SYNREPORT", "SYNREPORT",),
-	("AX_SPACE", FMAXDO_SCTN43AXDEF, "SPACE",),
-	("AX_SPACE01", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "KBDSPC_PRS", "press SPACE",),
-	("AX_SPACE02", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "KBDSPC_RLS", "release SPACE",),
-	("AX_SPACE03", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "SYNREPORT", "SYNREPORT",),
-	("AX_TAB", FMAXDO_SCTN43AXDEF, "TAB",),
-	("AX_TAB01", FMAXDO_SCTN43AXVALADD, "AX_TAB", "KBDTAB_PRS", "press TAB",),
-	("AX_TAB02", FMAXDO_SCTN43AXVALADD, "AX_TAB", "KBDTAB_RLS", "release TAB",),
-	("AX_TAB03", FMAXDO_SCTN43AXVALADD, "AX_TAB", "SYNREPORT", "SYNREPORT",),
-	("AX_Y", FMAXDO_SCTN43AXDEF, "Y",),
-	("AX_Y01", FMAXDO_SCTN43AXVALADD, "AX_Y", "KBDY_PRS", "press Y",),
-	("AX_Y02", FMAXDO_SCTN43AXVALADD, "AX_Y", "KBDY_RLS", "release Y",),
-	("AX_Y03", FMAXDO_SCTN43AXVALADD, "AX_Y", "SYNREPORT", "SYNREPORT",),
-	("B_BTNGHAT_DN", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DN", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DNLT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DNRT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_LT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_LT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_RLS", "BTNTYPE_SIMABS", "artifical button release for hat on gamepads",),
-	("B_BTNGHAT_RT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_RT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_UP", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UP", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UPLT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGHAT_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UPRT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
-	("B_BTNGLTSTK_DN", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DN", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DNLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DNRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_LT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_LT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_RLS", "BTNTYPE_SIMABS", "artificial button release for LTSTK on gamepads",),
-	("B_BTNGLTSTK_RT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_RT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_UP", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UP", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UPLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGLTSTK_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UPRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_DN", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DN", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DNLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DNRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_LT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_LT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_RLS", "BTNTYPE_SIMABS", "artificial button release for RTSTK on gamepads",),
-	("B_BTNGRTSTK_RT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_RT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_UP", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UP", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UPLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNGRTSTK_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UPRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
-	("B_BTNG_01", FMAXDO_SCTN47BTNSDEF, "BTNG_01", "BTNTYPE_NOTHOLDABLE", "BTNG001/X on gamepads",),
-	("B_BTNG_02", FMAXDO_SCTN47BTNSDEF, "BTNG_02", "BTNTYPE_NOTHOLDABLE", "BTNG002/A on gamepads",),
-	("B_BTNG_03", FMAXDO_SCTN47BTNSDEF, "BTNG_03", "BTNTYPE_NOTHOLDABLE", "BTNG003/B on gamepads",),
-	("B_BTNG_04", FMAXDO_SCTN47BTNSDEF, "BTNG_04", "BTNTYPE_NOTHOLDABLE", "BTNG004/Y on gamepads",),
-	("B_BTNG_05", FMAXDO_SCTN47BTNSDEF, "BTNG_05", "BTNTYPE_HOLDABLE", "BTNG005/left shoulder on gamepads",),
-	("B_BTNG_06", FMAXDO_SCTN47BTNSDEF, "BTNG_06", "BTNTYPE_HOLDABLE", "BTNG006/right shoulder on gamepads",),
-	("B_BTNG_07", FMAXDO_SCTN47BTNSDEF, "BTNG_07", "BTNTYPE_HOLDABLE", "BTNG007/left trigger on gamepads",),
-	("B_BTNG_08", FMAXDO_SCTN47BTNSDEF, "BTNG_08", "BTNTYPE_HOLDABLE", "BTNG008/right trigger on gamepads",),
-	("B_BTNG_09", FMAXDO_SCTN47BTNSDEF, "BTNG_09", "BTNTYPE_NOTHOLDABLE", "BTNG009/left face on gamepads",),
-	("B_BTNG_10", FMAXDO_SCTN47BTNSDEF, "BTNG_10", "BTNTYPE_NOTHOLDABLE", "BTNG_010/right face on gamepads",),
-	("B_BTNG_11LTSTK", FMAXDO_SCTN47BTNSDEF, "BTNG_11LTSTK", "BTNTYPE_NOTHOLDABLE", "BTN011/left stick on gamepads",),
-	("B_BTNG_12RTSTK", FMAXDO_SCTN47BTNSDEF, "BTNG_12RTSTK", "BTNTYPE_NOTHOLDABLE", "BTN012/right stick on gamepads",),
-	("B_BTNG_13", FMAXDO_SCTN47BTNSDEF, "BTNG_13", "BTNTYPE_NOTHOLDABLE", "BTN013/home/select on gamepads",),
-	("B_BTNMWH_DN", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DN", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DN on mice",),
-	("B_BTNMWH_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DNLT", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DNLT on mice",),
-	("B_BTNMWH_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DNRT", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DNRT on mice",),
-	("B_BTNMWH_LT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_LT", "BTNTYPE_SIMREL", "BTNMWHLLT/MSE_LT on mice",),
-	("B_BTNMWH_RLS", FMAXDO_SCTN47BTNSDEF, "BTNMWH_RLS", "BTNTYPE_SIMREL", "BTNMWHLRLS/MSE_RLS on mice",),
-	("B_BTNMWH_RT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_RT", "BTNTYPE_SIMREL", "BTNMWHLRT/MSE_RT on mice",),
-	("B_BTNMWH_UP", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UP", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UP on mice",),
-	("B_BTNMWH_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UPLT", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UPLT on mice",),
-	("B_BTNMWH_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UPRT", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UPRT on mice",),
-	("B_BTNM_01LT", FMAXDO_SCTN47BTNSDEF, "BTNM_01LT", "BTNTYPE_NOTHOLDABLE", "BTN01/LEFT on mice",),
-	("B_BTNM_02MD", FMAXDO_SCTN47BTNSDEF, "BTNM_02MD", "BTNTYPE_NOTHOLDABLE", "BTN02/MIDDLE on mice",),
-	("B_BTNM_03RT", FMAXDO_SCTN47BTNSDEF, "BTNM_03RT", "BTNTYPE_NOTHOLDABLE", "BTN03/RIGHT on mice",),
-	("B_BTNM_04WHUP", FMAXDO_SCTN47BTNSDEF, "BTNM_04WHUP", "BTNTYPE_SIMREL", "BTNM04/MSEWHL_UP on mice",),
-	("B_BTNM_05WHDN", FMAXDO_SCTN47BTNSDEF, "BTNM_05WHDN", "BTNTYPE_SIMREL", "BTNM05/MSEWHL_DN on mice",),
-	("B_BTNM_06WHLT", FMAXDO_SCTN47BTNSDEF, "BTNM_06WHLT", "BTNTYPE_SIMREL", "BTNM06/MSEWHL_LT on mice",),
-	("B_BTNM_07WHRT", FMAXDO_SCTN47BTNSDEF, "BTNM_07WHRT", "BTNTYPE_SIMREL", "BTNM07/MSEWHL_RT on mice",),
-	("B_BTNM_08", FMAXDO_SCTN47BTNSDEF, "BTNM_08", "BTNTYPE_NOTHOLDABLE", "BTNM_08/NW most BTN on mice",),
-	("B_BTNM_09", FMAXDO_SCTN47BTNSDEF, "BTNM_09", "BTNTYPE_NOTHOLDABLE", "BTNM_09 on mice",),
-	("B_BTNM_10", FMAXDO_SCTN47BTNSDEF, "BTNM_10", "BTNTYPE_NOTHOLDABLE", "BTNM_10 on mice",),
-	("B_BTNM_11", FMAXDO_SCTN47BTNSDEF, "BTNM_11", "BTNTYPE_NOTHOLDABLE", "BTNM_11 on mice",),
-	("B_BTNM_12", FMAXDO_SCTN47BTNSDEF, "BTNM_12", "BTNTYPE_NOTHOLDABLE", "BTNM_12/SE most on mice",),
-	("B_BTNM_MDN", FMAXDO_SCTN47BTNSDEF, "BTNM_MDN", "BTNTYPE_SIMREL", "BTNMDN/MSE_DN on mice",),
-	("B_BTNM_MDNA", FMAXDO_SCTN47BTNSDEF, "BTNM_MDNA", "BTNTYPE_SIMREL", "BTNMDN/MSE_DN on mice",),
-	("B_BTNM_MDNLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MDNLT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNLT on mice",),
-	("B_BTNM_MDNRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MDNRT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNRT on mice",),
-	("B_BTNM_MLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MLT", "BTNTYPE_SIMREL", "BTNMLT/MSE_LT on mice",),
-	("B_BTNM_MLTA", FMAXDO_SCTN47BTNSDEF, "BTNM_MLTA", "BTNTYPE_SIMREL", "BTNMLT/MSE_LT on mice",),
-	("B_BTNM_MRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MRT", "BTNTYPE_SIMREL", "BTNMRT/MSE_RT on mice",),
-	("B_BTNM_MRTA", FMAXDO_SCTN47BTNSDEF, "BTNM_MRTA", "BTNTYPE_SIMREL", "BTNMRT/MSE_RT on mice",),
-	("B_BTNM_MUP", FMAXDO_SCTN47BTNSDEF, "BTNM_MUP", "BTNTYPE_SIMREL", "BTNMUP/MSE_UP on mice",),
-	("B_BTNM_MUPA", FMAXDO_SCTN47BTNSDEF, "BTNM_MUPA", "BTNTYPE_SIMREL", "BTNMUP/MSE_UP on mice",),
-	("B_BTNM_MUPLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MUPLT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPLT on mice",),
-	("B_BTNM_MUPRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MUPRT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPRT on mice",),
-	("B_BTNM_WHDN", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDN", "BTNTYPE_SIMREL", "BTNMDN/MSE_DN on mice",),
-	("B_BTNM_WHDNLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDNLT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNLT on mice",),
-	("B_BTNM_WHDNRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDNRT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNRT on mice",),
-	("B_BTNM_WHLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHLT", "BTNTYPE_SIMREL", "BTNMLT/MSE_LT on mice",),
-	("B_BTNM_WHRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHRT", "BTNTYPE_SIMREL", "BTNMRT/MSE_RT on mice",),
-	("B_BTNM_WHUP", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUP", "BTNTYPE_SIMREL", "BTNMUP/MSE_UP on mice",),
-	("B_BTNM_WHUPLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUPLT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPLT on mice",),
-	("B_BTNM_WHUPRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUPRT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPRT on mice",),
-	("B_BTNS_MODE1", FMAXDO_SCTN47BTNSDEF, "BTNS_MODE1", "BTNTYPE_SIMKEY", "switch through MODE1 move/wheel for mouse actions",),
-	("B_BTNS_MODE2", FMAXDO_SCTN47BTNSDEF, "BTNS_MODE2", "BTNTYPE_SIMKEY", "switch through MODE2 normal/draglock for mouse actions",),
 	("CFDICT_CODES2STRIP00", FMAXCF_SCTN24LISTDEF, "CODES2STRIP", "dict holding all of the things to strip from 'text' strings like color codes",),
 	("CFDICT_CODES2STRIP01", FMAXCF_SCTN24LISTSTRADD, "CODES2STRIP", "{ESC}[0m", "entry for ESC-[0m",),
 	("CFDICT_CODES2STRIP02", FMAXCF_SCTN24LISTSTRADD, "CODES2STRIP", "{ESC}[1m", "entry for ESC-[1m",),
@@ -1261,33 +625,33 @@ TBGLST = [
 	("DEVT_ABSS1D", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0X", "code for hat X entries",),
 	("DEVT_ABSS1E", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0Y", "code for hat Y entries",),
 	("DEVT_BTNS00", FMAXDO_SCTN48EVTYPEDEF, "BTNS", "EV type list BTNS entry",),
-	("DEVT_BTNS01", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS02", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
-	("DEVT_BTNS03", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
-	("DEVT_BTNS04", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
-	("DEVT_BTNS05", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
-	("DEVT_BTNS06", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
-	("DEVT_BTNS07", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
-	("DEVT_BTNS08", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
-	("DEVT_BTNS09", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
-	("DEVT_BTNS0A", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
-	("DEVT_BTNS0B", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS0C", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS0D", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
-	("DEVT_BTNS0E", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS0F", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
-	("DEVT_BTNS10", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
-	("DEVT_BTNS11", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS12", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
-	("DEVT_BTNS13", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
-	("DEVT_BTNS14", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS15", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS16", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
-	("DEVT_BTNS17", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS18", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
-	("DEVT_BTNS19", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
-	("DEVT_BTNS1A", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS1B", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS01", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS02", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
+	("DEVT_BTNS03", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
+	("DEVT_BTNS04", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
+	("DEVT_BTNS05", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
+	("DEVT_BTNS06", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
+	("DEVT_BTNS07", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
+	("DEVT_BTNS08", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
+	("DEVT_BTNS09", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
+	("DEVT_BTNS0A", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
+	("DEVT_BTNS0B", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS0C", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS0D", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
+	("DEVT_BTNS0E", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS0F", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
+	("DEVT_BTNS10", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
+	("DEVT_BTNS11", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS12", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS13", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
+	("DEVT_BTNS14", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS15", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS16", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
+	("DEVT_BTNS17", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS18", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
+	("DEVT_BTNS19", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
+	("DEVT_BTNS1A", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS1B", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
 	("DEVT_BTNS1C", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_01", "DEVCD_BTNG_01 entry in BTNS",),
 	("DEVT_BTNS1D", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_02", "DEVCD_BTNG_02 entry in BTNS",),
 	("DEVT_BTNS1E", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_03", "DEVCD_BTNG_03 entry in BTNS",),
@@ -1326,9 +690,15 @@ TBGLST = [
 	("DEVT_LTSTK0A", FMAXDO_SCTN48EVTYPELST, "LTSTK", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
 	("DEVT_LTSTK0B", FMAXDO_SCTN48EVTYPELST, "LTSTK", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
 	("DEVT_RAW00", FMAXDO_SCTN48EVTYPEDEF, "RAW", "EV type list entry ABSS",),
-	("DEVT_RAW01", FMAXDO_SCTN48EVTYPELST, "RAW", "LD.EV_ABS", "raw code for ABS",),
-	("DEVT_RAW02", FMAXDO_SCTN48EVTYPELST, "RAW", "LD.EV_REL", "raw code for REL",),
-	("DEVT_RAW03", FMAXDO_SCTN48EVTYPELST, "RAW", "LD.EV_KEY", "raw code for KEY",),
+	("DEVT_RAW01", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_ABS", "raw code for ABS",),
+	("DEVT_RAW02", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_KEY", "raw code for KEY",),
+	("DEVT_RAW03", FMAXDO_SCTN48EVTYPELST, "RAW", "DEVTYPE_REL", "raw code for REL",),
+	("DEVT_RELEASES00", FMAXDO_SCTN48EVTYPEDEF, "RELEASES", "EV type for RELEASES supported",),
+	("DEVT_RELEASES01", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGHAT_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES02", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGLTSTK_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES03", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNGRTSTK_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES04", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNMWH_RLS", "BTNMWHLDN/MSE_DN on mice",),
+	("DEVT_RELEASES05", FMAXDO_SCTN48EVTYPELST, "RELEASES", "DEVCD_BTNM_MRLS", "BTNMWHLDN/MSE_DN on mice",),
 	("DEVT_RELS00", FMAXDO_SCTN48EVTYPEDEF, "RELS", "EV type for RELS supported",),
 	("DEVT_RELS01", FMAXDO_SCTN48EVTYPELST, "RELS", "DEVCD_BTNMWH_DN", "BTNMWHLDN/MSE_DN on mice",),
 	("DEVT_RELS02", FMAXDO_SCTN48EVTYPELST, "RELS", "DEVCD_BTNMWH_DNLT", "BTNMWHLDN/MSE_DNLT on mice",),
@@ -1414,11 +784,594 @@ TBGLST = [
 	("DOVAL_ABS_X", FMAXDO_SCTN41DICTKEYDEF, "ABS_X", "key for stick 0 X",),
 	("DOVAL_ABS_Y", FMAXDO_SCTN41DICTKEYDEF, "ABS_Y", "key for stick 0 Y",),
 	("DOVAL_ABS_Z", FMAXDO_SCTN41DICTKEYDEF, "ABS_Z", "key for stick 1 X",),
+	("DOVAL_AXDSKTP1", FMAXDO_SCTN43AXDEF, "AXDSKTP1", "desktop #1",),
+	("DOVAL_AXDSKTP101", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXDSKTP102", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBD1_PRS", "press 1",),
+	("DOVAL_AXDSKTP103", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBD1_RLS", "release 1",),
+	("DOVAL_AXDSKTP104", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXDSKTP105", FMAXDO_SCTN43AXVALADD, "AXDSKTP1", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXDSKTP2", FMAXDO_SCTN43AXDEF, "AXDSKTP2", "desktop #2",),
+	("DOVAL_AXDSKTP201", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXDSKTP202", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBD2_PRS", "press 2",),
+	("DOVAL_AXDSKTP203", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBD2_RLS", "release 2",),
+	("DOVAL_AXDSKTP204", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXDSKTP205", FMAXDO_SCTN43AXVALADD, "AXDSKTP2", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXDSKTP3", FMAXDO_SCTN43AXDEF, "AXDSKTP3", "desktop #3",),
+	("DOVAL_AXDSKTP301", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXDSKTP302", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBD3_PRS", "press 3",),
+	("DOVAL_AXDSKTP303", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBD3_RLS", "release 3",),
+	("DOVAL_AXDSKTP304", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXDSKTP305", FMAXDO_SCTN43AXVALADD, "AXDSKTP3", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXDSKTP4", FMAXDO_SCTN43AXDEF, "AXDSKTP4", "desktop #4",),
+	("DOVAL_AXDSKTP401", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXDSKTP402", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBD4_PRS", "press 4",),
+	("DOVAL_AXDSKTP403", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBD4_RLS", "release 4",),
+	("DOVAL_AXDSKTP404", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXDSKTP405", FMAXDO_SCTN43AXVALADD, "AXDSKTP4", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXGIMPOVWRT", FMAXDO_SCTN43AXDEF, "AXGIMPOVWRT", "GIMP overwrite imported file",),
+	("DOVAL_AXGIMPOVWRT01", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXGIMPOVWRT02", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXGIMPOVWRT03", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDCTRLLT_PRS", "press LCTRL",),
+	("DOVAL_AXGIMPOVWRT04", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXGIMPOVWRT05", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDSHIFTLT_PRS", "press LSHIFT",),
+	("DOVAL_AXGIMPOVWRT06", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXGIMPOVWRT07", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDO_PRS", "press O",),
+	("DOVAL_AXGIMPOVWRT08", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDO_RLS", "release O",),
+	("DOVAL_AXGIMPOVWRT09", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDSHIFTLT_RLS", "release LSHIFT",),
+	("DOVAL_AXGIMPOVWRT0A", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDCTRLLT_RLS", "release LCTRL",),
+	("DOVAL_AXGIMPOVWRT0B", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXGIMPOVWRT0C", FMAXDO_SCTN43AXVALADD, "AXGIMPOVWRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXHRHWLDN", FMAXDO_SCTN43AXDEF, "AXHRHWLDN", "high rez wheel DOWN",),
+	("DOVAL_AXHRHWLDN00", FMAXDO_SCTN43AXVALADD, "AXHRHWLDN", "MSEWHL_DN", "move WHL down 1 unit",),
+	("DOVAL_AXHRHWLDN01", FMAXDO_SCTN43AXVALADD, "AXHRHWLDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXHRHWLLT", FMAXDO_SCTN43AXDEF, "AXHRHWLLT", "high rez wheel LEFT",),
+	("DOVAL_AXHRHWLLT00", FMAXDO_SCTN43AXVALADD, "AXHRHWLLT", "MSEWHL_LT", "move WHL left 1 unit",),
+	("DOVAL_AXHRHWLLT01", FMAXDO_SCTN43AXVALADD, "AXHRHWLLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXHRHWLRT", FMAXDO_SCTN43AXDEF, "AXHRHWLRT", "high rez wheel RIGHT",),
+	("DOVAL_AXHRHWLRT00", FMAXDO_SCTN43AXVALADD, "AXHRHWLRT", "MSEWHL_RT", "move WHL right 1 unit",),
+	("DOVAL_AXHRHWLRT01", FMAXDO_SCTN43AXVALADD, "AXHRHWLRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXHRHWLUP", FMAXDO_SCTN43AXDEF, "AXHRHWLUP", "high rez wheel UP",),
+	("DOVAL_AXHRHWLUP00", FMAXDO_SCTN43AXVALADD, "AXHRHWLUP", "MSEWHL_UP", "move WHL up 1 unit",),
+	("DOVAL_AXHRHWLUP01", FMAXDO_SCTN43AXVALADD, "AXHRHWLUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMCCOPY", FMAXDO_SCTN43AXDEF, "AXMCCOPY", "MC copy F5, ENTER",),
+	("DOVAL_AXMCCOPY01", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "KBDF5_PRS", "press F5",),
+	("DOVAL_AXMCCOPY02", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "KBDF5_RLS", "release F5",),
+	("DOVAL_AXMCCOPY03", FMAXDO_SCTN43AXVALADD, "AXMCCOPY", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMCDEL", FMAXDO_SCTN43AXDEF, "AXMCDEL", "MC del F8, ENTER",),
+	("DOVAL_AXMCDEL01", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "KBDF8_PRS", "press F8",),
+	("DOVAL_AXMCDEL02", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "KBDF8_RLS", "release F8",),
+	("DOVAL_AXMCDEL03", FMAXDO_SCTN43AXVALADD, "AXMCDEL", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMCMOVE", FMAXDO_SCTN43AXDEF, "AXMCMOVE", "MC move F6, ENTER",),
+	("DOVAL_AXMCMOVE01", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "KBDF6_PRS", "press F6",),
+	("DOVAL_AXMCMOVE02", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "KBDF6_RLS", "release F6",),
+	("DOVAL_AXMCMOVE03", FMAXDO_SCTN43AXVALADD, "AXMCMOVE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMCSEL", FMAXDO_SCTN43AXDEF, "AXMCSEL", "MC select INS",),
+	("DOVAL_AXMCSEL01", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "KBDINSERT_PRS", "press INSERT",),
+	("DOVAL_AXMCSEL02", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "KBDINSERT_RLS", "release INSERT",),
+	("DOVAL_AXMCSEL03", FMAXDO_SCTN43AXVALADD, "AXMCSEL", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNBAK", FMAXDO_SCTN43AXDEF, "AXMSEBTNBAK", "MSE BTN BACK",),
+	("DOVAL_AXMSEBTNBAK01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "MSEBTNBAK_PRSHLD", "press MSEBTNBAK",),
+	("DOVAL_AXMSEBTNBAK02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNBAK03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "MSEBTNBAK_RLS", "release MSEBTNBAK",),
+	("DOVAL_AXMSEBTNBAK04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNBAK", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNFWD", FMAXDO_SCTN43AXDEF, "AXMSEBTNFWD", "MSE BTN FWD",),
+	("DOVAL_AXMSEBTNFWD01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "MSEBTNFWD_PRSHLD", "press MSEBTNFWD",),
+	("DOVAL_AXMSEBTNFWD02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNFWD03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "MSEBTNFWD_RLS", "release MSEBTNFWD",),
+	("DOVAL_AXMSEBTNFWD04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNFWD", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT", "MSE BTN LEFT",),
+	("DOVAL_AXMSEBTNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "MSEBTNLT_RLS", "release MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_L00", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT_L00", "MSE BTN LEFT",),
+	("DOVAL_AXMSEBTNLT_L00_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_L00_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_L00_03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "MSEBTNLT_RLS", "release MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_L00_04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L00", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_L01", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT_L01", "MSE BTN LEFT_1 pressed",),
+	("DOVAL_AXMSEBTNLT_L01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L01", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_L01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_L02", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT_L02", "MSE BTN LEFT_2 released",),
+	("DOVAL_AXMSEBTNLT_L02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L02", "MSEBTNLT_RLS", "release MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_L02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_L02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_T01", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT_T01", "MSE BTN LEFT_1 pressed",),
+	("DOVAL_AXMSEBTNLT_T01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T01", "MSEBTNLT_PRSHLD", "press MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_T01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNLT_T02", FMAXDO_SCTN43AXDEF, "AXMSEBTNLT_T02", "MSE BTN LEFT_2 released",),
+	("DOVAL_AXMSEBTNLT_T02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T02", "MSEBTNLT_RLS", "release MSEBTNLT",),
+	("DOVAL_AXMSEBTNLT_T02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNLT_T02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNMID", FMAXDO_SCTN43AXDEF, "AXMSEBTNMID", "MSE BTN MIDDLE",),
+	("DOVAL_AXMSEBTNMID01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "MSEBTNMID_PRSHLD", "press MSEBTNMID",),
+	("DOVAL_AXMSEBTNMID02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNMID03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "MSEBTNMID_RLS", "release MSEBTNMID",),
+	("DOVAL_AXMSEBTNMID04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNMID", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNRT", FMAXDO_SCTN43AXDEF, "AXMSEBTNRT", "MSE BTN RIGHT",),
+	("DOVAL_AXMSEBTNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "MSEBTNRT_PRSHLD", "press MSEBTNRT",),
+	("DOVAL_AXMSEBTNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "MSEBTNRT_RLS", "release MSEBTNRT",),
+	("DOVAL_AXMSEBTNRT04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNRT_T01", FMAXDO_SCTN43AXDEF, "AXMSEBTNRT_T01", "MSE BTN LEFT_1 pressed",),
+	("DOVAL_AXMSEBTNRT_T01_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T01", "MSEBTNRT_PRSHLD", "press MSEBTNRT",),
+	("DOVAL_AXMSEBTNRT_T01_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNRT_T02", FMAXDO_SCTN43AXDEF, "AXMSEBTNRT_T02", "MSE BTN LEFT_2 released",),
+	("DOVAL_AXMSEBTNRT_T02_01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T02", "MSEBTNRT_RLS", "release MSEBTNRT",),
+	("DOVAL_AXMSEBTNRT_T02_02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNRT_T02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNSIDE", FMAXDO_SCTN43AXDEF, "AXMSEBTNSIDE", "MSE BTN SIDE",),
+	("DOVAL_AXMSEBTNSIDE01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "MSEBTNSIDE_PRSHLD", "press MSEBTNSIDE",),
+	("DOVAL_AXMSEBTNSIDE02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNSIDE03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "MSEBTNSIDE_RLS", "release MSEBTNSIDE",),
+	("DOVAL_AXMSEBTNSIDE04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNSIDE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNTASK", FMAXDO_SCTN43AXDEF, "AXMSEBTNTASK", "MSE BTN TASK",),
+	("DOVAL_AXMSEBTNTASK01", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "MSEBTNTASK_PRSHLD", "press MSEBTNTASK",),
+	("DOVAL_AXMSEBTNTASK02", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEBTNTASK03", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "MSEBTNTASK_RLS", "release MSEBTNTASK",),
+	("DOVAL_AXMSEBTNTASK04", FMAXDO_SCTN43AXVALADD, "AXMSEBTNTASK", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEDN", FMAXDO_SCTN43AXDEF, "AXMSEDN", "MSE DOWN",),
+	("DOVAL_AXMSEDN01", FMAXDO_SCTN43AXVALADD, "AXMSEDN", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
+	("DOVAL_AXMSEDN02", FMAXDO_SCTN43AXVALADD, "AXMSEDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEDNLT", FMAXDO_SCTN43AXDEF, "AXMSEDNLT", "MSE DOWNLT",),
+	("DOVAL_AXMSEDNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
+	("DOVAL_AXMSEDNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
+	("DOVAL_AXMSEDNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEDNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEDNRT", FMAXDO_SCTN43AXDEF, "AXMSEDNRT", "MSE DOWNRT",),
+	("DOVAL_AXMSEDNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "MSE_DN", "MSE_DN by MOUSEDISTANCE",),
+	("DOVAL_AXMSEDNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
+	("DOVAL_AXMSEDNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEDNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSELT", FMAXDO_SCTN43AXDEF, "AXMSELT", "MSE LEFT",),
+	("DOVAL_AXMSELT01", FMAXDO_SCTN43AXVALADD, "AXMSELT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
+	("DOVAL_AXMSELT02", FMAXDO_SCTN43AXVALADD, "AXMSELT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSERT", FMAXDO_SCTN43AXDEF, "AXMSERT", "MSE RIGHT",),
+	("DOVAL_AXMSERT01", FMAXDO_SCTN43AXVALADD, "AXMSERT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
+	("DOVAL_AXMSERT02", FMAXDO_SCTN43AXVALADD, "AXMSERT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEUP", FMAXDO_SCTN43AXDEF, "AXMSEUP", "MSE UP",),
+	("DOVAL_AXMSEUP01", FMAXDO_SCTN43AXVALADD, "AXMSEUP", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
+	("DOVAL_AXMSEUP02", FMAXDO_SCTN43AXVALADD, "AXMSEUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEUPLT", FMAXDO_SCTN43AXDEF, "AXMSEUPLT", "MSE UPLT",),
+	("DOVAL_AXMSEUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "MSE_LT", "MSE_LT by MOUSEDISTANCE",),
+	("DOVAL_AXMSEUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
+	("DOVAL_AXMSEUPLT02", FMAXDO_SCTN43AXVALADD, "AXMSEUPLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEUPRT", FMAXDO_SCTN43AXDEF, "AXMSEUPRT", "MSE UPRT",),
+	("DOVAL_AXMSEUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "MSE_RT", "MSE_RT by MOUSEDISTANCE",),
+	("DOVAL_AXMSEUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "MSE_UP", "MSE_UP by MOUSEDISTANCE",),
+	("DOVAL_AXMSEUPRT02", FMAXDO_SCTN43AXVALADD, "AXMSEUPRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLDN", FMAXDO_SCTN43AXDEF, "AXMSEWHLDN", "wheel DOWN",),
+	("DOVAL_AXMSEWHLDN01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDN", "MSEWHL_DN", "wheel DOWN",),
+	("DOVAL_AXMSEWHLDN02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLDNLT", FMAXDO_SCTN43AXDEF, "AXMSEWHLDNLT", "wheel DNLT",),
+	("DOVAL_AXMSEWHLDNLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "MSEWHL_DN", "wheel DOWN",),
+	("DOVAL_AXMSEWHLDNLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "MSEWHL_LT", "wheel LEFT",),
+	("DOVAL_AXMSEWHLDNLT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLDNRT", FMAXDO_SCTN43AXDEF, "AXMSEWHLDNRT", "wheel DNRT",),
+	("DOVAL_AXMSEWHLDNRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "MSEWHL_DN", "wheel DOWN",),
+	("DOVAL_AXMSEWHLDNRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "MSEWHL_RT", "wheel RIGHT",),
+	("DOVAL_AXMSEWHLDNRT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLDNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLLT", FMAXDO_SCTN43AXDEF, "AXMSEWHLLT", "wheel LEFT",),
+	("DOVAL_AXMSEWHLLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLLT", "MSEWHL_LT", "wheel LEFT",),
+	("DOVAL_AXMSEWHLLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLRT", FMAXDO_SCTN43AXDEF, "AXMSEWHLRT", "wheel RIGHT",),
+	("DOVAL_AXMSEWHLRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLRT", "MSEWHL_RT", "wheel RIGHT",),
+	("DOVAL_AXMSEWHLRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLUP", FMAXDO_SCTN43AXDEF, "AXMSEWHLUP", "wheel UP",),
+	("DOVAL_AXMSEWHLUP01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUP", "MSEWHL_UP", "wheel UP",),
+	("DOVAL_AXMSEWHLUP02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLUPLT", FMAXDO_SCTN43AXDEF, "AXMSEWHLUPLT", "wheel UPLT",),
+	("DOVAL_AXMSEWHLUPLT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "MSEWHL_UP", "wheel UP",),
+	("DOVAL_AXMSEWHLUPLT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "MSEWHL_LT", "wheel LEFT",),
+	("DOVAL_AXMSEWHLUPLT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXMSEWHLUPRT", FMAXDO_SCTN43AXDEF, "AXMSEWHLUPRT", "wheel UPRT",),
+	("DOVAL_AXMSEWHLUPRT01", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "MSEWHL_UP", "wheel UP",),
+	("DOVAL_AXMSEWHLUPRT02", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "MSEWHL_RT", "wheel RIGHT",),
+	("DOVAL_AXMSEWHLUPRT03", FMAXDO_SCTN43AXVALADD, "AXMSEWHLUPRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXSAVE", FMAXDO_SCTN43AXDEF, "AXSAVE", "save CTRL-S",),
+	("DOVAL_AXSAVE01", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AXSAVE02", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDS_PRS", "press S",),
+	("DOVAL_AXSAVE03", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDS_RLS", "release S",),
+	("DOVAL_AXSAVE04", FMAXDO_SCTN43AXVALADD, "AXSAVE", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AXSAVE05", FMAXDO_SCTN43AXVALADD, "AXSAVE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVCOPYTO", FMAXDO_SCTN43AXDEF, "AXXNVCOPYTO", "XnViewer COPYTO ALT-C",),
+	("DOVAL_AXXNVCOPYTO01", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXXNVCOPYTO02", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDS_PRS", "press S",),
+	("DOVAL_AXXNVCOPYTO03", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDS_RLS", "release S",),
+	("DOVAL_AXXNVCOPYTO04", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXXNVCOPYTO05", FMAXDO_SCTN43AXVALADD, "AXXNVCOPYTO", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVCROP", FMAXDO_SCTN43AXDEF, "AXXNVCROP", "XnViewer CROP SHIFT-X",),
+	("DOVAL_AXXNVCROP01", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AXXNVCROP02", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDX_PRS", "press X",),
+	("DOVAL_AXXNVCROP03", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDX_RLS", "release X",),
+	("DOVAL_AXXNVCROP04", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AXXNVCROP05", FMAXDO_SCTN43AXVALADD, "AXXNVCROP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVFLIPH", FMAXDO_SCTN43AXDEF, "AXXNVFLIPH", "XnViewer FLIP horizontal ALT-F",),
+	("DOVAL_AXXNVFLIPH01", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXXNVFLIPH02", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDF_PRS", "press F",),
+	("DOVAL_AXXNVFLIPH03", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDF_RLS", "release F",),
+	("DOVAL_AXXNVFLIPH04", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXXNVFLIPH05", FMAXDO_SCTN43AXVALADD, "AXXNVFLIPH", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVMOVE", FMAXDO_SCTN43AXDEF, "AXXNVMOVE", "XnViewer MOVE ALT-M",),
+	("DOVAL_AXXNVMOVE01", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AXXNVMOVE02", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDM_PRS", "press M",),
+	("DOVAL_AXXNVMOVE03", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDM_RLS", "release M",),
+	("DOVAL_AXXNVMOVE04", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AXXNVMOVE05", FMAXDO_SCTN43AXVALADD, "AXXNVMOVE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVROTLT", FMAXDO_SCTN43AXDEF, "AXXNVROTLT", "XnViewer ROT LEFT CTRL-SHIFT-L",),
+	("DOVAL_AXXNVROTLT01", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AXXNVROTLT02", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AXXNVROTLT03", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDL_PRS", "press L",),
+	("DOVAL_AXXNVROTLT04", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDL_RLS", "release L",),
+	("DOVAL_AXXNVROTLT05", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AXXNVROTLT06", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AXXNVROTLT07", FMAXDO_SCTN43AXVALADD, "AXXNVROTLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVROTRT", FMAXDO_SCTN43AXDEF, "AXXNVROTRT", "XnViewer ROT RIGHT CTRL-SHIFT-R",),
+	("DOVAL_AXXNVROTRT01", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AXXNVROTRT02", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AXXNVROTRT03", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDR_PRS", "press R",),
+	("DOVAL_AXXNVROTRT04", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDR_RLS", "release R",),
+	("DOVAL_AXXNVROTRT05", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AXXNVROTRT06", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AXXNVROTRT07", FMAXDO_SCTN43AXVALADD, "AXXNVROTRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVSEL2TOP", FMAXDO_SCTN43AXDEF, "AXXNVSEL2TOP", "XnViewer SELECT to top SHIFT-HOME, SHIFT-RIGHT",),
+	("DOVAL_AXXNVSEL2TOP01", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AXXNVSEL2TOP02", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDHOME_PRS", "press HOME",),
+	("DOVAL_AXXNVSEL2TOP03", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDHOME_RLS", "release HOME",),
+	("DOVAL_AXXNVSEL2TOP04", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDRT_PRS", "press RIGHT",),
+	("DOVAL_AXXNVSEL2TOP05", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDRT_RLS", "release RIGHT",),
+	("DOVAL_AXXNVSEL2TOP06", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AXXNVSEL2TOP07", FMAXDO_SCTN43AXVALADD, "AXXNVSEL2TOP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVZOOMFULL", FMAXDO_SCTN43AXDEF, "AXXNVZOOMFULL", "XnViewer zoom 1:1",),
+	("DOVAL_AXXNVZOOMFULL01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "KBDSPLAT_PRS", "press *",),
+	("DOVAL_AXXNVZOOMFULL02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "KBDSPLAT_RLS", "release *",),
+	("DOVAL_AXXNVZOOMFULL03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMFULL", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVZOOMIN", FMAXDO_SCTN43AXDEF, "AXXNVZOOMIN", "XnViewer zoom in/+",),
+	("DOVAL_AXXNVZOOMIN01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "KBDPLUS_PRS", "press +",),
+	("DOVAL_AXXNVZOOMIN02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "KBDPLUS_RLS", "release +",),
+	("DOVAL_AXXNVZOOMIN03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMIN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVZOOMOUT", FMAXDO_SCTN43AXDEF, "AXXNVZOOMOUT", "XnViewer zoom out/-",),
+	("DOVAL_AXXNVZOOMOUT01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "KBDMINUS_PRS", "press -",),
+	("DOVAL_AXXNVZOOMOUT02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "KBDMINUS_RLS", "release -",),
+	("DOVAL_AXXNVZOOMOUT03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMOUT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AXXNVZOOMRESET", FMAXDO_SCTN43AXDEF, "AXXNVZOOMRESET", "reset XnViewer zoom by back, forward, forward, back",),
+	("DOVAL_AXXNVZOOMRESET01", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_PRS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET02", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_RLS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET03", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_PRS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET04", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_RLS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET05", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_PRS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET06", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDRT_RLS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET07", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_PRS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET08", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "KBDLT_RLS", "press KBDLT",),
+	("DOVAL_AXXNVZOOMRESET09", FMAXDO_SCTN43AXVALADD, "AXXNVZOOMRESET", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALTC", FMAXDO_SCTN43AXDEF, "AX_ALTC", "ALT-C",),
+	("DOVAL_AX_ALTC01", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AX_ALTC02", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDC_PRS", "press C",),
+	("DOVAL_AX_ALTC03", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDC_RLS", "release C",),
+	("DOVAL_AX_ALTC04", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AX_ALTC05", FMAXDO_SCTN43AXVALADD, "AX_ALTC", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALTD", FMAXDO_SCTN43AXDEF, "AX_ALTD", "ALT-D",),
+	("DOVAL_AX_ALTD01", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AX_ALTD02", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDD_PRS", "press D",),
+	("DOVAL_AX_ALTD03", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDD_RLS", "release D",),
+	("DOVAL_AX_ALTD04", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AX_ALTD05", FMAXDO_SCTN43AXVALADD, "AX_ALTD", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALTTAB", FMAXDO_SCTN43AXDEF, "AX_ALTTAB", "ALT-TAB",),
+	("DOVAL_AX_ALTTAB01", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AX_ALTTAB02", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDTAB_PRS", "press TAB",),
+	("DOVAL_AX_ALTTAB03", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDTAB_RLS", "release TAB",),
+	("DOVAL_AX_ALTTAB04", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AX_ALTTAB05", FMAXDO_SCTN43AXVALADD, "AX_ALTTAB", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALT_T01", FMAXDO_SCTN43AXDEF, "AX_ALT_T01", "ALT-C",),
+	("DOVAL_AX_ALT_T0101", FMAXDO_SCTN43AXVALADD, "AX_ALT_T01", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AX_ALT_T0102", FMAXDO_SCTN43AXVALADD, "AX_ALT_T01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALT_T02", FMAXDO_SCTN43AXDEF, "AX_ALT_T02", "ALT-C",),
+	("DOVAL_AX_ALT_T0201", FMAXDO_SCTN43AXVALADD, "AX_ALT_T02", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AX_ALT_T0202", FMAXDO_SCTN43AXVALADD, "AX_ALT_T02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CRSRDN", FMAXDO_SCTN43AXDEF, "AX_CRSRDN", "DOWN",),
+	("DOVAL_AX_CRSRDN01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "KBDDN_PRS", "press DOWN",),
+	("DOVAL_AX_CRSRDN02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "KBDDN_RLS", "release DOWN",),
+	("DOVAL_AX_CRSRDN03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CRSRDNLT", FMAXDO_SCTN43AXDEF, "AX_CRSRDNLT", "DOWN",),
+	("DOVAL_AX_CRSRDNLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDDN_PRS", "press DOWN",),
+	("DOVAL_AX_CRSRDNLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDDN_RLS", "release DOWN",),
+	("DOVAL_AX_CRSRDNLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDLT_PRS", "press LEFT",),
+	("DOVAL_AX_CRSRDNLT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "KBDLT_RLS", "release LEFT",),
+	("DOVAL_AX_CRSRDNLT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CRSRDNRT", FMAXDO_SCTN43AXDEF, "AX_CRSRDNRT", "DOWN",),
+	("DOVAL_AX_CRSRDNRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDDN_PRS", "press DOWN",),
+	("DOVAL_AX_CRSRDNRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDDN_RLS", "release DOWN",),
+	("DOVAL_AX_CRSRDNRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDRT_PRS", "press RIGHT",),
+	("DOVAL_AX_CRSRDNRT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "KBDRT_RLS", "release RIGHT",),
+	("DOVAL_AX_CRSRDNRT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRDNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CRSRLT", FMAXDO_SCTN43AXDEF, "AX_CRSRLT", "LEFT",),
+	("DOVAL_AX_CRSRLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "KBDLT_PRS", "press LEFT",),
+	("DOVAL_AX_CRSRLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "KBDLT_RLS", "press LEFT",),
+	("DOVAL_AX_CRSRLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRLT", "SYNREPORT", "press LEFT",),
+	("DOVAL_AX_CRSRRT", FMAXDO_SCTN43AXDEF, "AX_CRSRRT", "RIGHT",),
+	("DOVAL_AX_CRSRRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "KBDRT_PRS", "press RIGHT",),
+	("DOVAL_AX_CRSRRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "KBDRT_RLS", "release RIGHT",),
+	("DOVAL_AX_CRSRRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRRT", "SYNREPORT", "press RIGHT",),
+	("DOVAL_AX_CRSRUP", FMAXDO_SCTN43AXDEF, "AX_CRSRUP", "UP",),
+	("DOVAL_AX_CRSRUP01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_CRSRUP02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "KBDUP_RLS", "press UP",),
+	("DOVAL_AX_CRSRUP03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUP", "SYNREPORT", "press UP",),
+	("DOVAL_AX_CRSRUPLT", FMAXDO_SCTN43AXDEF, "AX_CRSRUPLT", "UPLT",),
+	("DOVAL_AX_CRSRUPLT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_CRSRUPLT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDUP_RLS", "press UP",),
+	("DOVAL_AX_CRSRUPLT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDLT_PRS", "press LT",),
+	("DOVAL_AX_CRSRUPLT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "KBDLT_RLS", "press LT",),
+	("DOVAL_AX_CRSRUPLT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPLT", "SYNREPORT", "press UP",),
+	("DOVAL_AX_CRSRUPRT", FMAXDO_SCTN43AXDEF, "AX_CRSRUPRT", "UPRT",),
+	("DOVAL_AX_CRSRUPRT01", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_CRSRUPRT02", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDUP_RLS", "press UP",),
+	("DOVAL_AX_CRSRUPRT03", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDRT_PRS", "press RT",),
+	("DOVAL_AX_CRSRUPRT04", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "KBDRT_RLS", "press RT",),
+	("DOVAL_AX_CRSRUPRT05", FMAXDO_SCTN43AXVALADD, "AX_CRSRUPRT", "SYNREPORT", "press UP",),
+	("DOVAL_AX_CTRLA", FMAXDO_SCTN43AXDEF, "AX_CTRLA", "CTRL-A",),
+	("DOVAL_AX_CTRLA01", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLA02", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDA_PRS", "press A",),
+	("DOVAL_AX_CTRLA03", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDA_RLS", "release A",),
+	("DOVAL_AX_CTRLA04", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLA05", FMAXDO_SCTN43AXVALADD, "AX_CTRLA", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLPGDN", FMAXDO_SCTN43AXDEF, "AX_CTRLPGDN", "CTRLPGDN",),
+	("DOVAL_AX_CTRLPGDN01", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLPGDN02", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDPGDN_PRS", "press PGDN",),
+	("DOVAL_AX_CTRLPGDN03", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDPGDN_RLS", "release PGDN",),
+	("DOVAL_AX_CTRLPGDN04", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLPGDN05", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLPGUP", FMAXDO_SCTN43AXDEF, "AX_CTRLPGUP", "CTRLPGUP",),
+	("DOVAL_AX_CTRLPGUP01", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLPGUP02", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDPGUP_PRS", "press PGUP",),
+	("DOVAL_AX_CTRLPGUP03", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDPGUP_RLS", "release PGUP",),
+	("DOVAL_AX_CTRLPGUP04", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLPGUP05", FMAXDO_SCTN43AXVALADD, "AX_CTRLPGUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLQ", FMAXDO_SCTN43AXDEF, "AX_CTRLQ", "CTRL-Q",),
+	("DOVAL_AX_CTRLQ01", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLQ02", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDQ_PRS", "press Q",),
+	("DOVAL_AX_CTRLQ03", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDQ_RLS", "release Q",),
+	("DOVAL_AX_CTRLQ04", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLQ05", FMAXDO_SCTN43AXVALADD, "AX_CTRLQ", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLS", FMAXDO_SCTN43AXDEF, "AX_CTRLS", "CTRL-S",),
+	("DOVAL_AX_CTRLS01", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLS02", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDS_PRS", "press S",),
+	("DOVAL_AX_CTRLS03", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDS_RLS", "release S",),
+	("DOVAL_AX_CTRLS04", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLS05", FMAXDO_SCTN43AXVALADD, "AX_CTRLS", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLTAB", FMAXDO_SCTN43AXDEF, "AX_CTRLTAB", "CTRL-TAB",),
+	("DOVAL_AX_CTRLTAB01", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLTAB02", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDTAB_PRS", "press TAB",),
+	("DOVAL_AX_CTRLTAB03", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDTAB_RLS", "release TAB",),
+	("DOVAL_AX_CTRLTAB04", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLTAB05", FMAXDO_SCTN43AXVALADD, "AX_CTRLTAB", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRLW", FMAXDO_SCTN43AXDEF, "AX_CTRLW", "CTRL-W",),
+	("DOVAL_AX_CTRLW01", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRLW02", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDW_PRS", "press W",),
+	("DOVAL_AX_CTRLW03", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDW_RLS", "release W",),
+	("DOVAL_AX_CTRLW04", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRLW05", FMAXDO_SCTN43AXVALADD, "AX_CTRLW", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRL_T01", FMAXDO_SCTN43AXDEF, "AX_CTRL_T01", "CTRL toggle actions",),
+	("DOVAL_AX_CTRL_T0101", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T01", "KBDCTRLLT_PRS", "press CTRL",),
+	("DOVAL_AX_CTRL_T0102", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_CTRL_T02", FMAXDO_SCTN43AXDEF, "AX_CTRL_T02", "CTRL toggle actions",),
+	("DOVAL_AX_CTRL_T0201", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T02", "KBDCTRLLT_RLS", "release CTRL",),
+	("DOVAL_AX_CTRL_T0202", FMAXDO_SCTN43AXVALADD, "AX_CTRL_T02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_DEL", FMAXDO_SCTN43AXDEF, "AX_DEL", "DEL",),
+	("DOVAL_AX_DEL01", FMAXDO_SCTN43AXVALADD, "AX_DEL", "KBDDEL_PRS", "press DEL",),
+	("DOVAL_AX_DEL02", FMAXDO_SCTN43AXVALADD, "AX_DEL", "KBDDEL_RLS", "release DEL",),
+	("DOVAL_AX_DEL03", FMAXDO_SCTN43AXVALADD, "AX_DEL", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_END", FMAXDO_SCTN43AXDEF, "AX_END", "END",),
+	("DOVAL_AX_END01", FMAXDO_SCTN43AXVALADD, "AX_END", "KBDEND_PRS", "press END",),
+	("DOVAL_AX_END02", FMAXDO_SCTN43AXVALADD, "AX_END", "KBDEND_RLS", "release END",),
+	("DOVAL_AX_END03", FMAXDO_SCTN43AXVALADD, "AX_END", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ENTER", FMAXDO_SCTN43AXDEF, "AX_ENTER", "ENTER",),
+	("DOVAL_AX_ENTER01", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "KBDENTER_PRS", "press ENTER",),
+	("DOVAL_AX_ENTER02", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "KBDENTER_RLS", "release ENTER",),
+	("DOVAL_AX_ENTER03", FMAXDO_SCTN43AXVALADD, "AX_ENTER", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ESC", FMAXDO_SCTN43AXDEF, "AX_ESC", "ESC",),
+	("DOVAL_AX_ESC01", FMAXDO_SCTN43AXVALADD, "AX_ESC", "KBDESC_PRS", "press ESC",),
+	("DOVAL_AX_ESC02", FMAXDO_SCTN43AXVALADD, "AX_ESC", "KBDESC_RLS", "release ESC",),
+	("DOVAL_AX_ESC03", FMAXDO_SCTN43AXVALADD, "AX_ESC", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_F", FMAXDO_SCTN43AXDEF, "AX_F", "F",),
+	("DOVAL_AX_F01", FMAXDO_SCTN43AXVALADD, "AX_F", "KBDF_PRS", "press F",),
+	("DOVAL_AX_F02", FMAXDO_SCTN43AXVALADD, "AX_F", "KBDF_RLS", "release F",),
+	("DOVAL_AX_F03", FMAXDO_SCTN43AXVALADD, "AX_F", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_F10", FMAXDO_SCTN43AXDEF, "AX_F10", "F10",),
+	("DOVAL_AX_F1001", FMAXDO_SCTN43AXVALADD, "AX_F10", "KBDF10_PRS", "press F10",),
+	("DOVAL_AX_F1002", FMAXDO_SCTN43AXVALADD, "AX_F10", "KBDF10_RLS", "release F10",),
+	("DOVAL_AX_F1003", FMAXDO_SCTN43AXVALADD, "AX_F10", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_F5", FMAXDO_SCTN43AXDEF, "AX_F5", "F5",),
+	("DOVAL_AX_F501", FMAXDO_SCTN43AXVALADD, "AX_F5", "KBDF5_PRS", "press F5",),
+	("DOVAL_AX_F502", FMAXDO_SCTN43AXVALADD, "AX_F5", "KBDF5_RLS", "release F5",),
+	("DOVAL_AX_F503", FMAXDO_SCTN43AXVALADD, "AX_F5", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_F6", FMAXDO_SCTN43AXDEF, "AX_F6", "F6",),
+	("DOVAL_AX_F601", FMAXDO_SCTN43AXVALADD, "AX_F6", "KBDF6_PRS", "press F6",),
+	("DOVAL_AX_F602", FMAXDO_SCTN43AXVALADD, "AX_F6", "KBDF6_RLS", "release F6",),
+	("DOVAL_AX_F603", FMAXDO_SCTN43AXVALADD, "AX_F6", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_HOME", FMAXDO_SCTN43AXDEF, "AX_HOME", "HOME",),
+	("DOVAL_AX_HOME01", FMAXDO_SCTN43AXVALADD, "AX_HOME", "KBDHOME_PRS", "press HOME",),
+	("DOVAL_AX_HOME02", FMAXDO_SCTN43AXVALADD, "AX_HOME", "KBDHOME_RLS", "release HOME",),
+	("DOVAL_AX_HOME03", FMAXDO_SCTN43AXVALADD, "AX_HOME", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_INS", FMAXDO_SCTN43AXDEF, "AX_INS", "MC select INS",),
+	("DOVAL_AX_INS01", FMAXDO_SCTN43AXVALADD, "AX_INS", "KBDINSERT_PRS", "press INSERT",),
+	("DOVAL_AX_INS02", FMAXDO_SCTN43AXVALADD, "AX_INS", "KBDINSERT_RLS", "release INSERT",),
+	("DOVAL_AX_INS03", FMAXDO_SCTN43AXVALADD, "AX_INS", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_N", FMAXDO_SCTN43AXDEF, "AX_N", "N",),
+	("DOVAL_AX_N01", FMAXDO_SCTN43AXVALADD, "AX_N", "KBDN_PRS", "press N",),
+	("DOVAL_AX_N02", FMAXDO_SCTN43AXVALADD, "AX_N", "KBDN_RLS", "release N",),
+	("DOVAL_AX_N03", FMAXDO_SCTN43AXVALADD, "AX_N", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_PGDN", FMAXDO_SCTN43AXDEF, "AX_PGDN", "PGDN",),
+	("DOVAL_AX_PGDN01", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "KBDPGDN_PRS", "press PGDN",),
+	("DOVAL_AX_PGDN02", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "KBDPGDN_RLS", "release PGDN",),
+	("DOVAL_AX_PGDN03", FMAXDO_SCTN43AXVALADD, "AX_PGDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_PGUP", FMAXDO_SCTN43AXDEF, "AX_PGUP", "PGUP",),
+	("DOVAL_AX_PGUP01", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "KBDPGUP_PRS", "press PGUP",),
+	("DOVAL_AX_PGUP02", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "KBDPGUP_RLS", "release PGUP",),
+	("DOVAL_AX_PGUP03", FMAXDO_SCTN43AXVALADD, "AX_PGUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_Q", FMAXDO_SCTN43AXDEF, "AX_Q", "Q",),
+	("DOVAL_AX_Q01", FMAXDO_SCTN43AXVALADD, "AX_Q", "KBDQ_PRS", "press Q",),
+	("DOVAL_AX_Q02", FMAXDO_SCTN43AXVALADD, "AX_Q", "KBDQ_RLS", "release Q",),
+	("DOVAL_AX_Q03", FMAXDO_SCTN43AXVALADD, "AX_Q", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTDN", FMAXDO_SCTN43AXDEF, "AX_SHIFTDN", "SHIFT-DN",),
+	("DOVAL_AX_SHIFTDN01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTDN02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDDN_PRS", "press DN",),
+	("DOVAL_AX_SHIFTDN03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDDN_RLS", "release DN",),
+	("DOVAL_AX_SHIFTDN04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTDN05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDN", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTDNLT", FMAXDO_SCTN43AXDEF, "AX_SHIFTDNLT", "SHIFT-DNLT",),
+	("DOVAL_AX_SHIFTDNLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTDNLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDDN_PRS", "press DN",),
+	("DOVAL_AX_SHIFTDNLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDDN_RLS", "release DN",),
+	("DOVAL_AX_SHIFTDNLT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTDNLT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTDNRT", FMAXDO_SCTN43AXDEF, "AX_SHIFTDNRT", "SHIFT-DNRT",),
+	("DOVAL_AX_SHIFTDNRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTDNRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDDN_PRS", "press DN",),
+	("DOVAL_AX_SHIFTDNRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDDN_RLS", "release DN",),
+	("DOVAL_AX_SHIFTDNRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDRT_PRS", "press RT",),
+	("DOVAL_AX_SHIFTDNRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDRT_RLS", "release RT",),
+	("DOVAL_AX_SHIFTDNRT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTDNRT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTDNRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTLT", FMAXDO_SCTN43AXDEF, "AX_SHIFTLT", "SHIFT-LT",),
+	("DOVAL_AX_SHIFTLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDLT_PRS", "press LT",),
+	("DOVAL_AX_SHIFTLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDLT_RLS", "release LT",),
+	("DOVAL_AX_SHIFTLT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTLT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTRT", FMAXDO_SCTN43AXDEF, "AX_SHIFTRT", "SHIFT-RT",),
+	("DOVAL_AX_SHIFTRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDRT_PRS", "press RT",),
+	("DOVAL_AX_SHIFTRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDRT_RLS", "release RT",),
+	("DOVAL_AX_SHIFTRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTTAB", FMAXDO_SCTN43AXDEF, "AX_SHIFTTAB", "ALT-SHIFT-TAB",),
+	("DOVAL_AX_SHIFTTAB01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTTAB02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDTAB_PRS", "press TAB",),
+	("DOVAL_AX_SHIFTTAB03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDTAB_RLS", "release TAB",),
+	("DOVAL_AX_SHIFTTAB04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTTAB05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTTAB", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTUP", FMAXDO_SCTN43AXDEF, "AX_SHIFTUP", "SHIFT-UP",),
+	("DOVAL_AX_SHIFTUP01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTUP02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_SHIFTUP03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDUP_RLS", "release UP",),
+	("DOVAL_AX_SHIFTUP04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTUP05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUP", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTUPLT", FMAXDO_SCTN43AXDEF, "AX_SHIFTUPLT", "SHIFT-UPLT",),
+	("DOVAL_AX_SHIFTUPLT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTUPLT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_SHIFTUPLT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDUP_RLS", "release UP",),
+	("DOVAL_AX_SHIFTUPLT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTUPLT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPLT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTUPRT", FMAXDO_SCTN43AXDEF, "AX_SHIFTUPRT", "SHIFT-UPRT",),
+	("DOVAL_AX_SHIFTUPRT01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDSHIFTRT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTUPRT02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDUP_PRS", "press UP",),
+	("DOVAL_AX_SHIFTUPRT03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDUP_RLS", "release UP",),
+	("DOVAL_AX_SHIFTUPRT04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDRT_PRS", "press RT",),
+	("DOVAL_AX_SHIFTUPRT05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDRT_RLS", "release RT",),
+	("DOVAL_AX_SHIFTUPRT06", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "KBDSHIFTRT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTUPRT07", FMAXDO_SCTN43AXVALADD, "AX_SHIFTUPRT", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFTX", FMAXDO_SCTN43AXDEF, "AX_SHIFTX", "SHIFT-X",),
+	("DOVAL_AX_SHIFTX01", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFTX02", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDX_PRS", "press X",),
+	("DOVAL_AX_SHIFTX03", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDX_RLS", "release X",),
+	("DOVAL_AX_SHIFTX04", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFTX05", FMAXDO_SCTN43AXVALADD, "AX_SHIFTX", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFT_T01", FMAXDO_SCTN43AXDEF, "AX_SHIFT_T01", "SHIFT toggle actions",),
+	("DOVAL_AX_SHIFT_T0101", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T01", "KBDSHIFTLT_PRS", "press SHIFT",),
+	("DOVAL_AX_SHIFT_T0102", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T01", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SHIFT_T02", FMAXDO_SCTN43AXDEF, "AX_SHIFT_T02", "SHIFT toggle actions",),
+	("DOVAL_AX_SHIFT_T0201", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T02", "KBDSHIFTLT_RLS", "release SHIFT",),
+	("DOVAL_AX_SHIFT_T0202", FMAXDO_SCTN43AXVALADD, "AX_SHIFT_T02", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_SPACE", FMAXDO_SCTN43AXDEF, "AX_SPACE", "SPACE",),
+	("DOVAL_AX_SPACE01", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "KBDSPC_PRS", "press SPACE",),
+	("DOVAL_AX_SPACE02", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "KBDSPC_RLS", "release SPACE",),
+	("DOVAL_AX_SPACE03", FMAXDO_SCTN43AXVALADD, "AX_SPACE", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_TAB", FMAXDO_SCTN43AXDEF, "AX_TAB", "TAB",),
+	("DOVAL_AX_TAB01", FMAXDO_SCTN43AXVALADD, "AX_TAB", "KBDTAB_PRS", "press TAB",),
+	("DOVAL_AX_TAB02", FMAXDO_SCTN43AXVALADD, "AX_TAB", "KBDTAB_RLS", "release TAB",),
+	("DOVAL_AX_TAB03", FMAXDO_SCTN43AXVALADD, "AX_TAB", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_Y", FMAXDO_SCTN43AXDEF, "AX_Y", "Y",),
+	("DOVAL_AX_Y01", FMAXDO_SCTN43AXVALADD, "AX_Y", "KBDY_PRS", "press Y",),
+	("DOVAL_AX_Y02", FMAXDO_SCTN43AXVALADD, "AX_Y", "KBDY_RLS", "release Y",),
+	("DOVAL_AX_Y03", FMAXDO_SCTN43AXVALADD, "AX_Y", "SYNREPORT", "SYNREPORT",),
 	("DOVAL_BTNAXTYPE_LOCKING", FMAXDO_SCTN41DICTKEYDEF, "BTNAXTYPE_LOCKING", "action type NORMAL key",),
 	("DOVAL_BTNAXTYPE_MODED", FMAXDO_SCTN41DICTKEYDEF, "BTNAXTYPE_MODED", "action type NORMAL key",),
 	("DOVAL_BTNAXTYPE_NORMAL", FMAXDO_SCTN41DICTKEYDEF, "BTNAXTYPE_NORMAL", "action type NORMAL key",),
 	("DOVAL_BTNAXTYPE_SPCL", FMAXDO_SCTN41DICTKEYDEF, "BTNAXTYPE_SPCL", "action type key",),
 	("DOVAL_BTNAXTYPE_TOGGLE", FMAXDO_SCTN41DICTKEYDEF, "BTNAXTYPE_TOGGLE", "action type key",),
+	("DOVAL_BTNGHAT_DN", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DN", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DNLT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_DNRT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_LT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_LT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_RLS", "BTNTYPE_SIMABS", "artifical button release for hat on gamepads",),
+	("DOVAL_BTNGHAT_RT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_RT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_UP", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UP", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UPLT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGHAT_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGHAT_UPRT", "BTNTYPE_SIMABS", "artificial button for the hat on gamepads",),
+	("DOVAL_BTNGLTSTK_DN", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DN", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DNLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_DNRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_LT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_LT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_RLS", "BTNTYPE_SIMABS", "artificial button release for LTSTK on gamepads",),
+	("DOVAL_BTNGLTSTK_RT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_RT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_UP", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UP", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UPLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGLTSTK_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGLTSTK_UPRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_DN", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DN", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DNLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_DNRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_LT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_LT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_RLS", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_RLS", "BTNTYPE_SIMABS", "artificial button release for RTSTK on gamepads",),
+	("DOVAL_BTNGRTSTK_RT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_RT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_UP", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UP", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UPLT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNGRTSTK_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNGRTSTK_UPRT", "BTNTYPE_SIMABS", "artificial button for left stick on gamepads",),
+	("DOVAL_BTNG_01", FMAXDO_SCTN47BTNSDEF, "BTNG_01", "BTNTYPE_NOTHOLDABLE", "BTNG001/X on gamepads",),
+	("DOVAL_BTNG_02", FMAXDO_SCTN47BTNSDEF, "BTNG_02", "BTNTYPE_NOTHOLDABLE", "BTNG002/A on gamepads",),
+	("DOVAL_BTNG_03", FMAXDO_SCTN47BTNSDEF, "BTNG_03", "BTNTYPE_NOTHOLDABLE", "BTNG003/B on gamepads",),
+	("DOVAL_BTNG_04", FMAXDO_SCTN47BTNSDEF, "BTNG_04", "BTNTYPE_NOTHOLDABLE", "BTNG004/Y on gamepads",),
+	("DOVAL_BTNG_05", FMAXDO_SCTN47BTNSDEF, "BTNG_05", "BTNTYPE_HOLDABLE", "BTNG005/left shoulder on gamepads",),
+	("DOVAL_BTNG_06", FMAXDO_SCTN47BTNSDEF, "BTNG_06", "BTNTYPE_HOLDABLE", "BTNG006/right shoulder on gamepads",),
+	("DOVAL_BTNG_07", FMAXDO_SCTN47BTNSDEF, "BTNG_07", "BTNTYPE_HOLDABLE", "BTNG007/left trigger on gamepads",),
+	("DOVAL_BTNG_08", FMAXDO_SCTN47BTNSDEF, "BTNG_08", "BTNTYPE_HOLDABLE", "BTNG008/right trigger on gamepads",),
+	("DOVAL_BTNG_09", FMAXDO_SCTN47BTNSDEF, "BTNG_09", "BTNTYPE_NOTHOLDABLE", "BTNG009/left face on gamepads",),
+	("DOVAL_BTNG_10", FMAXDO_SCTN47BTNSDEF, "BTNG_10", "BTNTYPE_NOTHOLDABLE", "BTNG_010/right face on gamepads",),
+	("DOVAL_BTNG_11LTSTK", FMAXDO_SCTN47BTNSDEF, "BTNG_11LTSTK", "BTNTYPE_NOTHOLDABLE", "BTN011/left stick on gamepads",),
+	("DOVAL_BTNG_12RTSTK", FMAXDO_SCTN47BTNSDEF, "BTNG_12RTSTK", "BTNTYPE_NOTHOLDABLE", "BTN012/right stick on gamepads",),
+	("DOVAL_BTNG_13", FMAXDO_SCTN47BTNSDEF, "BTNG_13", "BTNTYPE_NOTHOLDABLE", "BTN013/home/select on gamepads",),
+	("DOVAL_BTNMWH_DN", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DN", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DN on mice",),
+	("DOVAL_BTNMWH_DNLT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DNLT", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DNLT on mice",),
+	("DOVAL_BTNMWH_DNRT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_DNRT", "BTNTYPE_SIMREL", "BTNMWHLDN/MSE_DNRT on mice",),
+	("DOVAL_BTNMWH_LT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_LT", "BTNTYPE_SIMREL", "BTNMWHLLT/MSE_LT on mice",),
+	("DOVAL_BTNMWH_RLS", FMAXDO_SCTN47BTNSDEF, "BTNMWH_RLS", "BTNTYPE_SIMREL", "BTNMWHLRLS/MSE_RLS on mice",),
+	("DOVAL_BTNMWH_RT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_RT", "BTNTYPE_SIMREL", "BTNMWHLRT/MSE_RT on mice",),
+	("DOVAL_BTNMWH_UP", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UP", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UP on mice",),
+	("DOVAL_BTNMWH_UPLT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UPLT", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UPLT on mice",),
+	("DOVAL_BTNMWH_UPRT", FMAXDO_SCTN47BTNSDEF, "BTNMWH_UPRT", "BTNTYPE_SIMREL", "BTNMWHLUP/MSE_UPRT on mice",),
+	("DOVAL_BTNM_01LT", FMAXDO_SCTN47BTNSDEF, "BTNM_01LT", "BTNTYPE_NOTHOLDABLE", "BTN01/LEFT on mice",),
+	("DOVAL_BTNM_02MD", FMAXDO_SCTN47BTNSDEF, "BTNM_02MD", "BTNTYPE_NOTHOLDABLE", "BTN02/MIDDLE on mice",),
+	("DOVAL_BTNM_03RT", FMAXDO_SCTN47BTNSDEF, "BTNM_03RT", "BTNTYPE_NOTHOLDABLE", "BTN03/RIGHT on mice",),
+	("DOVAL_BTNM_04WHUP", FMAXDO_SCTN47BTNSDEF, "BTNM_04WHUP", "BTNTYPE_SIMREL", "BTNM04/MSEWHL_UP on mice",),
+	("DOVAL_BTNM_05WHDN", FMAXDO_SCTN47BTNSDEF, "BTNM_05WHDN", "BTNTYPE_SIMREL", "BTNM05/MSEWHL_DN on mice",),
+	("DOVAL_BTNM_06WHLT", FMAXDO_SCTN47BTNSDEF, "BTNM_06WHLT", "BTNTYPE_SIMREL", "BTNM06/MSEWHL_LT on mice",),
+	("DOVAL_BTNM_07WHRT", FMAXDO_SCTN47BTNSDEF, "BTNM_07WHRT", "BTNTYPE_SIMREL", "BTNM07/MSEWHL_RT on mice",),
+	("DOVAL_BTNM_08", FMAXDO_SCTN47BTNSDEF, "BTNM_08", "BTNTYPE_NOTHOLDABLE", "BTNM_08/NW most BTN on mice",),
+	("DOVAL_BTNM_09", FMAXDO_SCTN47BTNSDEF, "BTNM_09", "BTNTYPE_NOTHOLDABLE", "BTNM_09 on mice",),
+	("DOVAL_BTNM_10", FMAXDO_SCTN47BTNSDEF, "BTNM_10", "BTNTYPE_NOTHOLDABLE", "BTNM_10 on mice",),
+	("DOVAL_BTNM_11", FMAXDO_SCTN47BTNSDEF, "BTNM_11", "BTNTYPE_NOTHOLDABLE", "BTNM_11 on mice",),
+	("DOVAL_BTNM_12", FMAXDO_SCTN47BTNSDEF, "BTNM_12", "BTNTYPE_NOTHOLDABLE", "BTNM_12/SE most on mice",),
+	("DOVAL_BTNM_MDN", FMAXDO_SCTN47BTNSDEF, "BTNM_MDN", "BTNTYPE_SIMREL", "BTNMDN/MSE_DN on mice",),
+	("DOVAL_BTNM_MDNLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MDNLT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNLT on mice",),
+	("DOVAL_BTNM_MDNRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MDNRT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNRT on mice",),
+	("DOVAL_BTNM_MLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MLT", "BTNTYPE_SIMREL", "BTNMLT/MSE_LT on mice",),
+	("DOVAL_BTNM_MRLS", FMAXDO_SCTN47BTNSDEF, "BTNM_MRLS", "BTNTYPE_SIMREL", "MSE_MRLS on mice",),
+	("DOVAL_BTNM_MRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MRT", "BTNTYPE_SIMREL", "BTNMRT/MSE_RT on mice",),
+	("DOVAL_BTNM_MUP", FMAXDO_SCTN47BTNSDEF, "BTNM_MUP", "BTNTYPE_SIMREL", "BTNMUP/MSE_UP on mice",),
+	("DOVAL_BTNM_MUPLT", FMAXDO_SCTN47BTNSDEF, "BTNM_MUPLT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPLT on mice",),
+	("DOVAL_BTNM_MUPRT", FMAXDO_SCTN47BTNSDEF, "BTNM_MUPRT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPRT on mice",),
+	("DOVAL_BTNM_WHDN", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDN", "BTNTYPE_SIMREL", "BTNMDN/MSE_DN on mice",),
+	("DOVAL_BTNM_WHDNLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDNLT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNLT on mice",),
+	("DOVAL_BTNM_WHDNRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHDNRT", "BTNTYPE_SIMREL", "BTNMDN/MSE_DNRT on mice",),
+	("DOVAL_BTNM_WHLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHLT", "BTNTYPE_SIMREL", "BTNMLT/MSE_LT on mice",),
+	("DOVAL_BTNM_WHRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHRT", "BTNTYPE_SIMREL", "BTNMRT/MSE_RT on mice",),
+	("DOVAL_BTNM_WHUP", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUP", "BTNTYPE_SIMREL", "BTNMUP/MSE_UP on mice",),
+	("DOVAL_BTNM_WHUPLT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUPLT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPLT on mice",),
+	("DOVAL_BTNM_WHUPRT", FMAXDO_SCTN47BTNSDEF, "BTNM_WHUPRT", "BTNTYPE_SIMREL", "BTNMUP/MSE_UPRT on mice",),
 	("DOVAL_BTNS00", FMAXDO_SCTN41VALDEF, "BTNS00", "0B00000001", "FLAG LD.EV_KEY holdable BTN0 GPM",),
 	("DOVAL_BTNS05", FMAXDO_SCTN41VALDEF, "BTNS05", "0B00000010", "FLAG LD.EV_KEY holdable BTN5 gamepads",),
 	("DOVAL_BTNS06", FMAXDO_SCTN41VALDEF, "BTNS06", "0B00000100", "FLAG LD.EV_KEY holdable BTN6 gamepads",),
@@ -1427,6 +1380,8 @@ TBGLST = [
 	("DOVAL_BTNS22", FMAXDO_SCTN41VALDEF, "BTNS22", "0B00100000", "FLAG LD.EV_KEY holdable BTN22 saitek",),
 	("DOVAL_BTNS23", FMAXDO_SCTN41VALDEF, "BTNS23", "0B01000000", "FLAG LD.EV_KEY holdable BTN23 saitek",),
 	("DOVAL_BTNS24", FMAXDO_SCTN41VALDEF, "BTNS24", "0B10000000", "FLAG LD.EV_KEY holdable BTN24 saitek",),
+	("DOVAL_BTNS_MODE1", FMAXDO_SCTN47BTNSDEF, "BTNS_MODE1", "BTNTYPE_SIMKEY", "switch through MODE1 move/wheel for mouse actions",),
+	("DOVAL_BTNS_MODE2", FMAXDO_SCTN47BTNSDEF, "BTNS_MODE2", "BTNTYPE_SIMKEY", "switch through MODE2 normal/draglock for mouse actions",),
 	("DOVAL_BTNS_NOT", FMAXDO_SCTN41VALDEF, "BTNS_NOT", "0B00000000", "FLAG no BTN or _KEY_ held",),
 	("DOVAL_BTNTYPE", FMAXDO_SCTN41DICTKEYDEF, "BTNTYPE", "action type key",),
 	("DOVAL_BTNTYPE_HOLDABLE", FMAXDO_SCTN41STRDEF, "BTNTYPE_HOLDABLE", "BTNTYPE_HOLDABLE", "HOLDABLE button",),
@@ -1505,7 +1460,7 @@ TBGLST = [
 	("DOVAL_DEVCD_BTNM_MDNLT", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MDNLT", "BTNM_MDNLT", "shortcut to BTNM_05WHDN",),
 	("DOVAL_DEVCD_BTNM_MDNRT", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MDNRT", "BTNM_MDNRT", "shortcut to BTNM_05WHDN",),
 	("DOVAL_DEVCD_BTNM_MLT", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MLT", "BTNM_MLT", "shortcut to BTNM_06WHLT",),
-	("DOVAL_DEVCD_BTNM_MLTA", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MLTA", "BTNM_MLTA", "shortcut to BTNM_06WHLT",),
+	("DOVAL_DEVCD_BTNM_MRLS", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MRLS", "BTNM_MRLS", "shortcut to BTNM_MRLS",),
 	("DOVAL_DEVCD_BTNM_MRT", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MRT", "BTNM_MRT", "shortcut to BTNM_07WHRT",),
 	("DOVAL_DEVCD_BTNM_MRTA", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MRTA", "BTNM_MRTA", "shortcut to BTNM_07WHRT",),
 	("DOVAL_DEVCD_BTNM_MUP", FMAXDO_SCTN41VALDEF, "DEVCD_BTNM_MUP", "BTNM_MUP", "shortcut to BTNM_04WHUP",),
@@ -1533,6 +1488,9 @@ TBGLST = [
 	("DOVAL_DEVICETYPE_KNOB", FMAXDO_SCTN41DICTKEYDEF, "DEVICETYPE_KNOB", "device type KNOB",),
 	("DOVAL_DEVICETYPE_MOUSE", FMAXDO_SCTN41DICTKEYDEF, "DEVICETYPE_MOUSE", "define a device type MOUSE",),
 	("DOVAL_DEVICETYPE_SAITEK", FMAXDO_SCTN41DICTKEYDEF, "DEVICETYPE_SAITEK", "device type SAITEK defined",),
+	("DOVAL_DEVTYPE_ABS", FMAXDO_SCTN41VALDEF, "DEVTYPE_ABS", "LD.EV_ABS", "shortcut to LD.EV_ABS",),
+	("DOVAL_DEVTYPE_KEY", FMAXDO_SCTN41VALDEF, "DEVTYPE_KEY", "LD.EV_KEY", "shortcut to LD.EV_KEY",),
+	("DOVAL_DEVTYPE_REL", FMAXDO_SCTN41VALDEF, "DEVTYPE_REL", "LD.EV_REL", "shortcut to LD.EV_REL",),
 	("DOVAL_DEV_ABSHAT_STATUS", FMAXDO_SCTN41DICTKEYDEF, "DEV_ABSHAT_STATUS", "status of ABS items on the device",),
 	("DOVAL_DEV_ABSLTSTK_STATUS", FMAXDO_SCTN41DICTKEYDEF, "DEV_ABSLTSTK_STATUS", "status of ABS items on the device",),
 	("DOVAL_DEV_ABSRTSTK_STATUS", FMAXDO_SCTN41DICTKEYDEF, "DEV_ABSRTSTK_STATUS", "status of ABS items on the device",),
@@ -1622,7 +1580,7 @@ TBGLST = [
 	("DOVAL_DIRY_OR", FMAXDO_SCTN41LAMBDADEF, "DIRY_OR", "X_: DIRY_VAL | X_", "FLAG DIR UPDN or lambda",),
 	("DOVAL_DIRY_VAL", FMAXDO_SCTN41VALDEF, "DIRY_VAL", "0B0101", "UP/DN directions",),
 	("DOVAL_DORPT_CRSR", FMAXDO_SCTN41VALDEF, "DORPT_CRSR", "200", "cursor repeat",),
-	("DOVAL_DORPT_MSE", FMAXDO_SCTN41VALDEF, "DORPT_MSE", "10", "mouse repeat",),
+	("DOVAL_DORPT_MSE", FMAXDO_SCTN41VALDEF, "DORPT_MSE", "9", "mouse repeat",),
 	("DOVAL_DORPT_NOT", FMAXDO_SCTN41VALDEF, "DORPT_NOT", "0", "no repeat",),
 	("DOVAL_DORPT_PAUSE", FMAXDO_SCTN41VALDEF, "DORPT_PAUSE", "250", "pause before repeating",),
 	("DOVAL_DORPT_WHL", FMAXDO_SCTN41VALDEF, "DORPT_WHL", "100", "mouse  wheelrepeat",),
@@ -1631,7 +1589,7 @@ TBGLST = [
 	("DOVAL_HATMAX", FMAXDO_SCTN41VALDEF, "HATMAX", "1", "HAT MAX",),
 	("DOVAL_HATMID", FMAXDO_SCTN41VALDEF, "HATMID", "0", "HAT MID/REST",),
 	("DOVAL_HATMIN", FMAXDO_SCTN41VALDEF, "HATMIN", "-1", "HAT MIN",),
-	("DOVAL_JOYSTICKDEAD", FMAXDO_SCTN41VALDEF, "JOYSTICKDEAD", "120", "DEAD zone on a lo rez ABS device",),
+	("DOVAL_JOYSTICKDEAD", FMAXDO_SCTN41VALDEF, "JOYSTICKDEAD", "100", "DEAD zone on a lo rez ABS device",),
 	("DOVAL_JOYSTICKMAX", FMAXDO_SCTN41VALDEF, "JOYSTICKMAX", "255", "MAX on lo rez ABS device",),
 	("DOVAL_JOYSTICKMID", FMAXDO_SCTN41VALDEF, "JOYSTICKMID", "128", "MID on lo rez ABS device",),
 	("DOVAL_JOYSTICKMIN", FMAXDO_SCTN41VALDEF, "JOYSTICKMIN", "0", "MIN on lo rez ABS device",),
@@ -1743,18 +1701,10 @@ TBGLST = [
 	("D_MIMD__BTNG_03", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_03", "AXMSEBTNMID", "press middle mouse button",),
 	("D_MIMD__BTNG_04", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_04", "AX_CTRLS", "save/CTRL-S",),
 	("D_MIMD__BTNG_0501", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_01", "AX_CTRLA", "select all CTRL-A",),
-	("D_MIMD__BTNG_0501", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_04", "AXXNVROTLT", "select all CTRL-A",),
 	("D_MIMD__BTNG_0502", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_02", "AXXNVROTRT", "select all CTRL-A",),
 	("D_MIMD__BTNG_0503", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_03", "AXXNVCROP", "XnViewer CROP",),
+	("D_MIMD__BTNG_0504", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_04", "AXXNVROTLT", "select all CTRL-A",),
 	("D_MIMD__BTNG_0513", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_13", "AXXNVSEL2TOP", "select to top SHIFT-HOME SHIFT-RT",),
-	("D_MIMD__BTNG_05HATDN", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DN", "AX_SHIFTDN", "SHIFT-DN",),
-	("D_MIMD__BTNG_05HATDNLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DNLT", "AX_SHIFTDNLT", "SHIFT-DNLT",),
-	("D_MIMD__BTNG_05HATDNRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_DNRT", "AX_SHIFTDNRT", "SHIFT-DNRT",),
-	("D_MIMD__BTNG_05HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_LT", "AX_SHIFTLT", "SHIFT-LT",),
-	("D_MIMD__BTNG_05HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_RT", "AX_SHIFTRT", "SHIFT-RT",),
-	("D_MIMD__BTNG_05HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UP", "AX_SHIFTUP", "SHIFT-UP",),
-	("D_MIMD__BTNG_05HATUPLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UPLT", "AX_SHIFTUPLT", "SHIFT-UPLT",),
-	("D_MIMD__BTNG_05HATUPRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_CRSR", "BTNG_05", "BTNGHAT_UPRT", "AX_SHIFTUPRT", "SHIFT-UPRT",),
 	("D_MIMD__BTNG_0601", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_01", "AX_Q", "QUIT Q in many programs",),
 	("D_MIMD__BTNG_0602", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_02", "AX_CTRLQ", "QUIT CTRL-Q in many programs",),
 	("D_MIMD__BTNG_0603", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_03", "AX_ALTD", "ALT-D dismiss in some programs",),
@@ -1778,19 +1728,15 @@ TBGLST = [
 	("D_MIMD__BTNG_07HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_LT", "AXXNVZOOMRESET", "XnViewer zoom to default",),
 	("D_MIMD__BTNG_07HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_RT", "AXXNVZOOMFULL", "XnViewer zoom to 1:1",),
 	("D_MIMD__BTNG_07HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_07", "BTNGHAT_UP", "AXXNVZOOMOUT", "XnViewer zoom to out/-",),
-	("D_MIMD__BTNG_0801_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T01", "ALT press/release toggle on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0801_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T02", "ALT press/release toggle on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0802_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "DEL on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "DEL on BTNG_08-BTNG_13",),
-	("D_MIMD__BTNG_0803_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T01", "SHIFT on BTNG_0804_T01",),
-	("D_MIMD__BTNG_0803_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T02", "SHIFT on BTNG_0804_T02",),
-	("D_MIMD__BTNG_0804", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_04", "AX_TAB", "SHIFT on BTNG_0804_T02",),
+	("D_MIMD__BTNG_0801_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T01", "ALT press on BTNG0801_T01",),
+	("D_MIMD__BTNG_0801_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T02", "ALT release on BTNG0801_T02",),
+	("D_MIMD__BTNG_0802_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL press on BTNG_0802_T01",),
+	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL release on BTNG_0802_T02",),
+	("D_MIMD__BTNG_0803_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T01", "SHIFT press on BTNG_0803_T01",),
+	("D_MIMD__BTNG_0803_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T02", "SHIFT release on BTNG_0803_T02",),
+	("D_MIMD__BTNG_0804", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_04", "AX_TAB", "TAB on BTNG0804",),
 	("D_MIMD__BTNG_0813_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_13", "AX_DEL", "DEL on BTNG_0813_T01",),
 	("D_MIMD__BTNG_0813_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_13", "AX_ENTER", "ENTER on BTNG_0813_T02",),
-	("D_MIMD__BTNG_08HATDN", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_DN", "AX_CTRLPGDN", "PGDN",),
-	("D_MIMD__BTNG_08HATLT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_LT", "AX_ALTTAB", "ALTTAB",),
-	("D_MIMD__BTNG_08HATRT", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_RT", "AX_CTRLTAB", "CTRLTAB",),
-	("D_MIMD__BTNG_08HATUP", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNGHAT_UP", "AX_CTRLPGUP", "PGUP",),
 	("D_MIMD__BTNG_09", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_09", "AX_ENTER", "ENTER on BTNG_09",),
 	("D_MIMD__BTNG_10", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_10", "AXXNVMOVE", "XnViewer move",),
 	("D_MIMD__BTNG_11LTSTK", FMAXDO_SCTN45NOTHOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_11LTSTK", "AXMSEBTNLT", "left mouse button on same stick click",),
@@ -2743,9 +2689,18 @@ TBGLST.sort()
 def makeAComment(comment_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
-	strToRtn_ += CMNTLINE + NEWLINE
-	strToRtn_ += f"# * {comment_}" + NEWLINE
-	strToRtn_ += CMNTLINE + NEWLINE
+	strToRtn_ += f"""{CMNTLINE}{NEWLINE}# * {comment_}{NEWLINE}{CMNTLINE}{NEWLINE}"""
+	return strToRtn_
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+
+
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# makeAComment
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def makeAWideComment(comment_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	strToRtn_ = ""
+	strToRtn_ += f"""#{NEWLINE}#{NEWLINE}{CMNTLINE}{NEWLINE}# * {comment_}{NEWLINE}{CMNTLINE}{NEWLINE}#{NEWLINE}#{NEWLINE}"""
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
@@ -2761,89 +2716,37 @@ def readFileToStr(FILENAME_):
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# copied sections
-# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-
-
-DO_TOP = f"""{NEWLINE}{NEWLINE}{makeAComment("SCTN40 start of CF.py")}#
-from libevdev import InputEvent as IE
-import fcntl
-import libevdev as LD
-import os
-{NEWLINE}
-import CF
-{NEWLINE}{NEWLINE}{makeAComment("included modules")}#
-# * def fixBtn(DEVTCode_):
-# * def fixEvent(thisDevice_, eventToFix_):
-# * def incNdx(AXLst_, currentNDX_):
-# * def isMatch(eventCD1_, eventCD2_):
-# * def openOutputDevice(lookingForDeviceName_):
-# * def SPCL_(spclEvent_, spclVal_):
-{NEWLINE}{NEWLINE}"""
-
-
-FM_TOP = f"""#!/usr/bin/python{NEWLINE}{NEWLINE}{readFileToStr(SCTNSNAME)}{NEWLINE}{NEWLINE}
-{makeAComment("modules defined in this file")}#
-# * def doErrorItem(message_, itemToError_):
-# * def explodeItem(itemToExplode_):
-# * def makeAComment(comment_):
-# * def makeCF():
-# * def makeDO():
-# * def makeFM():
-# * def parseTBGLST():
-# * def readFileToStr(FILENAME_):
-# * def __main__():{NEWLINE}{NEWLINE}
-"""
-
-
-HBI_TOP = f"""#{NEWLINE}#{NEWLINE}{makeAComment("SCTN50 start of HBI")}from time import sleep{NEWLINE}#
-import libevdev as LD{NEWLINE}{NEWLINE}
-def IDB():
-{NTAB(1)}devHBI = LD.Device()
-{NTAB(1)}devHBI.name = "HBI hot beef injector"
-"""
-
-
-HBI_BTM = f"""{NTAB(1)}hbiDevice = devHBI.create_uinput_device()
-	print(f"New device at {OBRCE}hbiDevice.devnode{CBRCE} ({OBRCE}hbiDevice.syspath{CBRCE})")
-	sleep(1)
-	return hbiDevice{NEWLINE}{NEWLINE}#{NEWLINE}#{NEWLINE}{makeAComment("end of HBI.py")}{NEWLINE}
-"""
-
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# make C.py
+# makeCF
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def makeCF():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
-	strToRtn_ += readFileToStr(CFTOP_NAME)
-	strToRtn_ += readFileToStr(SCTN0102NAME)
-	strToRtn_ += f"{NEWLINE}{NEWLINE}"
+	strToRtn_ += f"""{readFileToStr(CFTOP_NAME)}{readFileToStr(SCTN0102NAME)}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN21 CF defines")
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
+	strToRtn_ += f"""{makeAComment("SCTN21 CF defines")}"""
 	for name_, value_ in FMCF_SCTN21DEFDICT.items():
-		strToRtn_ += f"{name_} = {value_}  # {FMCF_SCTN21DEFCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += f"{NEWLINE}{NEWLINE}"
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{name_} = {value_}  # {FMCF_SCTN21DEFCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
 	strToRtn_ += f"""{makeAComment("SCTN22 options structures")}PARMSDICT = {OBRCE}{NEWLINE}"""
 	for name_, value_ in FMCF_SCTN22PARMSDICT.items():
-		strToRtn_ += f"{value_}"
-	strToRtn_ += f"{CBRCE}{NEWLINE}{NEWLINE}"
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{value_}"""
+	strToRtn_ += f"""{CBRCE}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += f"OPTIONSDICT = {OBRCE}{NEWLINE}"
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
+	strToRtn_ += f"""OPTIONSDICT = {OBRCE}{NEWLINE}"""
 	for name_, value_ in FMCF_SCTN22OPTIONSDICT.items():
-		strToRtn_ += f"{value_}"
+		strToRtn_ += f"""{value_}"""
 	strToRtn_ += f"""{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"""
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 
-	# strToRtn_ += f"{readFileToStr(CFBTM_NAME)}"
+	strToRtn_ += f"""{makeAWideComment("end of managed sections of CF.py")}{NEWLINE}{NEWLINE}"""
 	return strToRtn_
 
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
@@ -2855,137 +2758,213 @@ def makeCF():
 def makeDO():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
-	strToRtn_ += DO_TOP
+	strToRtn_ += f"""{readFileToStr(DOTOP_NAME)}"""
 
-	strToRtn_ += makeAComment("SCTN41 device defines")
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN41 device defines
+	strToRtn_ += f"""{makeAComment("SCTN41 device defines")}"""
 	for name_, value_ in FMDO_SCTN41DEVICEDEFDICT.items():
-		strToRtn_ += f"{value_}  # {FMDO_SCTN41DEVICEDEFCMNTDICT[name_]}{NEWLINE}"
+		strToRtn_ += f"""{value_}  # {FMDO_SCTN41DEVICEDEFCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}{makeAComment("SCTN47 buttons lists")}BTNSHOLDABLELIST = {OBRKT}{NEWLINE}"""
 	for item_ in BTNSHOLDABLELIST:
-		strToRtn_ += f"{NTAB(1)}{item_},{NEWLINE}"
-	strToRtn_ += f"{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}{item_},{NEWLINE}"""
+	strToRtn_ += f"""{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN41 device defines
 
-	strToRtn_ += makeAComment("SCTN42 LDIE entries")
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN42 LDIE entries
+	strToRtn_ += f"""{makeAComment("SCTN42 LDIE entries")}{FOLD1STARTHERE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN42LDIEDICT.items():
-		strToRtn_ += f"{name_} = {value_}  # {FMDO_SCTN42LDIECMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += f"{NEWLINE}{NEWLINE}"
-
-	strToRtn_ += f"SPCLAXLIST = {OBRKT}{NEWLINE}"
+		strToRtn_ += f"""{name_} = {value_}  # {FMDO_SCTN42LDIECMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{FOLD1ENDHERE}{NEWLINE}{NEWLINE}"""
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN42 LDIE entries
+	strToRtn_ += f"""SPCLAXLIST = {OBRKT}{NEWLINE}"""
 	for thisItem_ in FMDO_SCTN42LDIESPCLLIST:
-		strToRtn_ += f"{NTAB(1)}{thisItem_},  # {FMDO_SCTN42LDIECMNTDICT[thisItem_]}{NEWLINE}"
-	strToRtn_ += f"{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}{thisItem_},  # {FMDO_SCTN42LDIECMNTDICT[thisItem_]}{NEWLINE}"""
+	strToRtn_ += f"""{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN42 LDIE entries
 
-	strToRtn_ += makeAComment("SCTN43 actions to output entries")
-	strToRtn_ += f"ACTIONS = {OBRCE}{NEWLINE}"
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN43 actions to output entries
+	strToRtn_ += f"""{makeAComment("SCTN43 actions to output entries")}"""
+	strToRtn_ += f"""ACTIONS = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN43AXDEFDICT.items():
-		strToRtn_ += f"{NTAB(1)}{name_}: {OBRKT}  # {FMDO_SCTN43AXDEFCMNTDICT[name_]}{NEWLINE}{value_}{NTAB(1)}{CBRKT},{NEWLINE}{NEWLINE}"
-	strToRtn_ += f"{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}{name_}: {OBRKT}  # {FMDO_SCTN43AXDEFCMNTDICT[name_]}{NEWLINE}{NTAB(1)}{FOLD2STARTHERE}{NEWLINE}{value_}{NTAB(1)}{CBRKT},{NEWLINE}{NTAB(1)}{FOLD2ENDHERE}{NEWLINE}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN43 actions to output entries
 
-	strToRtn_ += makeAComment("SCTN48 device code list and dict")
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN48 device code list and dict
+	strToRtn_ += f"""{makeAComment("SCTN48 device code list and dict")}"""
 	for name_, item_ in FMDO_SCTN48DEFDICT.items():
-		strToRtn_ += f"{item_}  # {FMDO_SCTN48DEFCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += f"{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{item_}  # {FMDO_SCTN48DEFCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
 	strToRtn1_ = ""
 	strToRtn2_ = ""
-	strToRtn1_ += f"DEVTLIST = {OBRKT}{NEWLINE}"
-	strToRtn2_ += f"DEVTDICT = {OBRCE}{NEWLINE}"
+	strToRtn1_ += f"""DEVTLIST = {OBRKT}{NEWLINE}"""
+	strToRtn2_ += f"""DEVTDICT = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
 	for name_, values_ in FMDO_SCTN48TYPESDICT.items():
-		strToRtn1_ += f"{NTAB(1)}{name_},  # {FMDO_SCTN48TYPESCMNTDICT[name_]}{NEWLINE}"
-		strToRtn2_ += f"{NTAB(1)}{name_}: {OBRKT}  # {FMDO_SCTN48TYPESCMNTDICT[name_]}{NEWLINE}"
+		strToRtn1_ += f"""{NTAB(1)}{name_},  # {FMDO_SCTN48TYPESCMNTDICT[name_]}{NEWLINE}"""
+		strToRtn2_ += f"""{NTAB(1)}{name_}: {OBRKT}  # {FMDO_SCTN48TYPESCMNTDICT[name_]}{NEWLINE}{NTAB(1)}{FOLD2STARTHERE}{NEWLINE}"""
 		for thisValue_ in values_:
-			strToRtn2_ += f"{NTAB(2)}{thisValue_}{NEWLINE}"
-		strToRtn2_ += f"{NTAB(1)}{CBRKT},{NEWLINE}"
-	strToRtn1_ += f"{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"
-	strToRtn2_ += f"{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"
-	strToRtn_ += strToRtn1_
-	strToRtn_ += strToRtn2_
+			strToRtn2_ += f"""{NTAB(2)}{thisValue_}{NEWLINE}"""
+		strToRtn2_ += f"""{NTAB(1)}{CBRKT},{NEWLINE}{NTAB(1)}{FOLD2ENDHERE}{NEWLINE}{NEWLINE}"""
+	strToRtn1_ += f"""{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	strToRtn2_ += f"""{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	strToRtn_ += f"""{strToRtn1_}{strToRtn2_}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN48 device code list and dict
 
-	strToRtn_ += makeAComment("SCTN44 filled and empty device entries")
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN44 device entries
+	strToRtn_ += f"""{makeAComment("SCTN44 device entries")}"""
 	strToRtn1_ = ""
-	strToRtn_ += f"DEVICES = {OBRCE}  # define SCTN44 DEVICES{NEWLINE}"
+	strToRtn_ += f"""DEVICES = {OBRCE}  # define SCTN44 DEVICES{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN44DEVICESDICT.items():
-		strToRtn1_ += f"{NTAB(1)}{name_}: {OBRCE}  # {FMDO_SCTN41DEVICEDEFCMNTDICT[name_]}{NEWLINE}"
+		strToRtn1_ += f"""{NTAB(1)}{name_}: {OBRCE}  # {FMDO_SCTN41DEVICEDEFCMNTDICT[name_]}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{NEWLINE}"""
 		for name1_, value1_ in value_.items():
-			strToRtn1_ += f"{NTAB(2)}{name1_}: {value1_}, {NEWLINE}"
-		strToRtn1_ += f"{NTAB(1)}{CBRCE},{NEWLINE}"
-	strToRtn1_ += f"{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"
-	strToRtn_ += strToRtn1_
+			strToRtn1_ += f"""{NTAB(2)}{name1_}: {value1_}, {NEWLINE}"""
+		strToRtn1_ += f"""{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERE}{NEWLINE}{NEWLINE}"""
+	strToRtn1_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	strToRtn_ += f"""{strToRtn1_}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN44 device entries
 
-	strToRtn_ += f"""{makeAComment("SCTN45 device profile and REPEATDICT")}PROFILE = {OBRCE}  # device profile defined{NEWLINE}"""
-	strToRtn1_ = f"""REPEATDICT = {OBRCE}{NEWLINE}"""
-	strToRtn2_ = f"""BTNTYPEDICT = {OBRCE}{NEWLINE}"""
-	strToRtn3_ = f"""BTNNDXDICT = {OBRCE}{NEWLINE}"""
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+	strToRtn_ += f"""{makeAComment("SCTN45 device PROFILE BTNTYPEDICT REPEATDICT")}"""
+	strToRtn_ += f"""{makeAComment("PROFILE")}{NEWLINE}PROFILE = {OBRCE}  # device PROFILE{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
+	strToRtn1_ = f"""{makeAComment("REPEATDICT")}{NEWLINE}REPEATDICT = {OBRCE}  # device REPEATDSICT{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
+	strToRtn2_ = f"""{makeAComment("BTNTYPEDICT")}{NEWLINE}BTNTYPEDICT = {OBRCE}  # BTNTYPEDICT{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
+	strToRtn3_ = f"""{makeAComment("BTNNDXDICT")}{NEWLINE}BTNNDXDICT = {OBRCE}  # BTNNDXDICT{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 	for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
-		# ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1 ⥥1
-		strToRtn_ += f"{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}"
-		strToRtn1_ += f"{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}"
-		strToRtn2_ += f"{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}"
-		strToRtn3_ += f"{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}"
+		# 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+		BC1 = f""" {thisDEV_MYNAME_}:"""
+		MK1 = f"""{NTAB(1)}{MARK1MIDLN(BC1)}"""
+		strToRtn_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn1_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn2_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+		strToRtn3_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{BC1}{NEWLINE}{NEWLINE}{MK1}{NTAB(2)}{MARK2STARTLN(BC1)}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
 		for thisBTNName1_, thisVal2_ in thisVal1_.items():
-			# ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2 ⥥2
+			# 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥ 3⥥
+			BC2 = f"""{BC1}{thisBTNName1_}:"""
+			MK2 = F"""{MK1}{NTAB(2)}{MARK2MIDLN(BC2)}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
 			if thisBTNName1_ not in BTNSHOLDABLELIST:
-				# ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3
-				strToRtn_ += f"{NTAB(2)}{thisBTNName1_}: {OBRKT}{NEWLINE}{thisVal2_}{NTAB(2)}{CBRKT},{NEWLINE}{NEWLINE}"
+				# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
+				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRKT}{NEWLINE}{NTAB(3)}{MARK3STARTLN(f"{BC2}AX")}{thisVal2_}{NTAB(2)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3ENDLN(f"{BC2}AX")}{NEWLINE}{MK2}"""
 				strToRtn1_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
 				strToRtn2_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
 				strToRtn3_ += f"""{NTAB(2)}{thisBTNName1_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_]}{NEWLINE}"""
-				# ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3
+				# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
 			elif thisBTNName1_ in BTNSHOLDABLELIST:
-				# ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3 ⥥3
-				strToRtn_ += f"{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}"
-				strToRtn1_ += f"{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}"
-				strToRtn2_ += f"{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}"
-				strToRtn3_ += f"{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}"
+				# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
+				strToRtn_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn1_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn2_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+				strToRtn3_ += f"""{NTAB(2)}{thisBTNName1_}: {OBRCE}  # holdable button {thisBTNName1_}{NEWLINE}{NTAB(3)}{MARK3STARTLN(BC2)}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
 				for thisBTNName2_, thisVal3 in thisVal2_.items():
-					# ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4 ⥥4
+					# ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5
+					BC3 = f"""{BC2}{thisBTNName2_}:"""
+					MK3 = f"""{MK2}{NTAB(3)}{MARK3MIDLN(BC3)}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
+					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
 					if thisBTNName2_ not in BTNSHOLDABLELIST:
-						# ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5
-						strToRtn_ += f"{NTAB(3)}{thisBTNName2_}: {OBRKT}{NEWLINE}{thisVal3}{NTAB(3)}{CBRKT},{NEWLINE}"
-						strToRtn1_ += f"{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"
-						strToRtn2_ += f"{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"
-						strToRtn3_ += f"{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"
-						# ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5
+						# ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6
+						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRKT}{NEWLINE}{NTAB(4)}{MARK4STARTLN(BC3)}{thisVal3}{NTAB(3)}{CBRKT},{NEWLINE}{NTAB(4)}{MARK4ENDLN(BC3)}{NEWLINE}{MK3}"""
+						strToRtn1_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
+						strToRtn2_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
+						strToRtn3_ += f"""{NTAB(3)}{thisBTNName2_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_]}{NEWLINE}"""
+						# ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
+					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
 					elif thisBTNName2_ in BTNSHOLDABLELIST:
-						# ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5 ⥥5
-						strToRtn_ += f"{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}"
-						strToRtn1_ += f"{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}"
-						strToRtn2_ += f"{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}"
-						strToRtn3_ += f"{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}"
+						# 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥ 6⥥
+						strToRtn_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn1_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn2_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+						strToRtn3_ += f"""{NTAB(3)}{thisBTNName2_}: {OBRCE}  # holdable buttons {thisBTNName1_}:{thisBTNName2_}{NEWLINE}{NTAB(2)}{MARK2STARTLN(BC2)}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
+					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
+						# ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣
 						for thisBTNName3_, thisAX_ in thisVal3.items():
-							# ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6 ⥥6
-							strToRtn_ += f"{NTAB(4)}{thisBTNName3_}: {OBRKT}{NEWLINE}{thisAX_}{NTAB(4)}{CBRKT},{NEWLINE}"
-							strToRtn1_ += f"{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"
-							strToRtn2_ += f"{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"
-							strToRtn3_ += f"{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"
-							# ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6
-						strToRtn_ += f"{NTAB(3)}{CBRCE},{NEWLINE}"
-						strToRtn1_ += f"{NTAB(3)}{CBRCE},{NEWLINE}"
-						strToRtn2_ += f"{NTAB(3)}{CBRCE},{NEWLINE}"
-						strToRtn3_ += f"{NTAB(3)}{CBRCE},{NEWLINE}"
-						# ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5
-					# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
-				strToRtn_ += f"{NTAB(2)}{CBRCE},{NEWLINE}"
-				strToRtn1_ += f"{NTAB(2)}{CBRCE},{NEWLINE}"
-				strToRtn2_ += f"{NTAB(2)}{CBRCE},{NEWLINE}"
-				strToRtn3_ += f"{NTAB(2)}{CBRCE},{NEWLINE}"
-				# ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3
-			# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
-		# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
-		strToRtn_ += f"{NTAB(1)}{CBRCE},{NEWLINE}"
-		strToRtn1_ += f"{NTAB(1)}{CBRCE},{NEWLINE}"
-		strToRtn2_ += f"{NTAB(1)}{CBRCE},{NEWLINE}"
-		strToRtn3_ += f"{NTAB(1)}{CBRCE},{NEWLINE}"
-	strToRtn_ += f"{CBRCE}{NEWLINE}{NEWLINE}{strToRtn1_}{CBRCE}{NEWLINE}{NEWLINE}{strToRtn3_}{CBRCE}{NEWLINE}{NEWLINE}{strToRtn2_}{CBRCE}{NEWLINE}{NEWLINE}"
+							# 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥ 7⥥
+							strToRtn_ += f"""{NTAB(4)}{thisBTNName3_}: {OBRKT}{NEWLINE}{NTAB(5)}{MARK3STARTLN(thisAX_)}{thisAX_}{NTAB(4)}{CBRKT},{NEWLINE}{NTAB(3)}{MARK3ENDLN(thisAX_)}"""
+							strToRtn1_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45RPTDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
+							strToRtn2_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNTYPEDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
+							strToRtn3_ += f"""{NTAB(4)}{thisBTNName3_}: {FMDO_SCTN45BTNNDXDICT[thisDEV_MYNAME_][thisBTNName1_][thisBTNName2_][thisBTNName3_]}{NEWLINE}"""
+							# ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7 ⥣7
 
-	strToRtn_ += f"""{makeAComment("SCTN46 device XLATE table")}XLATETABLE = {OBRCE}{NEWLINE}"""
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
+					# ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣ ⥥5⥣
+						# ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣ ⥥6⥣
+						strToRtn_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}{thisDEV_MYNAME_}{NEWLINE}"""
+						strToRtn1_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
+						strToRtn2_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
+						strToRtn3_ += f"""{NTAB(2)}{MARK2ENDLN(BC2)}{NTAB(3)}{CBRCE},{NEWLINE}"""
+
+						# ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6 ⥣6
+					# ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5 ⥣5
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+			# ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣ ⥥3⥣
+				# ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣ ⥥4⥣
+				strToRtn_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn1_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn2_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+				strToRtn3_ += f"""{NTAB(2)}{CBRCE},{NEWLINE}{NTAB(3)}{MARK3ENDLN(BC2)}{NEWLINE}{MK2}"""
+
+				# ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4 ⥣4
+			# ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3 ⥣3
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+		strToRtn_ += f"""{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERE}{NEWLINE}"""
+		strToRtn1_ += f"""{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERE}{NEWLINE}"""
+		strToRtn2_ += f"""{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERE}{NEWLINE}"""
+		strToRtn3_ += f"""{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERE}{NEWLINE}"""
+
+		# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 for thisDEV_MYNAME_, thisVal1_ in FMDO_SCTN45PROFDICT.items():
+	strToRtn_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{NEWLINE}{strToRtn1_}{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{NEWLINE}{strToRtn3_}{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{NEWLINE}{strToRtn2_}{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
+
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN46 device XLATE table
+	strToRtn_ += f"""{makeAComment("SCTN46 device XLATE table")}XLATETABLE = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
 	for thisDEV_MYNAME_, entries_ in FMDO_SCTN46XLATEDICT.items():
-		strToRtn_ += f"{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{entries_}{NTAB(1)}{CBRCE},{NEWLINE}"
-	strToRtn_ += f"{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERELN}{entries_}{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERELN}"""
+	strToRtn_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERELN}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN46 device XLATE table
 
-	strToRtn_ += f"""{makeAComment("SCTN49 DIR to BTN SIM translation")}DIR2BTN = {OBRCE}{NEWLINE}"""
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN49 DIR to BTN SIM translation
+	strToRtn_ += f"""{makeAComment("SCTN49 DIR to BTN SIM translation")}DIR2BTN = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
 	for thisDEVT_, theseItems_ in FMDO_SCTN49DIRTRANSDICT.items():
-		strToRtn_ += f"""{NTAB(1)}{thisDEVT_}: {OBRCE}  # {FMDO_SCTN49DIRTRANSCMNTDICT[thisDEVT_]}{NEWLINE}{theseItems_}{NTAB(1)}{CBRCE},{NEWLINE}"""
-	strToRtn_ += f"{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}{thisDEVT_}: {OBRCE}  # {FMDO_SCTN49DIRTRANSCMNTDICT[thisDEVT_]}{NEWLINE}{NTAB(2)}{FOLD2STARTHERELN}{theseItems_}{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERELN}"""
+	strToRtn_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERELN}{NEWLINE}{NEWLINE}"""
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN49 DIR to BTN SIM translation
 
 	strToRtn_ += f"""#{NEWLINE}#{NEWLINE}{makeAComment("end of managed section of DO.py")}#{NEWLINE}#{NEWLINE}{NEWLINE}{NEWLINE}"""
 
@@ -2998,73 +2977,64 @@ def makeDO():
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def makeFM():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
 	strToRtn_ = ""
-	strToRtn_ += FM_TOP
-	strToRtn_+= readFileToStr(SCTN0102NAME)
+	strToRtn_ += f"""{readFileToStr(FMTOP_NAME)}{readFileToStr(SCTN0102NAME)}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN03 TYPEs and lambda")
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{makeAComment("SCTN03 TYPEs and lambda")}"""
 	for name_, value_ in FMCF_SCTN03TYPEDICT.items():
-		strToRtn_ += f"{name_} = {value_}  # {FMCF_SCTN03TYPECMNTDICT[name_]}{NEWLINE}"
+		strToRtn_ += f"""{name_} = {value_}  # {FMCF_SCTN03TYPECMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += NEWLINE + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
 	strToRtn_ += makeAComment("SCTN04 BTNS")
 	strToRtn1_ = ""
 	for name_, value_ in FMDO_SCTN47BTNSDICT.items():
-		strToRtn_ += f"{name_} = {DBLQT}{name_}{DBLQT}  # {FMDO_SCTN47BTNSCMNTDICT[name_]}{NEWLINE}"
+		strToRtn_ += f"""{name_} = {DBLQT}{name_}{DBLQT}  # {FMDO_SCTN47BTNSCMNTDICT[name_]}{NEWLINE}"""
 		if value_ == "True":
-			strToRtn1_ += f"{NTAB(1)}{name_},{NEWLINE}"
-	strToRtn_ += f"{NEWLINE}{NEWLINE}BTNSHOLDABLELIST = {OBRKT}{NEWLINE}{strToRtn1_}{CBRKT}{NEWLINE}{NEWLINE}"
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+			strToRtn1_ += f"""{NTAB(1)}{name_},{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}BTNSHOLDABLELIST = {OBRKT}{NEWLINE}{strToRtn1_}{CBRKT}{NEWLINE}{NEWLINE}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN11 FMAX _DEF_")
+	## ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{makeAComment("SCTN11 FMAX _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN11AXDICT.items():
-		strToRtn_ += f"{name_} = {value_}  # {FMFM_SCTN11AXCMNTDICT[name_]}{NEWLINE}"
-		strToRtn01_ += f"{NTAB(1)}{name_},  # {FMFM_SCTN11AXCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += NEWLINE + NEWLINE
-	strToRtn_ += f"FMAXFM_AXLST = {OBRKT}{NEWLINE}{strToRtn01_}{CBRKT}{NEWLINE}"
-	strToRtn_ += NEWLINE + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{name_} = {value_}  # {FMFM_SCTN11AXCMNTDICT[name_]}{NEWLINE}"""
+		strToRtn01_ += f"""{NTAB(1)}{name_},  # {FMFM_SCTN11AXCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}FMAXFM_AXLST = {OBRKT}{NEWLINE}{strToRtn01_}{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN12 VAL _DEF_")
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{makeAComment("SCTN12 VAL _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN12VALDICT.items():
-		strToRtn_ += f"{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN12VALCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += NEWLINE + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN12VALCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN13 _DICT_ _DEF_")
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{makeAComment("SCTN13 _DICT_ _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN13DICTDICT.items():
-		strToRtn_ += f"{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN13DICTCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += NEWLINE + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN13DICTCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
 
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += makeAComment("SCTN14 _LIST_ _DEF_")
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{makeAComment("SCTN14 _LIST_ _DEF_")}"""
 	for name_, value_ in FMFM_SCTN14LISTDICT.items():
-		strToRtn_ += f"{name_} = {value_}  # {FMFM_SCTN14LISTCMNTDICT[name_]}{NEWLINE}"
-	strToRtn_ += NEWLINE + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{name_} = {value_}  # {FMFM_SCTN14LISTCMNTDICT[name_]}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}{NEWLINE}{makeAWideComment("end of managed portions of FM.py")}{NEWLINE}{NEWLINE}"""
 
-	strToRtn_ += f"""#{NEWLINE}#{NEWLINE}{makeAComment("end of managed portions of FM.py")}#{NEWLINE}#{NEWLINE}{NEWLINE}{NEWLINE}"""
-
-	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-	strToRtn_ += f"{NTAB(1)}global {BKSLSH}{NEWLINE}"
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
+	strToRtn_ += f"""{NTAB(1)}global {BKSLSH}{NEWLINE}"""
 	for key_ in FMFM_SCTN13DICTDICT:
-		strToRtn_ += f"{NTAB(2)}{key_}, {BKSLSH}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(2)}{key_}, {BKSLSH}{NEWLINE}"""
 	for key_ in FMFM_SCTN14LISTDICT:
-		strToRtn_ += f"{NTAB(2)}{key_}, {BKSLSH}{NEWLINE}"
-	strToRtn_ = strToRtn_[:-4] + NEWLINE
-	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+		strToRtn_ += f"""{NTAB(2)}{key_}, {BKSLSH}{NEWLINE}"""
+	strToRtn_ = f"""{strToRtn_[:-4]}{NEWLINE}"""
 
 	return strToRtn_
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
+
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
@@ -3074,16 +3044,19 @@ def makeFM():
 def makeHBI():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
-	strToRtn_ += f"{HBI_TOP}"
+	strToRtn_ += f"""{readFileToStr(HBITOP_NAME)}"""
 	for item_ in FMHBI_SCTN50HBIABSLIST:
-		strToRtn_ += f"{NTAB(1)}devHBI.enable{OPAREN}LD.EV_ABS.{item_}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}devHBI.enable{OPAREN}LD.EV_ABS.{item_}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}"""
 	for item_ in FMHBI_SCTN51HBIBTNLIST:
-		strToRtn_ += f"{NTAB(1)}devHBI.enable{OPAREN}LD.EV_KEY.{item_}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}devHBI.enable{OPAREN}LD.EV_KEY.{item_}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}"""
 	for item_ in FMHBI_SCTN52HBIKEYLIST:
-		strToRtn_ += f"{NTAB(1)}devHBI.enable{OPAREN}LD.EV_KEY.{item_}{NEWLINE}"
+		strToRtn_ += f"""{NTAB(1)}devHBI.enable{OPAREN}LD.EV_KEY.{item_}{NEWLINE}"""
+	strToRtn_ += f"""{NEWLINE}"""
 	for item_ in FMHBI_SCTN53HBIRELLIST:
-		strToRtn_ += f"{NTAB(1)}devHBI.enable{OPAREN}LD.EV_REL.{item_}{NEWLINE}"
-	strToRtn_ += f"{HBI_BTM}"
+		strToRtn_ += f"""{NTAB(1)}devHBI.enable{OPAREN}LD.EV_REL.{item_}{NEWLINE}"""
+	strToRtn_ += f"""{readFileToStr(HBIBTM_NAME)}"""
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
@@ -3093,12 +3066,7 @@ def makeHBI():
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def doErrorItem(message_, itemToError_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	print(f"""
-{message_}
-is a tuple {isinstance(itemToError_, tuple)}
-item as parsed
-{repr(itemToError_)}
-""")
+	print(f"""{NEWLINE}{message_}{NEWLINE}is a tuple {isinstance(itemToError_, tuple)}{NEWLINE}item as parsed{NEWLINE}{repr(itemToError_)}{NEWLINE}""")
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
@@ -3108,10 +3076,10 @@ item as parsed
 def explodeItem(itemToExplode_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
-	strToRtn_ += f"{NTAB(1)}{OPAREN}{DBLQT}{itemToExplode_[0]}{DBLQT}, {itemToExplode_[1]}, "
+	strToRtn_ += f"""{NTAB(1)}{OPAREN}{DBLQT}{itemToExplode_[0]}{DBLQT}, {itemToExplode_[1]}, """
 	for TI1_ in range(2, len(itemToExplode_)):
-		strToRtn_ += f"{DBLQT}{itemToExplode_[TI1_]}{DBLQT}, "
-	strToRtn_ = strToRtn_[:-1] + f"{CPAREN},{NEWLINE}"
+		strToRtn_ += f"""{DBLQT}{itemToExplode_[TI1_]}{DBLQT}, """
+	strToRtn_ = f"""{strToRtn_[:-1]}{CPAREN},{NEWLINE}"""
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
@@ -3170,7 +3138,10 @@ def parseTBGLST(FDTBGLST):
 		FMHBI_SCTN52HBIKEYLIST, \
 		FMHBI_SCTN53HBIRELLIST
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+
 	for thisItem_ in TBGLST:
+		# 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ 2⥥ for thisItem_ in TBGLST:
+
 		FDTBGLST.write(f"{explodeItem(thisItem_)}")
 		thisItemLen_ = len(thisItem_)
 		if thisItemLen_ < 3:
@@ -3185,11 +3156,16 @@ def parseTBGLST(FDTBGLST):
 		if thisAX_ not in FMAXFM_AXLST:
 			doErrorItem("not a supported action in FM", thisItem_)
 			continue
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		if thisAX_ is None:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN03LAMBDADEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3202,6 +3178,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN03TYPEDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3214,6 +3192,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN21STRDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3226,6 +3206,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN21VALDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3238,6 +3220,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN22PARMDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 6:
@@ -3249,6 +3233,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN22STRENTRYADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3260,6 +3246,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN22VALENTRYADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3271,6 +3259,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN24LISTDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3282,6 +3272,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN24LISTSTRADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3293,6 +3285,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN24LISTSTRADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3304,6 +3298,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN24LISTVALADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3315,6 +3311,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN41DEVICEDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3330,6 +3328,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN41DICTKEYDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3341,6 +3341,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN41LAMBDADEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3353,6 +3355,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN41STRDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3365,6 +3369,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN41VALDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3377,6 +3383,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIEABSDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3389,6 +3397,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIEBTNDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3401,6 +3411,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIEKEYDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3413,6 +3425,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIERELDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3425,6 +3439,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIESPCLDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3438,6 +3454,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN42LDIESYNDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3450,18 +3468,23 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN43AXDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-			if thisItemLen_ != 3:
-				doErrorItem("not 3 items", thisItem_)
+			if thisItemLen_ != 4:
+				doErrorItem("not 4 items", thisItem_)
 				continue
-			FMDO_SCTN41DEVICEDEFDICT[thisName_] = f"{thisName_} = {DBLQT}{thisName_}{DBLQT}"
-			FMDO_SCTN41DEVICEDEFCMNTDICT[thisName_] = f"{thisComment_}"
-			FMDO_SCTN43AXDEFDICT[thisName_] = ""
-			FMDO_SCTN43AXDEFCMNTDICT[thisName_] = f"{thisComment_}"
+			thisAXName_ = thisItem_[2]
+			FMDO_SCTN41DEVICEDEFDICT[thisAXName_] = f"{thisAXName_} = {DBLQT}{thisAXName_}{DBLQT}"
+			FMDO_SCTN41DEVICEDEFCMNTDICT[thisAXName_] = f"{thisComment_}"
+			FMDO_SCTN43AXDEFDICT[thisAXName_] = ""
+			FMDO_SCTN43AXDEFCMNTDICT[thisAXName_] = f"{thisComment_}"
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN43AXVALADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3475,6 +3498,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN44DEVICEENTRYSTRADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 6:
@@ -3489,6 +3514,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN44DEVICEENTRYVALADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 6:
@@ -3504,6 +3531,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN45HOLDABLEADD1:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 9:
@@ -3545,6 +3574,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN45HOLDABLEADD2:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 10:
@@ -3595,6 +3626,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN45NOTHOLDABLEADD1:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 8:
@@ -3627,6 +3660,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN46XLATEADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 6:
@@ -3641,6 +3676,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN47BTNSDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3657,6 +3694,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN48EVTYPEDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3671,6 +3710,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN48EVTYPELST:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3684,6 +3725,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN49DIRTRANSDEVDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3696,6 +3739,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN49DIRTRANSVALADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 6:
@@ -3710,6 +3755,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXFM_SCTN11AXDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 3:
@@ -3720,6 +3767,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXFM_SCTN12VALDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 5:
@@ -3732,6 +3781,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXFM_SCTN13DICTDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 3:
@@ -3742,6 +3793,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXFM_SCTN14LISTDEF:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 3:
@@ -3752,6 +3805,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXHBI_SCTN50ABSADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3762,6 +3817,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXHBI_SCTN51BTNADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3772,6 +3829,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXHBI_SCTN52KEYADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3782,6 +3841,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
+		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXHBI_SCTN53RELADD:
 			# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 			if thisItemLen_ != 4:
@@ -3792,6 +3853,8 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+		# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
@@ -3804,6 +3867,50 @@ def __main__():
 		FDOut.write(f"TBGLST = {OBRKT}{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}")
 		parseTBGLST(FDOut)
 		FDOut.write(f"{NTAB(1)}{FOLD1ENDHERE}{NEWLINE}{CBRKT}{NEWLINE}")
+
+	# FMCF_SCTN03TYPECMNTDICT.sort()
+	# FMCF_SCTN03TYPEDICT.sort()
+	# FMCF_SCTN21DEFCMNTDICT.sort()
+	# FMCF_SCTN21DEFDICT.sort()
+	# FMCF_SCTN22OPTIONSCMNTDICT.sort()
+	# FMCF_SCTN22OPTIONSDICT.sort()
+	# FMCF_SCTN22PARMSCMNTDICT.sort()
+	# FMCF_SCTN22PARMSDICT.sort()
+	# FMCF_SCTN23DICTCMNTDICT.sort()
+	# FMCF_SCTN23DICTDICT.sort()
+	# FMCF_SCTN24LISTCMNTDICT.sort()
+	# FMCF_SCTN24LISTDICT.sort()
+	# FMDO_SCTN41DEVICEDEFCMNTDICT.sort()
+	# FMDO_SCTN41DEVICEDEFDICT.sort()
+	# FMDO_SCTN42LDIECMNTDICT.sort()
+	# FMDO_SCTN42LDIEDICT.sort()
+	# FMDO_SCTN43AXDEFCMNTDICT.sort()
+	# FMDO_SCTN43AXDEFDICT.sort()
+	# FMDO_SCTN44DEVICESCMNTDICT.sort()
+	# FMDO_SCTN44DEVICESDICT.sort()
+	# FMDO_SCTN45BTNNDXDICT.sort()
+	# FMDO_SCTN45BTNTYPEDICT.sort()
+	# FMDO_SCTN45PROFDICT.sort()
+	# FMDO_SCTN45RPTDICT.sort()
+	# FMDO_SCTN46XLATECMNTDICT.sort()
+	# FMDO_SCTN46XLATEDICT.sort()
+	# FMDO_SCTN47BTNSCMNTDICT.sort()
+	# FMDO_SCTN47BTNSDICT.sort()
+	# FMDO_SCTN48DEFCMNTDICT.sort()
+	# FMDO_SCTN48DEFDICT.sort()
+	# FMDO_SCTN48TYPESCMNTDICT.sort()
+	# FMDO_SCTN48TYPESDICT.sort()
+	# FMDO_SCTN49DIRTRANSCMNTDICT.sort()
+	# FMDO_SCTN49DIRTRANSDICT.sort()
+	# FMFM_SCTN11AXCMNTDICT.sort()
+	# FMFM_SCTN11AXDICT.sort()
+	# FMFM_SCTN12VALCMNTDICT.sort()
+	# FMFM_SCTN12VALDICT.sort()
+	# FMFM_SCTN13DICTCMNTDICT.sort()
+	# FMFM_SCTN13DICTDICT.sort()
+	# FMFM_SCTN14LISTCMNTDICT.sort()
+	# FMFM_SCTN14LISTDICT.sort()
+
 
 	with open(CF_NAME, "tw") as FDOut:
 		strToWrt_ = makeCF()

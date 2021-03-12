@@ -1,16 +1,25 @@
+
+
 #
 #
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN50 start of HBI
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# SCTN50 start of HBI
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#
+#
+
+
 from time import sleep
-#
 import libevdev as LD
+
+
+import CF
 
 
 def IDB():
 	devHBI = LD.Device()
 	devHBI.name = "HBI hot beef injector"
+
 	devHBI.enable(LD.EV_KEY.BTN_LEFT)  # ability to send MSEBTNLT
 	devHBI.enable(LD.EV_KEY.BTN_MIDDLE)  # ability to send MSEBTNMID
 	devHBI.enable(LD.EV_KEY.BTN_RIGHT)  # ability to send MSEBTNRT
@@ -19,6 +28,7 @@ def IDB():
 	devHBI.enable(LD.EV_KEY.BTN_FORWARD)  # ability to send MSEBTNFWD
 	devHBI.enable(LD.EV_KEY.BTN_BACK)  # ability to send MSEBTNBAK
 	devHBI.enable(LD.EV_KEY.BTN_TASK)  # ability to send MSEBTNTASK
+
 	devHBI.enable(LD.EV_KEY.KEY_0)  # ability to send KEY_0
 	devHBI.enable(LD.EV_KEY.KEY_1)  # make KEY_1 available
 	devHBI.enable(LD.EV_KEY.KEY_102ND)  # make KEY_102ND available
@@ -182,19 +192,24 @@ def IDB():
 	devHBI.enable(LD.EV_KEY.KEY_YEN)  # make KEY_YEN available
 	devHBI.enable(LD.EV_KEY.KEY_Z)  # make KEY_Z available
 	devHBI.enable(LD.EV_KEY.KEY_ZENKAKUHANKAKU)  # make KEY_ZENKAKUHANKAKU available
+
 	devHBI.enable(LD.EV_REL.REL_HWHEEL)  # make REL_HWHEEL available
 	devHBI.enable(LD.EV_REL.REL_HWHEEL_HI_RES)  # make REL_HWHEEL_HI_RES available
 	devHBI.enable(LD.EV_REL.REL_WHEEL)  # make REL_WHEEL available
 	devHBI.enable(LD.EV_REL.REL_WHEEL_HI_RES)  # make REL_WHEEL_HI_RES available
 	devHBI.enable(LD.EV_REL.REL_X)  # make REL_X available
 	devHBI.enable(LD.EV_REL.REL_Y)  # make REL_Y available
+
 	hbiDevice = devHBI.create_uinput_device()
 	print(f"New device at {hbiDevice.devnode} ({hbiDevice.syspath})")
 	sleep(1)
 	return hbiDevice
 
+
 #
 #
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * end of HBI.py
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# SCTN50 end of HBI
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#
+#
