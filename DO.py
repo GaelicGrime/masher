@@ -3669,7 +3669,7 @@ def fixQueue(queueIn_):
 		return listToRtn_
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	# key, ltstk return the key(s) + last ltstk
+	# key, rtstk return the key(s) + last rtstk
 	elif (queueOutBtns_ != []) and  (queueOutHat_ == []) and (queueOutLtStk_ == []) and (queueOutRels_ == []) and (queueOutRtStk_ != []):
 		listToRtn_ = queueOutBtns_
 		listToRtn_.append(queueOutRtStk_[-1])
