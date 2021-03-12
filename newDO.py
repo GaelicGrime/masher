@@ -77,11 +77,15 @@ AXMSEBTNRT_T02 = "AXMSEBTNRT_T02"  # MSE BTN LEFT_2 released
 AXMSEBTNSIDE = "AXMSEBTNSIDE"  # MSE BTN SIDE
 AXMSEBTNTASK = "AXMSEBTNTASK"  # MSE BTN TASK
 AXMSEDN = "AXMSEDN"  # MSE DOWN
+AXMSEDNA = "AXMSEDNA"  # MSE DOWN
 AXMSEDNLT = "AXMSEDNLT"  # MSE DOWNLT
 AXMSEDNRT = "AXMSEDNRT"  # MSE DOWNRT
 AXMSELT = "AXMSELT"  # MSE LEFT
+AXMSELTA = "AXMSELTA"  # MSE LEFT
 AXMSERT = "AXMSERT"  # MSE RIGHT
+AXMSERTA = "AXMSERTA"  # MSE RIGHT
 AXMSEUP = "AXMSEUP"  # MSE UP
+AXMSEUPA = "AXMSEUPA"  # MSE UP
 AXMSEUPLT = "AXMSEUPLT"  # MSE UPLT
 AXMSEUPRT = "AXMSEUPRT"  # MSE UPRT
 AXMSEWHLDN = "AXMSEWHLDN"  # wheel DOWN
@@ -222,12 +226,15 @@ BTNM_10 = "BTNM_10"  # BTNM_10 on mice
 BTNM_11 = "BTNM_11"  # BTNM_11 on mice
 BTNM_12 = "BTNM_12"  # BTNM_12/SE most on mice
 BTNM_MDN = "BTNM_MDN"  # BTNMDN/MSE_DN on mice
+BTNM_MDNA = "BTNM_MDNA"  # BTNMDN/MSE_DN on mice
 BTNM_MDNLT = "BTNM_MDNLT"  # BTNMDN/MSE_DNLT on mice
 BTNM_MDNRT = "BTNM_MDNRT"  # BTNMDN/MSE_DNRT on mice
 BTNM_MLT = "BTNM_MLT"  # BTNMLT/MSE_LT on mice
 BTNM_MRLS = "BTNM_MRLS"  # MSE_MRLS on mice
 BTNM_MRT = "BTNM_MRT"  # BTNMRT/MSE_RT on mice
+BTNM_MRTA = "BTNM_MRTA"  # BTNMRT/MSE_RT on mice
 BTNM_MUP = "BTNM_MUP"  # BTNMUP/MSE_UP on mice
+BTNM_MUPA = "BTNM_MUPA"  # BTNMUP/MSE_UP on mice
 BTNM_MUPLT = "BTNM_MUPLT"  # BTNMUP/MSE_UPLT on mice
 BTNM_MUPRT = "BTNM_MUPRT"  # BTNMUP/MSE_UPRT on mice
 BTNM_WHDN = "BTNM_WHDN"  # BTNMDN/MSE_DN on mice
@@ -322,12 +329,15 @@ DEVCD_BTNM_10 = BTNM_10  # shortcut to BTNM_10
 DEVCD_BTNM_11 = BTNM_11  # shortcut to BTNM_11
 DEVCD_BTNM_12 = BTNM_12  # shortcut to BTNM_12
 DEVCD_BTNM_MDN = BTNM_MDN  # shortcut to BTNM_05WHDN
+DEVCD_BTNM_MDNA = BTNM_MDNA  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MDNLT = BTNM_MDNLT  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MDNRT = BTNM_MDNRT  # shortcut to BTNM_05WHDN
 DEVCD_BTNM_MLT = BTNM_MLT  # shortcut to BTNM_06WHLT
 DEVCD_BTNM_MRLS = BTNM_MRLS  # shortcut to BTNM_MRLS
 DEVCD_BTNM_MRT = BTNM_MRT  # shortcut to BTNM_07WHRT
+DEVCD_BTNM_MRTA = BTNM_MRTA  # shortcut to BTNM_07WHRT
 DEVCD_BTNM_MUP = BTNM_MUP  # shortcut to BTNM_04WHUP
+DEVCD_BTNM_MUPA = BTNM_MUPA  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPLT = BTNM_MUPLT  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPRT = BTNM_MUPRT  # shortcut to BTNM_04WHUP
 DEVCD_BTNS_MODE1 = BTNS_MODE1  # shortcut to special mode 1 button
@@ -386,7 +396,7 @@ DIRDNRT_MSK_OR = lambda X_: DIRDNRT_MSK_VAL | X_  # FLAG DIR DOWN or lambda
 DIRDNRT_MSK_VAL = 0B1001  # MASK DIR DOWN RIGHT
 DIRDNRT_OR = lambda X_: DIRDNRT_VAL | X_  # FLAG DIR DNRT or lambda
 DIRDNRT_VAL = 0B0110  # FLAG DIR DOWN RIGHT
-DIRDNUP_VAL = 0B0101  # FLAG DIRDNUP 
+DIRDNUP_VAL = 0B0101  # FLAG DIRDNUP
 DIRDN_AND = lambda X_: DIRDN_VAL & X_  # FLAG DIR DN and lambda
 DIRDN_MSK_AND = lambda X_: DIRDN_MSK_VAL & X_  # FLAG DIR DOWN and lambda
 DIRDN_MSK_OR = lambda X_: DIRDN_MSK_VAL | X_  # FLAG DIR DOWN or lambda
@@ -462,6 +472,7 @@ KEYRLS = 0X00  # KEY released
 LOGITECH = "LOGITECH"  # device Logitech trackman marble
 MIMD = "MIMD"  # define MIMD gamepad
 MOUSEDISTANCE = 2  # how far to move the mouse per event
+MOUSEDISTANCEARB = 2  # how far to move the mouse per event
 OBJMODE_CLASS = "OBJMODE_CLASS"  # dict key for class internal []{}
 OBJMODE_STANDALONE = "OBJMODE_STANDALONE"  # dict key for standalone []{}
 OBJMODE_STANDALONECLASS = "OBJMODE_STANDALONECLASS"  # dict key for a class []{}
@@ -1056,9 +1067,13 @@ MSEWHL_LT = IE(LD.EV_REL.REL_HWHEEL, -WHEELDISTANCE)  # move MSE WHL left WHEELD
 MSEWHL_RT = IE(LD.EV_REL.REL_HWHEEL, WHEELDISTANCE)  # move MSE WHL right WHEELDISTANCE
 MSEWHL_UP = IE(LD.EV_REL.REL_WHEEL, WHEELDISTANCE)  # move MSE WHL up WHEELDISTANCE
 MSE_DN = IE(LD.EV_REL.REL_Y, MOUSEDISTANCE)  # how far to move the mouse per event
+MSE_DNA = IE(LD.EV_REL.REL_Y, MOUSEDISTANCEARB)  # how far to move the mouse per event
 MSE_LT = IE(LD.EV_REL.REL_X, -MOUSEDISTANCE)  # move MSE left -MOUSEDISTANCE
+MSE_LTA = IE(LD.EV_REL.REL_X, -MOUSEDISTANCEARB)  # move MSE left -MOUSEDISTANCE
 MSE_RT = IE(LD.EV_REL.REL_X, MOUSEDISTANCE)  # move mouse right MOUSEDISTANCE
+MSE_RTA = IE(LD.EV_REL.REL_X, MOUSEDISTANCEARB)  # move mouse right MOUSEDISTANCE
 MSE_UP = IE(LD.EV_REL.REL_Y, -MOUSEDISTANCE)  # move mouse up MOUSEDISTANCE
+MSE_UPA = IE(LD.EV_REL.REL_Y, -MOUSEDISTANCEARB)  # move mouse up MOUSEDISTANCE
 SYNREPORT = IE(LD.EV_SYN.SYN_REPORT, 0)  # send a sync report 0
 # fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
@@ -1242,6 +1257,23 @@ ACTIONS = {
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	AXMSEBTNLT_L00: [  # MSE BTN LEFT
+		MSEBTNLT_PRSHLD,  # press MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+		MSEBTNLT_RLS,  # release MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNLT_L01: [  # MSE BTN LEFT_1 pressed
+		MSEBTNLT_PRSHLD,  # press MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AXMSEBTNLT_L02: [  # MSE BTN LEFT_2 released
+		MSEBTNLT_RLS,  # release MSEBTNLT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEBTNLT_T01: [  # MSE BTN LEFT_1 pressed
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		MSEBTNLT_PRSHLD,  # press MSEBTNLT
@@ -1313,6 +1345,11 @@ ACTIONS = {
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	AXMSEDNA: [  # MSE DOWN
+		MSE_DNA,  # MSE_DN by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEDNLT: [  # MSE DOWNLT
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		MSE_DN,  # MSE_DN by MOUSEDISTANCE
@@ -1336,6 +1373,11 @@ ACTIONS = {
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	AXMSELTA: [  # MSE LEFT
+		MSE_LTA,  # MSE_LT by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSERT: [  # MSE RIGHT
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		MSE_RT,  # MSE_RT by MOUSEDISTANCE
@@ -1343,12 +1385,22 @@ ACTIONS = {
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	AXMSERTA: [  # MSE RIGHT
+		MSE_RTA,  # MSE_RT by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AXMSEUP: [  # MSE UP
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		MSE_UP,  # MSE_UP by MOUSEDISTANCE
 		SYNREPORT,  # SYNREPORT
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
+
+	AXMSEUPA: [  # MSE UP
+		MSE_UPA,  # MSE_UP by MOUSEDISTANCE
+		SYNREPORT,  # SYNREPORT
+	],
 
 	AXMSEUPLT: [  # MSE UPLT
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
@@ -1980,6 +2032,16 @@ ACTIONS = {
 	],
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
+	AX_SHIFT_T01: [  # SHIFT toggle actions
+		KBDSHIFTLT_PRS,  # press SHIFT
+		SYNREPORT,  # SYNREPORT
+	],
+
+	AX_SHIFT_T02: [  # SHIFT toggle actions
+		KBDSHIFTLT_RLS,  # release SHIFT
+		SYNREPORT,  # SYNREPORT
+	],
+
 	AX_SPACE: [  # SPACE
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 		KBDSPC_PRS,  # press SPACE
@@ -2303,48 +2365,48 @@ DEVICES = {  # define SCTN44 DEVICES
 
 	DEFT: {  # define the DEFT trackball
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held, 
-		DEV_DEVICETYPE: DEVICETYPE_MOUSE,  # DEFT device type flag, 
-		DEV_ENABLED: False,  # DEFT enabled flag, 
-		DEV_ERR_DELTA: 300 * 60 * 100,  # 5 minutes between error checks, 
-		DEV_ERR_NEXTTIME: 0,  # DEFT next time to check error status, 
-		DEV_FD: None,  # file descriptor for DEFT, 
-		DEV_GRAB: True,  # grab the device, 
-		DEV_HASPAUSED: False,  # DEFT name, 
-		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name, 
-		DEV_QUEUE: [],  # DEFT queue, 
-		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status, 
-		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status, 
-		DEV_RPT_NEXTTIME: 0,  # DEFT next time to repeat, 
-		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # DEFT time between repeats, 
-		DEV_SPENT: False,  # DEFT queue has been sent/spent, 
-		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # DEFT status, 
+		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held,
+		DEV_DEVICETYPE: DEVICETYPE_MOUSE,  # DEFT device type flag,
+		DEV_ENABLED: False,  # DEFT enabled flag,
+		DEV_ERR_DELTA: 300 * 60 * 100,  # 5 minutes between error checks,
+		DEV_ERR_NEXTTIME: 0,  # DEFT next time to check error status,
+		DEV_FD: None,  # file descriptor for DEFT,
+		DEV_GRAB: True,  # grab the device,
+		DEV_HASPAUSED: False,  # DEFT name,
+		DEV_NAME: "ELECOM ELECOM TrackBall Mouse",  # DEFT name,
+		DEV_QUEUE: [],  # DEFT queue,
+		DEV_RELMSE_STATUS: DIRNOT_VAL,  # DEFT REL status,
+		DEV_RELMW_STATUS: DIRNOT_VAL,  # DEFT REL status,
+		DEV_RPT_NEXTTIME: 0,  # DEFT next time to repeat,
+		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # DEFT time between repeats,
+		DEV_SPENT: False,  # DEFT queue has been sent/spent,
+		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # DEFT status,
 	},
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
 	MIMD: {  # define MIMD gamepad
 		# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
-		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check, 
-		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held, 
-		DEV_DEVICETYPE: DEVICETYPE_GAMEPAD,  # MIMD device type flag, 
-		DEV_ENABLED: True,  # MIMD enabled flag, 
-		DEV_ERR_DELTA: 30000,  # 300 seconds delta for error checking, 
-		DEV_ERR_NEXTTIME: 0,  # MIMD next time to check error status, 
-		DEV_FD: None,  # MIMD file descriptor, 
-		DEV_GRAB: True,  # grab the MIMD, 
-		DEV_HASPAUSED: False,  # MIMD name, 
-		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name, 
-		DEV_QUEUE: [],  # MIMD queue, 
-		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status, 
-		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat, 
-		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # MIMD time between repeats, 
-		DEV_SPENT: False,  # MIMD queue has been sent/spent, 
-		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # MIMD status, 
+		DEV_ABSHAT_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_ABSLTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_ABSRTSTK_STATUS: DIRNOT_VAL,  # no ABS to status check,
+		DEV_BTN_STATUS: BTNS_NOT,  # no buttons held,
+		DEV_DEVICETYPE: DEVICETYPE_GAMEPAD,  # MIMD device type flag,
+		DEV_ENABLED: True,  # MIMD enabled flag,
+		DEV_ERR_DELTA: 30000,  # 300 seconds delta for error checking,
+		DEV_ERR_NEXTTIME: 0,  # MIMD next time to check error status,
+		DEV_FD: None,  # MIMD file descriptor,
+		DEV_GRAB: True,  # grab the MIMD,
+		DEV_HASPAUSED: False,  # MIMD name,
+		DEV_NAME: "ShanWan     GAME:PAD S PRO-BLUETOOTH-V6.20",  # MIMD name,
+		DEV_QUEUE: [],  # MIMD queue,
+		DEV_RELMSE_STATUS: DIRNOT_VAL,  # MIMD REL status,
+		DEV_RPT_NEXTTIME: 0,  # MIMD next time to repeat,
+		DEV_RPT_NEXTTIMEDELTA: DORPT_NOT,  # MIMD time between repeats,
+		DEV_SPENT: False,  # MIMD queue has been sent/spent,
+		DEV_STATUS: DEVICESTATUS_DISCONNECTED,  # MIMD status,
 	},
 		# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
@@ -3464,5 +3526,3 @@ DIR2BTN = {
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
-
-
