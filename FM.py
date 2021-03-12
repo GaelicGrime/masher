@@ -4,7 +4,10 @@
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # modules defined in FM.py
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
+# FM.py is copied, along with the appropriate FMxxxxxx.py file from CONFIGDIR to local by pythonUnitsLink.py
+# make sure if you change the modules, you also update the stored copy FMxxxxxx.py TBGLST file when you update FM.py
+# CF.py is always linked, make sure to update CFTOP.py and SCTN0102 when FM.py or CF.py are changed
+# all other units are loaded dynamically by pythonUnitsLink.py using the SCTN16 structure, FMSCTNENABLED.py file locally, etc.
 # * def doErrorItem(message_, itemToError_):
 # * def explodeItem(itemToExplode_):
 # * def makeAComment(comment_):
@@ -24,16 +27,17 @@ import hashlib as HL
 
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN01 _CHR_ _CONST_
+# * SCTN001 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
 CBRCE = "}"  # CLOSEBRACE
 CBRKT = "]"  # CLOSEBRACKET
 CMNTLEN = 150
-CONFIGDIR = "/home/will/.config/python/"
+CONFIGDIR = "/rcr/0-units/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
+ESC = "\x1b"
 FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
@@ -41,35 +45,39 @@ OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
 TABSTR = "\t"  # TAB
+TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 
 #
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN02 value_ constants
+# * SCTN002 value_ constants
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
+BIN04 = lambda X: f"{X:04b}"
+BIN08 = lambda X: f"{X:08b}"
+BIN16 = lambda X: f"{X:016b}"
 BIN32 = lambda X: f"{X:032b}"
+BIN64 = lambda X: f"{X:064b}"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
-CLRALL = "\033[2J"
-CLRDOWN = "\033[J"
-CLREOL = "\033[K"
-CMNTLINE = "# * " + "#*" * CMNTLEN
+CLRALL = f"{ESC}[2J"
+CLRDOWN = f"{ESC}[J"
+CLREOL = f"{ESC}[K"
+CMNTLINE = f"""# * {"#*" * CMNTLEN}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
 DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
-EEOL = "\033[K"
-_EMPTY_DICT_ = {}
-_EMPTY_LIST_ = []
-_EMPTY_STR_ = ""
-EMPTYSTRLST = [None, "", DBLQT, DBLQT + DBLQT, "'", "''", "`", "None", "\r", "\n", "\r\n", "\n\r", ]
-_EMPTY_TUPLE_ = ()
-ESC = "\x1b"
+EEOL = "{ESC}[K"
+EMPTY_DICT = {}
+EMPTY_LIST = []
+EMPTY_STR = ""
+EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", "'", "''", "`", "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
 FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
@@ -105,12 +113,11 @@ HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
 HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
 HEX64 = lambda X_: f"{X_:016H}"   # {thisComment_}
-IMPORTANTSTR = "# * " + "!-" * CMNTLEN  # important line marker
+IMPORTANTSTR = f"""# * {"!-" * CMNTLEN}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
-KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
-LINESUP = lambda NUM_:  f"\033[{NUM_}A"
+LINESUP = lambda NUM_:  f"{ESC}[{NUM_}A"
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -165,20 +172,25 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
-MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
-NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
-NOTMEDIAFILES = "MEDIAFILES"  # NOTMEDIAFILES key
+MOVETO = lambda LN_, COL_: f"\{ESC}[{LN_};{COL_}H"
 NOTRECURSE = "RECURSE"  # NOTRECURSE key
 NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
-NOTUNKNOWNFILES = "UNKNOWNFILES"  # NOTUNKNOWNFILES key
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
 QTSET = ['"', "'", "`"]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
 SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
 SP_NAME = "newSP.py"
+SPTOP_NAME = f"{CONFIGDIR}SPTOP.py"
 TBGLST_NAME = "TBGLST.py"
-TRIQT = DBLQT + DBLQT + DBLQT  # works most of the time triple quote
+
+
+CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from 'text' strings like color codes"}
+	f"{ESC}[0m",  # entry for ESC-[0m
+	f"{ESC}[1m",  # entry for ESC-[1m
+	f"{ESC}[32m",  # entry for ESC-[32m
+	f"{ESC}[35m",  # entry for ESC-[35m
+	f"{ESC}[36m",  # entry for ESC-[36m
+]
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
@@ -496,7 +508,7 @@ FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
 
 
 TBGLST = [
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	("CFDICT_CODES2STRIP00", FMAXCF_SCTN24LISTDEF, "CODES2STRIP", "dict holding all of the things to strip from 'text' strings like color codes",),
 	("CFDICT_CODES2STRIP01", FMAXCF_SCTN24LISTSTRADD, "CODES2STRIP", "{ESC}[0m", "entry for ESC-[0m",),
 	("CFDICT_CODES2STRIP02", FMAXCF_SCTN24LISTSTRADD, "CODES2STRIP", "{ESC}[1m", "entry for ESC-[1m",),
@@ -610,33 +622,33 @@ TBGLST = [
 	("DEVT_ABSS1D", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0X", "code for hat X entries",),
 	("DEVT_ABSS1E", FMAXDO_SCTN48EVTYPELST, "ABSS", "DEVCD_HAT0Y", "code for hat Y entries",),
 	("DEVT_BTNS00", FMAXDO_SCTN48EVTYPEDEF, "BTNS", "EV type list BTNS entry",),
-	("DEVT_BTNS01", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS02", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
-	("DEVT_BTNS03", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
-	("DEVT_BTNS04", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
-	("DEVT_BTNS05", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
-	("DEVT_BTNS06", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
-	("DEVT_BTNS07", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
-	("DEVT_BTNS08", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
-	("DEVT_BTNS09", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
-	("DEVT_BTNS0A", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
-	("DEVT_BTNS0B", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS0C", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS0D", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
-	("DEVT_BTNS0E", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS0F", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
-	("DEVT_BTNS10", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
-	("DEVT_BTNS11", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS12", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
-	("DEVT_BTNS13", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
-	("DEVT_BTNS14", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
-	("DEVT_BTNS15", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
-	("DEVT_BTNS16", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
-	("DEVT_BTNS17", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
-	("DEVT_BTNS18", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
-	("DEVT_BTNS19", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
-	("DEVT_BTNS1A", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
-	("DEVT_BTNS1B", FMAXFM_NOP, FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS01", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS02", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DN", "DEVCD_BTNGHAT_DN entry in BTNS",),
+	("DEVT_BTNS03", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DNLT", "DEVCD_BTNGHAT_DNLT entry in BTNS",),
+	("DEVT_BTNS04", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_DNRT", "DEVCD_BTNGHAT_DNRT entry in BTNS",),
+	("DEVT_BTNS05", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_LT", "DEVCD_BTNGHAT_LT entry in BTNS",),
+	("DEVT_BTNS06", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_RT", "DEVCD_BTNGHAT_RT entry in BTNS",),
+	("DEVT_BTNS07", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UP", "DEVCD_BTNGHAT_UP entry in BTNS",),
+	("DEVT_BTNS08", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UPLT", "DEVCD_BTNGHAT_UPLT entry in BTNS",),
+	("DEVT_BTNS09", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGHAT_UPRT", "DEVCD_BTNGHAT_UPRT entry in BTNS",),
+	("DEVT_BTNS0A", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DN", "DEVCD_BTNGLTSTK_DN entry in BTNS",),
+	("DEVT_BTNS0B", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DNLT", "DEVCD_BTNGLTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS0C", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_DNRT", "DEVCD_BTNGLTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS0D", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_LT", "DEVCD_BTNGLTSTK_LT entry in BTNS",),
+	("DEVT_BTNS0E", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS0F", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_RT", "DEVCD_BTNGLTSTK_RT entry in BTNS",),
+	("DEVT_BTNS10", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UP", "DEVCD_BTNGLTSTK_UP entry in BTNS",),
+	("DEVT_BTNS11", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UPLT", "DEVCD_BTNGLTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS12", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGLTSTK_UPRT", "DEVCD_BTNGLTSTK_UPRT entry in BTNS",),
+	("DEVT_BTNS13", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DN", "DEVCD_BTNGRTSTK_DN entry in BTNS",),
+	("DEVT_BTNS14", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DNLT", "DEVCD_BTNGRTSTK_DNLT entry in BTNS",),
+	("DEVT_BTNS15", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_DNRT", "DEVCD_BTNGRTSTK_DNRT entry in BTNS",),
+	("DEVT_BTNS16", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_LT", "DEVCD_BTNGRTSTK_LT entry in BTNS",),
+	("DEVT_BTNS17", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_RLS", "DEVCD_BTNGHAT_RLS entry in BTNS",),
+	("DEVT_BTNS18", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_RT", "DEVCD_BTNGRTSTK_RT entry in BTNS",),
+	("DEVT_BTNS19", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UP", "DEVCD_BTNGRTSTK_UP entry in BTNS",),
+	("DEVT_BTNS1A", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UPLT", "DEVCD_BTNGRTSTK_UPLT entry in BTNS",),
+	("DEVT_BTNS1B", FMAXFM_NOP, "FMAXDO_SCTN48EVTYPELST", "BTNS", "DEVCD_BTNGRTSTK_UPRT", "DEVCD_BTNGRTSTK_UPRT entry in BTNS",),
 	("DEVT_BTNS1C", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_01", "DEVCD_BTNG_01 entry in BTNS",),
 	("DEVT_BTNS1D", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_02", "DEVCD_BTNG_02 entry in BTNS",),
 	("DEVT_BTNS1E", FMAXDO_SCTN48EVTYPELST, "BTNS", "DEVCD_BTNG_03", "DEVCD_BTNG_03 entry in BTNS",),
@@ -1562,7 +1574,7 @@ TBGLST = [
 	("DOVAL_DIRY_OR", FMAXDO_SCTN41LAMBDADEF, "DIRY_OR", "X_: DIRY_VAL | X_", "FLAG DIR UPDN or lambda",),
 	("DOVAL_DIRY_VAL", FMAXDO_SCTN41VALDEF, "DIRY_VAL", "0B0101", "UP/DN directions",),
 	("DOVAL_DORPT_CRSR", FMAXDO_SCTN41VALDEF, "DORPT_CRSR", "200", "cursor repeat",),
-	("DOVAL_DORPT_MSE", FMAXDO_SCTN41VALDEF, "DORPT_MSE", "10", "mouse repeat",),
+	("DOVAL_DORPT_MSE", FMAXDO_SCTN41VALDEF, "DORPT_MSE", "9", "mouse repeat",),
 	("DOVAL_DORPT_NOT", FMAXDO_SCTN41VALDEF, "DORPT_NOT", "0", "no repeat",),
 	("DOVAL_DORPT_PAUSE", FMAXDO_SCTN41VALDEF, "DORPT_PAUSE", "250", "pause before repeating",),
 	("DOVAL_DORPT_WHL", FMAXDO_SCTN41VALDEF, "DORPT_WHL", "100", "mouse  wheelrepeat",),
@@ -1571,7 +1583,7 @@ TBGLST = [
 	("DOVAL_HATMAX", FMAXDO_SCTN41VALDEF, "HATMAX", "1", "HAT MAX",),
 	("DOVAL_HATMID", FMAXDO_SCTN41VALDEF, "HATMID", "0", "HAT MID/REST",),
 	("DOVAL_HATMIN", FMAXDO_SCTN41VALDEF, "HATMIN", "-1", "HAT MIN",),
-	("DOVAL_JOYSTICKDEAD", FMAXDO_SCTN41VALDEF, "JOYSTICKDEAD", "120", "DEAD zone on a lo rez ABS device",),
+	("DOVAL_JOYSTICKDEAD", FMAXDO_SCTN41VALDEF, "JOYSTICKDEAD", "100", "DEAD zone on a lo rez ABS device",),
 	("DOVAL_JOYSTICKMAX", FMAXDO_SCTN41VALDEF, "JOYSTICKMAX", "255", "MAX on lo rez ABS device",),
 	("DOVAL_JOYSTICKMID", FMAXDO_SCTN41VALDEF, "JOYSTICKMID", "128", "MID on lo rez ABS device",),
 	("DOVAL_JOYSTICKMIN", FMAXDO_SCTN41VALDEF, "JOYSTICKMIN", "0", "MIN on lo rez ABS device",),
@@ -1582,7 +1594,6 @@ TBGLST = [
 	("DOVAL_LOGITECH", FMAXDO_SCTN41DICTKEYDEF, "LOGITECH", "device Logitech trackman marble",),
 	("DOVAL_MIMD", FMAXDO_SCTN41DICTKEYDEF, "MIMD", "device for MIMD gamepads",),
 	("DOVAL_MOUSEDISTANCE", FMAXDO_SCTN41VALDEF, "MOUSEDISTANCE", "2", "how far to move the mouse per event",),
-	("DOVAL_MOUSEDISTANCEARB", FMAXDO_SCTN41VALDEF, "MOUSEDISTANCEARB", "2", "how far to move the mouse per event",),
 	("DOVAL_OBJMODE_CLASS", FMAXDO_SCTN41DICTKEYDEF, "OBJMODE_CLASS", "dict key for class internal []{}",),
 	("DOVAL_OBJMODE_STANDALONE", FMAXDO_SCTN41DICTKEYDEF, "OBJMODE_STANDALONE", "dict key for standalone []{}",),
 	("DOVAL_OBJMODE_STANDALONECLASS", FMAXDO_SCTN41DICTKEYDEF, "OBJMODE_STANDALONECLASS", "dict key for a class []{}",),
@@ -2645,7 +2656,7 @@ TBGLST = [
 	("MSE_RT", FMAXDO_SCTN42LDIERELDEF, "REL_X", "MOUSEDISTANCE", "move mouse right MOUSEDISTANCE",),
 	("MSE_UP", FMAXDO_SCTN42LDIERELDEF, "REL_Y", "-MOUSEDISTANCE", "move mouse up MOUSEDISTANCE",),
 	("SYNREPORT", FMAXDO_SCTN42LDIESYNDEF, "SYN_REPORT", "0", "send a sync report 0",),
-	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 ]
 TBGLST.sort()
 

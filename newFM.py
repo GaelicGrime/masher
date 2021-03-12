@@ -4,7 +4,10 @@
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # modules defined in FM.py
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-#
+# FM.py is copied, along with the appropriate FMxxxxxx.py file from CONFIGDIR to local by pythonUnitsLink.py
+# make sure if you change the modules, you also update the stored copy FMxxxxxx.py TBGLST file when you update FM.py
+# CF.py is always linked, make sure to update CFTOP.py and SCTN0102 when FM.py or CF.py are changed
+# all other units are loaded dynamically by pythonUnitsLink.py using the SCTN16 structure, FMSCTNENABLED.py file locally, etc.
 # * def doErrorItem(message_, itemToError_):
 # * def explodeItem(itemToExplode_):
 # * def makeAComment(comment_):
@@ -24,16 +27,17 @@ import hashlib as HL
 
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN01 _CHR_ _CONST_
+# * SCTN001 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
 CBRCE = "}"  # CLOSEBRACE
 CBRKT = "]"  # CLOSEBRACKET
 CMNTLEN = 150
-CONFIGDIR = "/home/will/.config/python/"
+CONFIGDIR = "/rcr/0-units/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
+ESC = "\x1b"
 FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
@@ -41,35 +45,39 @@ OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
 TABSTR = "\t"  # TAB
+TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 
 #
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN02 value_ constants
+# * SCTN002 value_ constants
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
+BIN04 = lambda X: f"{X:04b}"
+BIN08 = lambda X: f"{X:08b}"
+BIN16 = lambda X: f"{X:016b}"
 BIN32 = lambda X: f"{X:032b}"
+BIN64 = lambda X: f"{X:064b}"
 CF_NAME = "newCF.py"
 CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
-CLRALL = "\033[2J"
-CLRDOWN = "\033[J"
-CLREOL = "\033[K"
-CMNTLINE = "# * " + "#*" * CMNTLEN
+CLRALL = f"{ESC}[2J"
+CLRDOWN = f"{ESC}[J"
+CLREOL = f"{ESC}[K"
+CMNTLINE = f"""# * {"#*" * CMNTLEN}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
 DO_NAME = "newDO.py"
 DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
-EEOL = "\033[K"
-_EMPTY_DICT_ = {}
-_EMPTY_LIST_ = []
-_EMPTY_STR_ = ""
-EMPTYSTRLST = [None, "", DBLQT, DBLQT + DBLQT, "'", "''", "`", "None", "\r", "\n", "\r\n", "\n\r", ]
-_EMPTY_TUPLE_ = ()
-ESC = "\x1b"
+EEOL = "{ESC}[K"
+EMPTY_DICT = {}
+EMPTY_LIST = []
+EMPTY_STR = ""
+EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", "'", "''", "`", "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
 FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
@@ -105,12 +113,11 @@ HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
 HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
 HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
 HEX64 = lambda X_: f"{X_:016H}"   # {thisComment_}
-IMPORTANTSTR = "# * " + "!-" * CMNTLEN  # important line marker
+IMPORTANTSTR = f"""# * {"!-" * CMNTLEN}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
 INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
-KNOWNFILES = "KNOWNFILES"  # KNOWNFILES key
-LINESUP = lambda NUM_:  f"\033[{NUM_}A"
+LINESUP = lambda NUM_:  f"{ESC}[{NUM_}A"
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -165,20 +172,25 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MEDIAFILES = "MEDIAFILES"  # MEDIAFILES key
-MOVETO = lambda LN_, COL_: f"\033[{LN_};{COL_}H"
-NOTKNOWNFILES = "KNOWNFILES"  # NOTKNOWNFILES key
-NOTMEDIAFILES = "MEDIAFILES"  # NOTMEDIAFILES key
+MOVETO = lambda LN_, COL_: f"\{ESC}[{LN_};{COL_}H"
 NOTRECURSE = "RECURSE"  # NOTRECURSE key
 NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
-NOTUNKNOWNFILES = "UNKNOWNFILES"  # NOTUNKNOWNFILES key
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
 QTSET = ['"', "'", "`"]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
 SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
 SP_NAME = "newSP.py"
+SPTOP_NAME = f"{CONFIGDIR}SPTOP.py"
 TBGLST_NAME = "TBGLST.py"
-TRIQT = DBLQT + DBLQT + DBLQT  # works most of the time triple quote
+
+
+CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from 'text' strings like color codes"}
+	f"{ESC}[0m",  # entry for ESC-[0m
+	f"{ESC}[1m",  # entry for ESC-[1m
+	f"{ESC}[32m",  # entry for ESC-[32m
+	f"{ESC}[35m",  # entry for ESC-[35m
+	f"{ESC}[36m",  # entry for ESC-[36m
+]
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
