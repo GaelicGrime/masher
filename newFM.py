@@ -331,6 +331,7 @@ FMAXDO_SCTN41STRDEF = "FMAXDO_SCTN41STRDEF"  # define a profile STR <NAC><NAME><
 FMAXDO_SCTN41VALDEF = "FMAXDO_SCTN41VALDEF"  # define a profile value <NAC><NAME><VAL>
 FMAXDO_SCTN42LDIEABSDEF = "FMAXDO_SCTN42LDIEABSDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
 FMAXDO_SCTN42LDIEBTNDEF = "FMAXDO_SCTN42LDIEBTNDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN42LDIEFUNCDEF = "FMAXDO_SCTN42LDIEFUNCDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
 FMAXDO_SCTN42LDIEKEYDEF = "FMAXDO_SCTN42LDIEKEYDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
 FMAXDO_SCTN42LDIERELDEF = "FMAXDO_SCTN42LDIERELDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
 FMAXDO_SCTN42LDIESPCLDEF = "FMAXDO_SCTN42LDIESPCLDEF"  # define IE psuedo entry for special events
@@ -383,6 +384,7 @@ FMAXFM_AXLST = [
 	FMAXDO_SCTN41VALDEF,  # define a profile value <NAC><NAME><VAL>
 	FMAXDO_SCTN42LDIEABSDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
 	FMAXDO_SCTN42LDIEBTNDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN42LDIEFUNCDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
 	FMAXDO_SCTN42LDIEKEYDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
 	FMAXDO_SCTN42LDIERELDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
 	FMAXDO_SCTN42LDIESPCLDEF,  # define IE psuedo entry for special events
@@ -443,10 +445,10 @@ FMDO_SCTN43AXDEFCMNTDICT = {}  # SCTN23 output actions AX comments
 FMDO_SCTN43AXDEFDICT = {}  # SCTN23 output actions AX
 FMDO_SCTN44DEVICESCMNTDICT = {}  # SCTN24 device comments
 FMDO_SCTN44DEVICESDICT = {}  # SCTN24 devices dict
-FMDO_SCTN45BTNNDXDICT = {}  # SCTN25 device BTNTYPE dict
-FMDO_SCTN45BTNTYPEDICT = {}  # SCTN25 device BTNTYPE dict
-FMDO_SCTN45PROFDICT = {}  # SCTN25 device profile dict
-FMDO_SCTN45RPTDICT = {}  # SCTN25 device RPT dict
+FMDO_SCTN45BTNNDXDICT = {}  # SCTN45 device BTNTYPE dict
+FMDO_SCTN45BTNTYPEDICT = {}  # SCTN45 device BTNTYPE dict
+FMDO_SCTN45PROFDICT = {}  # SCTN45 device profile dict
+FMDO_SCTN45RPTDICT = {}  # SCTN45 device RPT dict
 FMDO_SCTN46XLATECMNTDICT = {}  # SCTN26 XLATE dict
 FMDO_SCTN46XLATEDICT = {}  # SCTN26 XLATE dict
 FMDO_SCTN47BTNSCMNTDICT = {}  # SCTN04 buttons
@@ -470,6 +472,7 @@ FMFM_SCTN14LISTDICT = {}  # SCTN21 device defines
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN14 _LIST_ _DEF_
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+FMDO_SCTN42LDIERELLIST = []  # SCTN22 LDIE relative evdev actions defined
 FMDO_SCTN42LDIESPCLLIST = []  # SCTN22 LDIE defined
 FMDO_SCTN47BTNSHOLDABLELIST = []  # buttons holdable list
 FMHBI_SCTN50HBIABSLIST = []  # SCTN50 list
@@ -530,6 +533,7 @@ FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
 		FMFM_SCTN13DICTDICT, \
 		FMFM_SCTN14LISTCMNTDICT, \
 		FMFM_SCTN14LISTDICT, \
+		FMDO_SCTN42LDIERELLIST, \
 		FMDO_SCTN42LDIESPCLLIST, \
 		FMDO_SCTN47BTNSHOLDABLELIST, \
 		FMHBI_SCTN50HBIABSLIST, \
