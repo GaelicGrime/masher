@@ -1741,7 +1741,7 @@ TBGLST = [
 	("D_MIMD__BTNG_0801_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T01", "ALT press on BTNG0801_T01",),
 	("D_MIMD__BTNG_0801_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_01", "AX_ALT_T02", "ALT release on BTNG0801_T02",),
 	("D_MIMD__BTNG_0802_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL press on BTNG_0802_T01",),
-	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T01", "CTRL release on BTNG_0802_T02",),
+	("D_MIMD__BTNG_0802_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_02", "AX_CTRL_T02", "CTRL release on BTNG_0802_T02",),
 	("D_MIMD__BTNG_0803_T01", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T01", "SHIFT press on BTNG_0803_T01",),
 	("D_MIMD__BTNG_0803_T02", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_08", "BTNG_03", "AX_SHIFT_T02", "SHIFT release on BTNG_0803_T02",),
 	("D_MIMD__BTNG_0804", FMAXDO_SCTN45HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_08", "BTNG_04", "AX_TAB", "TAB on BTNG0804",),
@@ -2734,19 +2734,19 @@ def makeAWideComment(comment_):
 # makeADict
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def makeADict(dictName_, dictComment_, dictItems_):
-	# fold here ⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
 	strToRtn_ += f"""{dictName_} = {OBRCE}  # {dictComment_}
 {dictItems_}{CBRCE}{NEWLINE}{NEWLINE}{NEWLINE}"""
 	return strToRtn_
-	# fold here ⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # makeATupDict
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
-	# fold here ⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱⟱
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
 	strToRtn1_ = ""
 	if tupDictSidecar_ is None:
@@ -2763,7 +2763,7 @@ def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
 {tupDictItems_}{CPAREN}{NEWLINE}{NEWLINE}def {tupDictName_}DICT{OPAREN}{CPAREN}:
 {NTAB(1)}dictToRtn_ = dict{OPAREN}{OPAREN}x, y{CPAREN} for x, y in {tupDictName_}TUP{CPAREN}{NEWLINE}{strToRtn1_}{NTAB(1)}return listToRtn_, dictToRtn_{NEWLINE}{NEWLINE}{NEWLINE}"""
 	return strToRtn_
-	# fold here ⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰⟰
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
