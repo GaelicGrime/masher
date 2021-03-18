@@ -247,8 +247,8 @@ BTNS08 = 0B00010000  # FLAG LD.EV_KEY holdable BTN8 gamepads
 BTNS22 = 0B00100000  # FLAG LD.EV_KEY holdable BTN22 saitek
 BTNS23 = 0B01000000  # FLAG LD.EV_KEY holdable BTN23 saitek
 BTNS24 = 0B10000000  # FLAG LD.EV_KEY holdable BTN24 saitek
-BTNS_MODE1 = "BTNS_MODE1"  # switch through MODE1 move/wheel for mouse actions
-BTNS_MODE2 = "BTNS_MODE2"  # switch through MODE2 normal/draglock for mouse actions
+BTNMODE_01 = "BTNMODE_01"  # switch through MODE1 move/wheel for mouse actions
+BTNMODE_02 = "BTNMODE_02"  # switch through MODE2 normal/draglock for mouse actions
 BTNS_NOT = 0B00000000  # FLAG no BTN or _KEY_ held
 BTNTYPE = "BTNTYPE"  # action type key
 BTNTYPE_HOLDABLE = "BTNTYPE_HOLDABLE"  # HOLDABLE button
@@ -331,8 +331,8 @@ DEVCD_BTNM_MRT = BTNM_MRT  # shortcut to BTNM_07WHRT
 DEVCD_BTNM_MUP = BTNM_MUP  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPLT = BTNM_MUPLT  # shortcut to BTNM_04WHUP
 DEVCD_BTNM_MUPRT = BTNM_MUPRT  # shortcut to BTNM_04WHUP
-DEVCD_BTNS_MODE1 = BTNS_MODE1  # shortcut to special mode 1 button
-DEVCD_BTNS_MODE2 = BTNS_MODE2  # shortcut to special mode 1 button
+DEVCD_BTNMODE_01 = BTNMODE_01  # shortcut to special mode 1 button
+DEVCD_BTNMODE_02 = BTNMODE_02  # shortcut to special mode 1 button
 DEVCD_HAT0X = LD.EV_ABS.ABS_HAT0X  # shortcut to ABS_HAT0X
 DEVCD_HAT0Y = LD.EV_ABS.ABS_HAT0Y  # shortcut to ABS_HAT0Y
 DEVCD_RELHRHWHL = LD.EV_REL.REL_HWHEEL_HI_RES  # shortcut to REL_HWHEEL_HI_RES
@@ -354,6 +354,7 @@ DEVICETYPE_SAITEK = "DEVICETYPE_SAITEK"  # device type SAITEK defined
 DEVTYPE_ABS = LD.EV_ABS  # shortcut to LD.EV_ABS
 DEVTYPE_KEY = LD.EV_KEY  # shortcut to LD.EV_KEY
 DEVTYPE_REL = LD.EV_REL  # shortcut to LD.EV_REL
+
 DEV_ABSHAT_STATUS = "DEV_ABSHAT_STATUS"  # status of ABS items on the device
 DEV_ABSLTSTK_STATUS = "DEV_ABSLTSTK_STATUS"  # status of ABS items on the device
 DEV_ABSRTSTK_STATUS = "DEV_ABSRTSTK_STATUS"  # status of ABS items on the device
@@ -364,9 +365,9 @@ DEV_ERR_DELTA = "DEV_ERR_DELTA"  # number of ticks (1/100) between error checks
 DEV_ERR_NEXTTIME = "DEV_ERR_NEXTTIME"  # next error time for this device if erroring
 DEV_FD = "DEV_FD"  # FD (file descriptor) of the device
 DEV_GRAB = "DEV_GRAB"  # GRAB shal the device be grabbed exclusively or not
+DEV_HASPAUSED = "DEV_HASPAUSED"  # PAUSED
 DEV_MYNAME = "DEV_MYNAME"  # device normal name_
 DEV_NAME = "DEV_NAME"  # NAME of device returned by uvdev/evdev/etc
-DEV_HASPAUSED = "DEV_HASPAUSED"  # PAUSED
 DEV_QUEUE = "DEV_QUEUE"  # QUEUE holding EVENT as they come in to the device handler
 DEV_RELMSE_STATUS = "DEV_RELMSE_STATUS"  # ABS status flags key
 DEV_RELMW_STATUS = "DEV_RELMW_STATUS"  # ABS status flags key
@@ -374,6 +375,7 @@ DEV_RPT_NEXTTIME = "DEV_RPT_NEXTTIME"  # next TIME device will repeat
 DEV_RPT_NEXTTIMEDELTA = "DEV_RPT_NEXTTIMEDELTA"  # now many TICK between repeats
 DEV_SPENT = "DEV_SPENT"  # queue is spent
 DEV_STATUS = "DEV_STATUS"  # device status
+
 DIRDNLT_AND = lambda X_: DIRDNLT_VAL & X_  # FLAG DIR DNLT and lambda
 DIRDNLT_MSK_AND = lambda X_: DIRDNLT_MSK_VAL & X_  # FLAG DIR DOWN and lambda
 DIRDNLT_MSK_OR = lambda X_: DIRDNLT_MSK_VAL | X_  # FLAG DIR DOWN or lambda
@@ -3703,7 +3705,7 @@ def fixQueue(queueIn_):
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ for thisEvent_ in queueIn_:
 	for thisEvent_ in queueIn_:
 		testvent_ = thisEvent_[0]
-		if testvent_ in DEVTDICT[BTNS]:
+		if testvent_ in DEVTDICT[KEYS]:
 			queueOutBtns_.append(thisEvent_)
 		elif testvent_ in DEVTDICT[HATS]:
 			queueOutHat_.append(thisEvent_)
@@ -3724,7 +3726,7 @@ def fixQueue(queueIn_):
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
 	# just keys, return all of them
 	elif (queueOutBtns_ != []) and (queueOutHat_ == []) and (queueOutLtStk_ == []) and (queueOutRels_ == []) and (queueOutRtStk_ == []):
-		# print(f"""fixQueue all BTNS""")
+		# print(f"""fixQueue all KEYS""")
 		return queueOutBtns_
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
