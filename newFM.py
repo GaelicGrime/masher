@@ -33,18 +33,19 @@ BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
 CBRCE = "}"  # CLOSEBRACE
 CBRKT = "]"  # CLOSEBRACKET
-CMNTLEN = 150
-CONFIGDIR = "/rcr/0-units/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
 ESC = "\x1b"
-FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
 TABSTR = "\t"  # TAB
+
+CMNTLEN = 200
+CONFIGDIR = "/rcr/0-units/python/"
+FOLDLEN = 200
 TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 
@@ -66,7 +67,7 @@ CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
 CLRALL = f"{ESC}[2J"
 CLRDOWN = f"{ESC}[J"
 CLREOL = f"{ESC}[K"
-CMNTLINE = f"""# * {"#*" * CMNTLEN}"""
+CMNTLINE = f"""# * {"#*" * (CMNTLEN // 2)}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
@@ -76,11 +77,12 @@ EEOL = "{ESC}[K"
 EMPTY_DICT = {}
 EMPTY_LIST = []
 EMPTY_STR = ""
-EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", "'", "''", "`", "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", SGLQT, f"{SGLQT}{SGLQT}", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
 EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
 FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
 FO_NAME = "newFO.py"
+FOTOP_NAME = f"{CONFIGDIR}FOTOP.py"
 FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
 FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
@@ -93,31 +95,18 @@ FOLD3ENDHERE = f"""# fold here {"⥣3" * (FOLDLEN // 2)}"""
 FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
 FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
-HASHER = "HASHER"  # HASHER key
-HASH_blake2b = HL.blake2b()  # define blake2b value
-HASH_blake2s = HL.blake2s()  # define blake2s value
-HASH_md5 = HL.md5()  # define md5 value
-HASH_sha1 = HL.sha1()  # define sha1 value
-HASH_sha224 = HL.sha224()  # define sha224 value
-HASH_sha256 = HL.sha256()  # define sha256 value
-HASH_sha3_224 = HL.sha3_224()  # define sha3_224 value
-HASH_sha3_256 = HL.sha3_256()  # define sha3_256 value
-HASH_sha3_384 = HL.sha3_384()  # define sha3_384 value
-HASH_sha3_512 = HL.sha3_512()  # define sha3_512 value
-HASH_sha384 = HL.sha384()  # define sha384 value
-HASH_sha512 = HL.sha512()  # define sha512 value
 HBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
 HBI_NAME = "newHBI.py"
 HBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
-HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
-HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
-HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
-HEX64 = lambda X_: f"{X_:016H}"   # {thisComment_}
-IMPORTANTSTR = f"""# * {"!-" * CMNTLEN}"""  # important line marker
+HEX08 = lambda X_: f"{X_:02H}"  # {thisComment_}
+HEX16 = lambda X_: f"{X_:04H}"  # {thisComment_}
+HEX32 = lambda X_: f"{X_:08H}"  # {thisComment_}
+HEX64 = lambda X_: f"{X_:016H}"  # {thisComment_}
+IMPORTANTSTR = f"""# * {"!-" * (CMNTLEN // 2)}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
-INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
-LINESUP = lambda NUM_:  f"{ESC}[{NUM_}A"
+INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line\
+LINESUP = lambda NUM_: f"{ESC}[{NUM_}A"
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -172,11 +161,10 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MOVETO = lambda LN_, COL_: f"\{ESC}[{LN_};{COL_}H"
-NOTRECURSE = "RECURSE"  # NOTRECURSE key
-NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
+MARKLINES_NAME = f"{CONFIGDIR}MARKLINES.py"
+MOVETO = lambda LN_, COL_: f"{ESC}[{LN_};{COL_}H"
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
-QTSET = ['"', "'", "`"]  # set of all quote characters
+QTSET = [DBLQT, SGLQT, BKQT]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
 SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
 SP_NAME = "newSP.py"
@@ -193,9 +181,9 @@ CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from
 ]
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN03 TYPEs and lambda
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 _ARRAY_ = "list"  # list or array, adjust for language
 _AX_ = "_AX_"  # action involving a common key combination like ALT-D CTRL-W
 _CHR_ = "varchar"  # character
@@ -220,9 +208,9 @@ _TYPE_ = "type"  # type in all uses
 _TYPES_ = "types"  # types in all uses
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN04 BTNS
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BTNGHAT_DN = "BTNGHAT_DN"  # artificial button for the hat on gamepads
 BTNGHAT_DNLT = "BTNGHAT_DNLT"  # artificial button for the hat on gamepads
 BTNGHAT_DNRT = "BTNGHAT_DNRT"  # artificial button for the hat on gamepads
@@ -263,6 +251,9 @@ BTNG_10 = "BTNG_10"  # BTNG_010/right face on gamepads
 BTNG_11LTSTK = "BTNG_11LTSTK"  # BTN011/left stick on gamepads
 BTNG_12RTSTK = "BTNG_12RTSTK"  # BTN012/right stick on gamepads
 BTNG_13 = "BTNG_13"  # BTN013/home/select on gamepads
+BTNK_00 = "BTNK_00"  # BTN000 on a knob
+BTNMODE_01 = "BTNMODE_01"  # switch through MODE1 move/wheel for mouse actions
+BTNMODE_02 = "BTNMODE_02"  # switch through MODE2 normal/draglock for mouse actions
 BTNMWH_DN = "BTNMWH_DN"  # BTNMWHLDN/MSE_DN on mice
 BTNMWH_DNLT = "BTNMWH_DNLT"  # BTNMWHLDN/MSE_DNLT on mice
 BTNMWH_DNRT = "BTNMWH_DNRT"  # BTNMWHLDN/MSE_DNRT on mice
@@ -279,11 +270,11 @@ BTNM_04WHUP = "BTNM_04WHUP"  # BTNM04/MSEWHL_UP on mice
 BTNM_05WHDN = "BTNM_05WHDN"  # BTNM05/MSEWHL_DN on mice
 BTNM_06WHLT = "BTNM_06WHLT"  # BTNM06/MSEWHL_LT on mice
 BTNM_07WHRT = "BTNM_07WHRT"  # BTNM07/MSEWHL_RT on mice
-BTNM_08 = "BTNM_08"  # BTNM_08/NW most BTN on mice
-BTNM_09 = "BTNM_09"  # BTNM_09 on mice
-BTNM_10 = "BTNM_10"  # BTNM_10 on mice
-BTNM_11 = "BTNM_11"  # BTNM_11 on mice
-BTNM_12 = "BTNM_12"  # BTNM_12/SE most on mice
+BTNM_08 = "BTNM_08"  # BTNM_08/NW most additional BTN on mice
+BTNM_09 = "BTNM_09"  # BTNM_09 additional on mice
+BTNM_10 = "BTNM_10"  # BTNM_10 additional on mice
+BTNM_11 = "BTNM_11"  # BTNM_11 additional BTN on mice
+BTNM_12 = "BTNM_12"  # BTNM_12/SE most additional BTN on mice
 BTNM_MDN = "BTNM_MDN"  # BTNMDN/MSE_DN on mice
 BTNM_MDNLT = "BTNM_MDNLT"  # BTNMDN/MSE_DNLT on mice
 BTNM_MDNRT = "BTNM_MDNRT"  # BTNMDN/MSE_DNRT on mice
@@ -301,242 +292,243 @@ BTNM_WHRT = "BTNM_WHRT"  # BTNMRT/MSE_RT on mice
 BTNM_WHUP = "BTNM_WHUP"  # BTNMUP/MSE_UP on mice
 BTNM_WHUPLT = "BTNM_WHUPLT"  # BTNMUP/MSE_UPLT on mice
 BTNM_WHUPRT = "BTNM_WHUPRT"  # BTNMUP/MSE_UPRT on mice
-BTNS_MODE1 = "BTNS_MODE1"  # switch through MODE1 move/wheel for mouse actions
-BTNS_MODE2 = "BTNS_MODE2"  # switch through MODE2 normal/draglock for mouse actions
+BTNST_00 = "BTNST_00"  # BTN000 on a Saitek commander
 
 
 BTNSHOLDABLELIST = [
 ]
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN11 FMAX _DEF_
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-FMAXCF_SCTN03LAMBDADEF = "FMAXCF_SCTN03LAMBDADEF"  # define a lambda function <NAC><NAME><lambda str>
-FMAXCF_SCTN03TYPEDEF = "FMAXCF_SCTN03TYPEDEF"  # define a fake type used in the translation dict <NAC><NAME><TYPE>
-FMAXCF_SCTN21STRDEF = "FMAXCF_SCTN21STRDEF"  # define a STR in SCTN21 <NAC><NAME><str>
-FMAXCF_SCTN21VALDEF = "FMAXCF_SCTN21VALDEF"  # define a VAL in SCTN21 <NAC><NAME><VAL>
-FMAXCF_SCTN22PARMDEF = "FMAXCF_SCTN22PARMDEF"  # define a '-a[=]' in SCTN22 <NAC><PARM><VAL>
-FMAXCF_SCTN22STRENTRYADD = "FMAXCF_SCTN22STRENTRYADD"  # define a OPTNAME: 'str' in SCTN22 <NAC><KEY><STR>
-FMAXCF_SCTN22VALENTRYADD = "FMAXCF_SCTN22VALENTRYADD"  # define a OPTNAME: VAL in SCTN22 <NAC><KEY><VAL>
-FMAXCF_SCTN23DICTDEF = "FMAXCF_SCTN23DICTDEF"  # define a dict in SCTN23 <NAC><DICTNAME><DICTMODE>
-FMAXCF_SCTN23DICTSTRADD = "FMAXCF_SCTN23DICTSTRADD"  # define a dict STR in SCTN23 <NAC><DICTNAME><STR>
-FMAXCF_SCTN23DICTVALADD = "FMAXCF_SCTN23DICTVALADD"  # define a dict VAL in SCTN23 <NAC><DICTNAME><VAL>
-FMAXCF_SCTN24LISTDEF = "FMAXCF_SCTN24LISTDEF"  # define a list in SCTN24 <NAC><LISTNAME>
-FMAXCF_SCTN24LISTSTRADD = "FMAXCF_SCTN24LISTSTRADD"  # define a list STR in SCTN24 <NAC><LISTNAME><STR>
-FMAXCF_SCTN24LISTVALADD = "FMAXCF_SCTN24LISTVALADD"  # define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>
-FMAXDO_SCTN41DEVICEDEF = "FMAXDO_SCTN41DEVICEDEF"  # define a device in PROF <NAC><MYNAME><DEV_NAME>
-FMAXDO_SCTN41DICTKEYDEF = "FMAXDO_SCTN41DICTKEYDEF"  # define a profile dict key <NAC><KEY>
-FMAXDO_SCTN41LAMBDADEF = "FMAXDO_SCTN41LAMBDADEF"  # define a profile lambda <NAC><NAME><LAMBDA>
-FMAXDO_SCTN41STRDEF = "FMAXDO_SCTN41STRDEF"  # define a profile STR <NAC><NAME><VAL>
-FMAXDO_SCTN41VALDEF = "FMAXDO_SCTN41VALDEF"  # define a profile value <NAC><NAME><VAL>
-FMAXDO_SCTN42LDIEABSDEF = "FMAXDO_SCTN42LDIEABSDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN42LDIEBTNDEF = "FMAXDO_SCTN42LDIEBTNDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN42LDIEFUNCDEF = "FMAXDO_SCTN42LDIEFUNCDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN42LDIEKEYDEF = "FMAXDO_SCTN42LDIEKEYDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN42LDIERELDEF = "FMAXDO_SCTN42LDIERELDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN42LDIESPCLDEF = "FMAXDO_SCTN42LDIESPCLDEF"  # define IE psuedo entry for special events
-FMAXDO_SCTN42LDIESYNDEF = "FMAXDO_SCTN42LDIESYNDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
-FMAXDO_SCTN43AXDEF = "FMAXDO_SCTN43AXDEF"  # define a profile action <NAC>
-FMAXDO_SCTN43AXVALADD = "FMAXDO_SCTN43AXVALADD"  # add an item to an action <NAC><AX><VAL>
-FMAXDO_SCTN44DEVICEENTRYSTRADD = "FMAXDO_SCTN44DEVICEENTRYSTRADD"  # define an entry in a device <NAC><MYNAME><ENTRYKEY><STR>
-FMAXDO_SCTN44DEVICEENTRYVALADD = "FMAXDO_SCTN44DEVICEENTRYVALADD"  # define an entry in a device <NAC><MYNAME><ENTRYKEY><VAL>
-FMAXDO_SCTN45HOLDABLEADD1 = "FMAXDO_SCTN45HOLDABLEADD1"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
-FMAXDO_SCTN45HOLDABLEADD2 = "FMAXDO_SCTN45HOLDABLEADD2"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
-FMAXDO_SCTN45NOTHOLDABLEADD1 = "FMAXDO_SCTN45NOTHOLDABLEADD1"  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
-FMAXDO_SCTN45NOTHOLDABLEMODEDADD1 = "FMAXDO_SCTN45NOTHOLDABLEMODEDADD1"  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
-FMAXDO_SCTN46XLATEADD = "FMAXDO_SCTN46XLATEADD"  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
-FMAXDO_SCTN47BTNSDEF = "FMAXDO_SCTN47BTNSDEF"  # define buttons all around <NAC><BTNNAME><HOLDABLE>
-FMAXDO_SCTN48EVTYPEDEF = "FMAXDO_SCTN48EVTYPEDEF"  # define a device type list type<NAC>
-FMAXDO_SCTN48EVTYPELST = "FMAXDO_SCTN48EVTYPELST"  # add a device list entry<NAC>
-FMAXDO_SCTN49DIRTRANSDEVDEF = "FMAXDO_SCTN49DIRTRANSDEVDEF"  # add a dict to DO.py <NAV><DEVNAME>
-FMAXDO_SCTN49DIRTRANSSTRADD = "FMAXDO_SCTN49DIRTRANSSTRADD"  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
-FMAXDO_SCTN49DIRTRANSVALADD = "FMAXDO_SCTN49DIRTRANSVALADD"  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
-FMAXFM_NOP = "FMAXFM_NOP"  # skip this entry
-FMAXFM_SCTN11AXDEF = "FMAXFM_SCTN11AXDEF"  # define a new FM action <NAC>
-FMAXFM_SCTN12VALDEF = "FMAXFM_SCTN12VALDEF"  # define a CM value_ <NAC><NAME><VAL>
-FMAXFM_SCTN13DICTDEF = "FMAXFM_SCTN13DICTDEF"  # define a dict for FM <NAC>
-FMAXFM_SCTN14LISTDEF = "FMAXFM_SCTN14LISTDEF"  # define a list in FM <NAC>
-FMAXFO_SCTN31DICTDEF = "FMAXFO_SCTN31DICTDEF"  # define a dict in FO.py <NAC>
-FMAXHBI_SCTN50ABSADD = "FMAXHBI_SCTN50ABSADD"  # enable ABS entry for IDB
-FMAXHBI_SCTN51BTNADD = "FMAXHBI_SCTN51BTNADD"  # enable BTN entry for IDB
-FMAXHBI_SCTN52KEYADD = "FMAXHBI_SCTN52KEYADD"  # enable KEY entry for IDB
-FMAXHBI_SCTN53RELADD = "FMAXHBI_SCTN53RELADD"  # enable REL entry for IDB
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+FMAXCF_SCTN0003_LAMBDADEF = "FMAXCF_SCTN0003_LAMBDADEF"  # define a lambda function <NAC><NAME><lambda str>
+FMAXCF_SCTN0003_TYPEDEF = "FMAXCF_SCTN0003_TYPEDEF"  # define a fake type used in the translation dict <NAC><NAME><TYPE>
+FMAXCF_SCTN0201_STRDEF = "FMAXCF_SCTN0201_STRDEF"  # define a STR in SCTN21 <NAC><NAME><str>
+FMAXCF_SCTN0201_VALDEF = "FMAXCF_SCTN0201_VALDEF"  # define a VAL in SCTN21 <NAC><NAME><VAL>
+FMAXCF_SCTN0202_PARMDEF = "FMAXCF_SCTN0202_PARMDEF"  # define a '-a[=]' in SCTN22 <NAC><PARM><VAL>
+FMAXCF_SCTN0202_STRENTRYADD = "FMAXCF_SCTN0202_STRENTRYADD"  # define a OPTNAME: 'str' in SCTN22 <NAC><KEY><STR>
+FMAXCF_SCTN0202_VALENTRYADD = "FMAXCF_SCTN0202_VALENTRYADD"  # define a OPTNAME: VAL in SCTN22 <NAC><KEY><VAL>
+FMAXCF_SCTN0203_DICTDEF = "FMAXCF_SCTN0203_DICTDEF"  # define a dict in SCTN23 <NAC><DICTNAME><DICTMODE>
+FMAXCF_SCTN0203_DICTSTRADD = "FMAXCF_SCTN0203_DICTSTRADD"  # define a dict STR in SCTN23 <NAC><DICTNAME><STR>
+FMAXCF_SCTN0203_DICTVALADD = "FMAXCF_SCTN0203_DICTVALADD"  # define a dict VAL in SCTN23 <NAC><DICTNAME><VAL>
+FMAXCF_SCTN0204_LISTDEF = "FMAXCF_SCTN0204_LISTDEF"  # define a list in SCTN24 <NAC><LISTNAME>
+FMAXCF_SCTN0204_LISTSTRADD = "FMAXCF_SCTN0204_LISTSTRADD"  # define a list STR in SCTN24 <NAC><LISTNAME><STR>
+FMAXCF_SCTN0204_LISTVALADD = "FMAXCF_SCTN0204_LISTVALADD"  # define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>
+FMAXDO_SCTN0401_DEVICEDEF = "FMAXDO_SCTN0401_DEVICEDEF"  # define a device in PROF <NAC><MYNAME><DEV_NAME>
+FMAXDO_SCTN0401_DICTKEYDEF = "FMAXDO_SCTN0401_DICTKEYDEF"  # define a profile dict key <NAC><KEY>
+FMAXDO_SCTN0401_LAMBDADEF = "FMAXDO_SCTN0401_LAMBDADEF"  # define a profile lambda <NAC><NAME><LAMBDA>
+FMAXDO_SCTN0401_STRDEF = "FMAXDO_SCTN0401_STRDEF"  # define a profile STR <NAC><NAME><VAL>
+FMAXDO_SCTN0401_VALDEF = "FMAXDO_SCTN0401_VALDEF"  # define a profile value <NAC><NAME><VAL>
+FMAXDO_SCTN0402_LDIEABSDEF = "FMAXDO_SCTN0402_LDIEABSDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0402_LDIEBTNDEF = "FMAXDO_SCTN0402_LDIEBTNDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0402_LDIEFUNCDEF = "FMAXDO_SCTN0402_LDIEFUNCDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0402_LDIEKEYDEF = "FMAXDO_SCTN0402_LDIEKEYDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0402_LDIERELDEF = "FMAXDO_SCTN0402_LDIERELDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0402_LDIESPCLDEF = "FMAXDO_SCTN0402_LDIESPCLDEF"  # define IE psuedo entry for special events
+FMAXDO_SCTN0402_LDIESYNDEF = "FMAXDO_SCTN0402_LDIESYNDEF"  # define an IE entry (3) <NAC><IESTR><VAL>
+FMAXDO_SCTN0403_AXDEF = "FMAXDO_SCTN0403_AXDEF"  # define a profile action <NAC>
+FMAXDO_SCTN0403_AXVALADD = "FMAXDO_SCTN0403_AXVALADD"  # add an item to an action <NAC><AX><VAL>
+FMAXDO_SCTN0404_DEVICEENTRYSTRADD = "FMAXDO_SCTN0404_DEVICEENTRYSTRADD"  # define an entry in a device <NAC><MYNAME><ENTRYKEY><STR>
+FMAXDO_SCTN0404_DEVICEENTRYVALADD = "FMAXDO_SCTN0404_DEVICEENTRYVALADD"  # define an entry in a device <NAC><MYNAME><ENTRYKEY><VAL>
+FMAXDO_SCTN0405_HOLDABLEADD1 = "FMAXDO_SCTN0405_HOLDABLEADD1"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
+FMAXDO_SCTN0405_HOLDABLEADD2 = "FMAXDO_SCTN0405_HOLDABLEADD2"  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
+FMAXDO_SCTN0405_NOTHOLDABLEADD1 = "FMAXDO_SCTN0405_NOTHOLDABLEADD1"  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
+FMAXDO_SCTN0405_NOTHOLDABLEMODEDADD1 = "FMAXDO_SCTN0405_NOTHOLDABLEMODEDADD1"  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
+FMAXDO_SCTN0406_XLATEADD = "FMAXDO_SCTN0406_XLATEADD"  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
+FMAXDO_SCTN0407_BTNSDEF = "FMAXDO_SCTN0407_BTNSDEF"  # define buttons all around <NAC><BTNNAME><HOLDABLE>
+FMAXDO_SCTN0408_EVTYPEDEF = "FMAXDO_SCTN0408_EVTYPEDEF"  # define a device type list type<NAC>
+FMAXDO_SCTN0408_EVTYPELST = "FMAXDO_SCTN0408_EVTYPELST"  # add a device list entry<NAC>
+FMAXDO_SCTN0409_DIRTRANSDEVDEF = "FMAXDO_SCTN0409_DIRTRANSDEVDEF"  # add a dict to DO.py <NAV><DEVNAME>
+FMAXDO_SCTN0409_DIRTRANSSTRADD = "FMAXDO_SCTN0409_DIRTRANSSTRADD"  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
+FMAXDO_SCTN0409_DIRTRANSVALADD = "FMAXDO_SCTN0409_DIRTRANSVALADD"  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
+FMAXDO_SCTN040A_HBIABSADD = "FMAXDO_SCTN040A_HBIABSADD"  # enable ABS entry for IDB
+FMAXDO_SCTN040A_HBIBTNADD = "FMAXDO_SCTN040A_HBIBTNADD"  # enable BTN entry for IDB
+FMAXDO_SCTN040A_HBIKEYADD = "FMAXDO_SCTN040A_HBIKEYADD"  # enable KEY entry for IDB
+FMAXDO_SCTN040A_HBIRELADD = "FMAXDO_SCTN040A_HBIRELADD"  # enable REL entry for IDB
+FMAXDO_SCTN040B_DICTDEF = "FMAXDO_SCTN040B_DICTDEF"  # define a dict in DO.py
+FMAXFM_SCTN0101_AXDEF = "FMAXFM_SCTN0101_AXDEF"  # define a new FM action <NAC>
+FMAXFM_SCTN0102_VALDEF = "FMAXFM_SCTN0102_VALDEF"  # define a CM value_ <NAC><NAME><VAL>
+FMAXFM_SCTN0103_DICTDEF = "FMAXFM_SCTN0103_DICTDEF"  # define a dict for FM <NAC>
+FMAXFM_SCTN0104_LISTDEF = "FMAXFM_SCTN0104_LISTDEF"  # define a list in FM <NAC>
+FMAXFO_SCTN0301_DICTDEF = "FMAXFO_SCTN0301_DICTDEF"  # define a dict in FO.py <NAC>
+FMAX_NOP = "FMAX_NOP"  # skip this entry
 
 
 FMAXFM_AXLST = [
-	FMAXCF_SCTN03LAMBDADEF,  # define a lambda function <NAC><NAME><lambda str>
-	FMAXCF_SCTN03TYPEDEF,  # define a fake type used in the translation dict <NAC><NAME><TYPE>
-	FMAXCF_SCTN21STRDEF,  # define a STR in SCTN21 <NAC><NAME><str>
-	FMAXCF_SCTN21VALDEF,  # define a VAL in SCTN21 <NAC><NAME><VAL>
-	FMAXCF_SCTN22PARMDEF,  # define a '-a[=]' in SCTN22 <NAC><PARM><VAL>
-	FMAXCF_SCTN22STRENTRYADD,  # define a OPTNAME: 'str' in SCTN22 <NAC><KEY><STR>
-	FMAXCF_SCTN22VALENTRYADD,  # define a OPTNAME: VAL in SCTN22 <NAC><KEY><VAL>
-	FMAXCF_SCTN23DICTDEF,  # define a dict in SCTN23 <NAC><DICTNAME><DICTMODE>
-	FMAXCF_SCTN23DICTSTRADD,  # define a dict STR in SCTN23 <NAC><DICTNAME><STR>
-	FMAXCF_SCTN23DICTVALADD,  # define a dict VAL in SCTN23 <NAC><DICTNAME><VAL>
-	FMAXCF_SCTN24LISTDEF,  # define a list in SCTN24 <NAC><LISTNAME>
-	FMAXCF_SCTN24LISTSTRADD,  # define a list STR in SCTN24 <NAC><LISTNAME><STR>
-	FMAXCF_SCTN24LISTVALADD,  # define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>
-	FMAXDO_SCTN41DEVICEDEF,  # define a device in PROF <NAC><MYNAME><DEV_NAME>
-	FMAXDO_SCTN41DICTKEYDEF,  # define a profile dict key <NAC><KEY>
-	FMAXDO_SCTN41LAMBDADEF,  # define a profile lambda <NAC><NAME><LAMBDA>
-	FMAXDO_SCTN41STRDEF,  # define a profile STR <NAC><NAME><VAL>
-	FMAXDO_SCTN41VALDEF,  # define a profile value <NAC><NAME><VAL>
-	FMAXDO_SCTN42LDIEABSDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN42LDIEBTNDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN42LDIEFUNCDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN42LDIEKEYDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN42LDIERELDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN42LDIESPCLDEF,  # define IE psuedo entry for special events
-	FMAXDO_SCTN42LDIESYNDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
-	FMAXDO_SCTN43AXDEF,  # define a profile action <NAC>
-	FMAXDO_SCTN43AXVALADD,  # add an item to an action <NAC><AX><VAL>
-	FMAXDO_SCTN44DEVICEENTRYSTRADD,  # define an entry in a device <NAC><MYNAME><ENTRYKEY><STR>
-	FMAXDO_SCTN44DEVICEENTRYVALADD,  # define an entry in a device <NAC><MYNAME><ENTRYKEY><VAL>
-	FMAXDO_SCTN45HOLDABLEADD1,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
-	FMAXDO_SCTN45HOLDABLEADD2,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
-	FMAXDO_SCTN45NOTHOLDABLEADD1,  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
-	FMAXDO_SCTN45NOTHOLDABLEMODEDADD1,  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
-	FMAXDO_SCTN46XLATEADD,  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
-	FMAXDO_SCTN47BTNSDEF,  # define buttons all around <NAC><BTNNAME><HOLDABLE>
-	FMAXDO_SCTN48EVTYPEDEF,  # define a device type list type<NAC>
-	FMAXDO_SCTN48EVTYPELST,  # add a device list entry<NAC>
-	FMAXDO_SCTN49DIRTRANSDEVDEF,  # add a dict to DO.py <NAV><DEVNAME>
-	FMAXDO_SCTN49DIRTRANSSTRADD,  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
-	FMAXDO_SCTN49DIRTRANSVALADD,  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
-	FMAXFM_NOP,  # skip this entry
-	FMAXFM_SCTN11AXDEF,  # define a new FM action <NAC>
-	FMAXFM_SCTN12VALDEF,  # define a CM value_ <NAC><NAME><VAL>
-	FMAXFM_SCTN13DICTDEF,  # define a dict for FM <NAC>
-	FMAXFM_SCTN14LISTDEF,  # define a list in FM <NAC>
-	FMAXFO_SCTN31DICTDEF,  # define a dict in FO.py <NAC>
-	FMAXHBI_SCTN50ABSADD,  # enable ABS entry for IDB
-	FMAXHBI_SCTN51BTNADD,  # enable BTN entry for IDB
-	FMAXHBI_SCTN52KEYADD,  # enable KEY entry for IDB
-	FMAXHBI_SCTN53RELADD,  # enable REL entry for IDB
+	FMAXCF_SCTN0003_LAMBDADEF,  # define a lambda function <NAC><NAME><lambda str>
+	FMAXCF_SCTN0003_TYPEDEF,  # define a fake type used in the translation dict <NAC><NAME><TYPE>
+	FMAXCF_SCTN0201_STRDEF,  # define a STR in SCTN21 <NAC><NAME><str>
+	FMAXCF_SCTN0201_VALDEF,  # define a VAL in SCTN21 <NAC><NAME><VAL>
+	FMAXCF_SCTN0202_PARMDEF,  # define a '-a[=]' in SCTN22 <NAC><PARM><VAL>
+	FMAXCF_SCTN0202_STRENTRYADD,  # define a OPTNAME: 'str' in SCTN22 <NAC><KEY><STR>
+	FMAXCF_SCTN0202_VALENTRYADD,  # define a OPTNAME: VAL in SCTN22 <NAC><KEY><VAL>
+	FMAXCF_SCTN0203_DICTDEF,  # define a dict in SCTN23 <NAC><DICTNAME><DICTMODE>
+	FMAXCF_SCTN0203_DICTSTRADD,  # define a dict STR in SCTN23 <NAC><DICTNAME><STR>
+	FMAXCF_SCTN0203_DICTVALADD,  # define a dict VAL in SCTN23 <NAC><DICTNAME><VAL>
+	FMAXCF_SCTN0204_LISTDEF,  # define a list in SCTN24 <NAC><LISTNAME>
+	FMAXCF_SCTN0204_LISTSTRADD,  # define a list STR in SCTN24 <NAC><LISTNAME><STR>
+	FMAXCF_SCTN0204_LISTVALADD,  # define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>
+	FMAXDO_SCTN0401_DEVICEDEF,  # define a device in PROF <NAC><MYNAME><DEV_NAME>
+	FMAXDO_SCTN0401_DICTKEYDEF,  # define a profile dict key <NAC><KEY>
+	FMAXDO_SCTN0401_LAMBDADEF,  # define a profile lambda <NAC><NAME><LAMBDA>
+	FMAXDO_SCTN0401_STRDEF,  # define a profile STR <NAC><NAME><VAL>
+	FMAXDO_SCTN0401_VALDEF,  # define a profile value <NAC><NAME><VAL>
+	FMAXDO_SCTN0402_LDIEABSDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0402_LDIEBTNDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0402_LDIEFUNCDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0402_LDIEKEYDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0402_LDIERELDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0402_LDIESPCLDEF,  # define IE psuedo entry for special events
+	FMAXDO_SCTN0402_LDIESYNDEF,  # define an IE entry (3) <NAC><IESTR><VAL>
+	FMAXDO_SCTN0403_AXDEF,  # define a profile action <NAC>
+	FMAXDO_SCTN0403_AXVALADD,  # add an item to an action <NAC><AX><VAL>
+	FMAXDO_SCTN0404_DEVICEENTRYSTRADD,  # define an entry in a device <NAC><MYNAME><ENTRYKEY><STR>
+	FMAXDO_SCTN0404_DEVICEENTRYVALADD,  # define an entry in a device <NAC><MYNAME><ENTRYKEY><VAL>
+	FMAXDO_SCTN0405_HOLDABLEADD1,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE><NOTHOLDABLE><Ax>
+	FMAXDO_SCTN0405_HOLDABLEADD2,  # define holdable items in profile <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><HOLDABLE1><HOLDABLE2><NOTHOLDABLE><Ax>
+	FMAXDO_SCTN0405_NOTHOLDABLEADD1,  # not holdable PROF items <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><NOTHOLDABLE><Ax>
+	FMAXDO_SCTN0405_NOTHOLDABLEMODEDADD1,  # not holdable PROF items with a mode <NAC><DEV_MYNAME><BTNTYPE><REPEATRATE><MODENAME><NOTHOLDABLE><Ax>
+	FMAXDO_SCTN0406_XLATEADD,  # add an item to an XLATE entry <NAC><DEV_MYNAME><DEVBTN><COMMONBTN>
+	FMAXDO_SCTN0407_BTNSDEF,  # define buttons all around <NAC><BTNNAME><HOLDABLE>
+	FMAXDO_SCTN0408_EVTYPEDEF,  # define a device type list type<NAC>
+	FMAXDO_SCTN0408_EVTYPELST,  # add a device list entry<NAC>
+	FMAXDO_SCTN0409_DIRTRANSDEVDEF,  # add a dict to DO.py <NAV><DEVNAME>
+	FMAXDO_SCTN0409_DIRTRANSSTRADD,  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
+	FMAXDO_SCTN0409_DIRTRANSVALADD,  # add a dict to DO.py <NAV><DEVNAME><KEY><VAL>
+	FMAXDO_SCTN040A_HBIABSADD,  # enable ABS entry for IDB
+	FMAXDO_SCTN040A_HBIBTNADD,  # enable BTN entry for IDB
+	FMAXDO_SCTN040A_HBIKEYADD,  # enable KEY entry for IDB
+	FMAXDO_SCTN040A_HBIRELADD,  # enable REL entry for IDB
+	FMAXDO_SCTN040B_DICTDEF,  # define a dict in DO.py
+	FMAXFM_SCTN0101_AXDEF,  # define a new FM action <NAC>
+	FMAXFM_SCTN0102_VALDEF,  # define a CM value_ <NAC><NAME><VAL>
+	FMAXFM_SCTN0103_DICTDEF,  # define a dict for FM <NAC>
+	FMAXFM_SCTN0104_LISTDEF,  # define a list in FM <NAC>
+	FMAXFO_SCTN0301_DICTDEF,  # define a dict in FO.py <NAC>
+	FMAX_NOP,  # skip this entry
 ]
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN12 VAL _DEF_
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN13 _DICT_ _DEF_
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-FMCF_SCTN03TYPECMNTDICT = {}  # SCTN09 types comments
-FMCF_SCTN03TYPEDICT = {}  # SCTN03 types
-FMCF_SCTN21DEFCMNTDICT = {}  # SCTN21 defines comments dict
-FMCF_SCTN21DEFDICT = {}  # SCTN21 defines dict
-FMCF_SCTN22OPTIONSCMNTDICT = {}  # SCTN22 options comments dict
-FMCF_SCTN22OPTIONSDICT = {}  # SCTN22 options dict
-FMCF_SCTN22PARMSCMNTDICT = {}  # SCTN22 options comments dict
-FMCF_SCTN22PARMSDICT = {}  # SCTN22 options dict
-FMCF_SCTN23DICTCMNTDICT = {}  # SCTN23 dict comments dict
-FMCF_SCTN23DICTDICT = {}  # SCTN23 dict dict
-FMCF_SCTN24LISTCMNTDICT = {}  # SCTN24 list comments dict
-FMCF_SCTN24LISTDICT = {}  # SCTN24 list dict
-FMDO_SCTN41DEVICEDEFCMNTDICT = {}  # SCTN21 device defines
-FMDO_SCTN41DEVICEDEFDICT = {}  # SCTN21 device defines
-FMDO_SCTN42LDIECMNTDICT = {}  # SCTN22 LDIE defined
-FMDO_SCTN42LDIEDICT = {}  # SCTN22 LDIE defined
-FMDO_SCTN43AXDEFCMNTDICT = {}  # SCTN23 output actions AX comments
-FMDO_SCTN43AXDEFDICT = {}  # SCTN23 output actions AX
-FMDO_SCTN44DEVICESCMNTDICT = {}  # SCTN24 device comments
-FMDO_SCTN44DEVICESDICT = {}  # SCTN24 devices dict
-FMDO_SCTN45BTNNDXDICT = {}  # SCTN45 device BTNTYPE dict
-FMDO_SCTN45BTNTYPEDICT = {}  # SCTN45 device BTNTYPE dict
-FMDO_SCTN45PROFDICT = {}  # SCTN45 device profile dict
-FMDO_SCTN45RPTDICT = {}  # SCTN45 device RPT dict
-FMDO_SCTN46XLATECMNTDICT = {}  # SCTN26 XLATE dict
-FMDO_SCTN46XLATEDICT = {}  # SCTN26 XLATE dict
-FMDO_SCTN47BTNSCMNTDICT = {}  # SCTN04 buttons
-FMDO_SCTN47BTNSDICT = {}  # SCTN04 buttons
-FMDO_SCTN48DEFCMNTDICT = {}  # define a device types list type
-FMDO_SCTN48DEFDICT = {}  # define a device types list type
-FMDO_SCTN48TYPESCMNTDICT = {}  # define a device types list type
-FMDO_SCTN48TYPESDICT = {}  # define a device types list type
-FMDO_SCTN49DIRTRANSCMNTDICT = {}  # holds dict for DO.py
-FMDO_SCTN49DIRTRANSDICT = {}  # holds dict for DO.py
-FMFM_SCTN11AXCMNTDICT = {}  # SCTN11 FMAX defined
-FMFM_SCTN11AXDICT = {}  # SCTN11 FMAX defined
-FMFM_SCTN12VALCMNTDICT = {}  # SCTN12 val
-FMFM_SCTN12VALDICT = {}  # SCTN12 val
-FMFM_SCTN13DICTCMNTDICT = {}  # SCTN13 dict defined
-FMFM_SCTN13DICTDICT = {}  # SCTN13 dict defined
-FMFM_SCTN14LISTCMNTDICT = {}  # SCTN21 device defines
-FMFM_SCTN14LISTDICT = {}  # SCTN21 device defines
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+FMCF_SCTN0003_TYPECMNTDICT = {}  # SCTN09 types comments
+FMCF_SCTN0003_TYPEDICT = {}  # SCTN03 types
+FMCF_SCTN0201_DEFCMNTDICT = {}  # SCTN21 defines comments dict
+FMCF_SCTN0201_DEFDICT = {}  # SCTN21 defines dict
+FMCF_SCTN0202_OPTIONSCMNTDICT = {}  # SCTN22 options comments dict
+FMCF_SCTN0202_OPTIONSDICT = {}  # SCTN22 options dict
+FMCF_SCTN0202_PARMSCMNTDICT = {}  # SCTN22 options comments dict
+FMCF_SCTN0202_PARMSDICT = {}  # SCTN22 options dict
+FMCF_SCTN0203_DICTCMNTDICT = {}  # SCTN23 dict comments dict
+FMCF_SCTN0203_DICTDICT = {}  # SCTN23 dict dict
+FMCF_SCTN0204_LISTCMNTDICT = {}  # SCTN24 list comments dict
+FMCF_SCTN0204_LISTDICT = {}  # SCTN24 list dict
+FMDO_SCTN0401_DEVICEDEFCMNTDICT = {}  # SCTN21 device defines
+FMDO_SCTN0401_DEVICEDEFDICT = {}  # SCTN21 device defines
+FMDO_SCTN0402_LDIECMNTDICT = {}  # SCTN22 LDIE defined
+FMDO_SCTN0402_LDIEDICT = {}  # SCTN22 LDIE defined
+FMDO_SCTN0403_AXDEFCMNTDICT = {}  # SCTN23 output actions AX comments
+FMDO_SCTN0403_AXDEFDICT = {}  # SCTN23 output actions AX
+FMDO_SCTN0404_DEVICESCMNTDICT = {}  # SCTN24 device comments
+FMDO_SCTN0404_DEVICESDICT = {}  # SCTN24 devices dict
+FMDO_SCTN0405_BTNNDXDICT = {}  # SCTN45 device BTNTYPE dict
+FMDO_SCTN0405_BTNTYPEDICT = {}  # SCTN45 device BTNTYPE dict
+FMDO_SCTN0405_PROFDICT = {}  # SCTN45 device profile dict
+FMDO_SCTN0405_RPTDICT = {}  # SCTN45 device RPT dict
+FMDO_SCTN0406_XLATECMNTDICT = {}  # SCTN26 XLATE dict
+FMDO_SCTN0406_XLATEDICT = {}  # SCTN26 XLATE dict
+FMDO_SCTN0407_BTNSCMNTDICT = {}  # SCTN04 buttons
+FMDO_SCTN0407_BTNSDICT = {}  # SCTN04 buttons
+FMDO_SCTN0408_DEFCMNTDICT = {}  # define a device types list type
+FMDO_SCTN0408_DEFDICT = {}  # define a device types list type
+FMDO_SCTN0408_TYPESCMNTDICT = {}  # define a device types list type
+FMDO_SCTN0408_TYPESDICT = {}  # define a device types list type
+FMDO_SCTN0409_DIRTRANSCMNTDICT = {}  # holds dict for DO.py
+FMDO_SCTN0409_DIRTRANSDICT = {}  # holds dict for DO.py
+FMFM_SCTN0101_AXCMNTDICT = {}  # SCTN03 types
+FMFM_SCTN0101_AXDICT = {}  # SCTN11 FMAX defined
+FMFM_SCTN0102_VALCMNTDICT = {}  # SCTN12 val
+FMFM_SCTN0102_VALDICT = {}  # SCTN12 val
+FMFM_SCTN0103_DICTCMNTDICT = {}  # SCTN13 dict defined
+FMFM_SCTN0103_DICTDICT = {}  # SCTN13 dict defined
+FMFM_SCTN0104_LISTCMNTDICT = {}  # SCTN21 device defines
+FMFM_SCTN0104_LISTDICT = {}  # SCTN21 device defines
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN14 _LIST_ _DEF_
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-FMDO_SCTN42LDIERELLIST = []  # SCTN22 LDIE relative evdev actions defined
-FMDO_SCTN42LDIESPCLLIST = []  # SCTN22 LDIE defined
-FMDO_SCTN47BTNSHOLDABLELIST = []  # buttons holdable list
-FMHBI_SCTN50HBIABSLIST = []  # SCTN50 list
-FMHBI_SCTN51HBIBTNLIST = []  # SCTN51 list
-FMHBI_SCTN52HBIKEYLIST = []  # SCTN52 list
-FMHBI_SCTN53HBIRELLIST = []  # SCTN53 list
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+FMDO_SCTN0402_LDIERELLIST = []  # SCTN22 LDIE relative evdev actions defined
+FMDO_SCTN0402_LDIESPCLLIST = []  # SCTN22 LDIE defined
+FMDO_SCTN0407_BTNSHOLDABLELIST = []  # buttons holdable list
+FMDO_SCTN040A_HBIABSLIST = []  # SCTN50 list
+FMDO_SCTN040A_HBIBTNLIST = []  # SCTN51 list
+FMDO_SCTN040A_HBIKEYLIST = []  # SCTN52 list
+FMDO_SCTN040A_HBIRELLIST = []  # SCTN53 list
 
 
 #
 #
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * end of managed portions of FM.py
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
 	global \
-		FMCF_SCTN03TYPECMNTDICT, \
-		FMCF_SCTN03TYPEDICT, \
-		FMCF_SCTN21DEFCMNTDICT, \
-		FMCF_SCTN21DEFDICT, \
-		FMCF_SCTN22OPTIONSCMNTDICT, \
-		FMCF_SCTN22OPTIONSDICT, \
-		FMCF_SCTN22PARMSCMNTDICT, \
-		FMCF_SCTN22PARMSDICT, \
-		FMCF_SCTN23DICTCMNTDICT, \
-		FMCF_SCTN23DICTDICT, \
-		FMCF_SCTN24LISTCMNTDICT, \
-		FMCF_SCTN24LISTDICT, \
-		FMDO_SCTN41DEVICEDEFCMNTDICT, \
-		FMDO_SCTN41DEVICEDEFDICT, \
-		FMDO_SCTN42LDIECMNTDICT, \
-		FMDO_SCTN42LDIEDICT, \
-		FMDO_SCTN43AXDEFCMNTDICT, \
-		FMDO_SCTN43AXDEFDICT, \
-		FMDO_SCTN44DEVICESCMNTDICT, \
-		FMDO_SCTN44DEVICESDICT, \
-		FMDO_SCTN45BTNNDXDICT, \
-		FMDO_SCTN45BTNTYPEDICT, \
-		FMDO_SCTN45PROFDICT, \
-		FMDO_SCTN45RPTDICT, \
-		FMDO_SCTN46XLATECMNTDICT, \
-		FMDO_SCTN46XLATEDICT, \
-		FMDO_SCTN47BTNSCMNTDICT, \
-		FMDO_SCTN47BTNSDICT, \
-		FMDO_SCTN48DEFCMNTDICT, \
-		FMDO_SCTN48DEFDICT, \
-		FMDO_SCTN48TYPESCMNTDICT, \
-		FMDO_SCTN48TYPESDICT, \
-		FMDO_SCTN49DIRTRANSCMNTDICT, \
-		FMDO_SCTN49DIRTRANSDICT, \
-		FMFM_SCTN11AXCMNTDICT, \
-		FMFM_SCTN11AXDICT, \
-		FMFM_SCTN12VALCMNTDICT, \
-		FMFM_SCTN12VALDICT, \
-		FMFM_SCTN13DICTCMNTDICT, \
-		FMFM_SCTN13DICTDICT, \
-		FMFM_SCTN14LISTCMNTDICT, \
-		FMFM_SCTN14LISTDICT, \
-		FMDO_SCTN42LDIERELLIST, \
-		FMDO_SCTN42LDIESPCLLIST, \
-		FMDO_SCTN47BTNSHOLDABLELIST, \
-		FMHBI_SCTN50HBIABSLIST, \
-		FMHBI_SCTN51HBIBTNLIST, \
-		FMHBI_SCTN52HBIKEYLIST, \
-		FMHBI_SCTN53HBIRELLIST
+		FMCF_SCTN0003_TYPECMNTDICT, \
+		FMCF_SCTN0003_TYPEDICT, \
+		FMCF_SCTN0201_DEFCMNTDICT, \
+		FMCF_SCTN0201_DEFDICT, \
+		FMCF_SCTN0202_OPTIONSCMNTDICT, \
+		FMCF_SCTN0202_OPTIONSDICT, \
+		FMCF_SCTN0202_PARMSCMNTDICT, \
+		FMCF_SCTN0202_PARMSDICT, \
+		FMCF_SCTN0203_DICTCMNTDICT, \
+		FMCF_SCTN0203_DICTDICT, \
+		FMCF_SCTN0204_LISTCMNTDICT, \
+		FMCF_SCTN0204_LISTDICT, \
+		FMDO_SCTN0401_DEVICEDEFCMNTDICT, \
+		FMDO_SCTN0401_DEVICEDEFDICT, \
+		FMDO_SCTN0402_LDIECMNTDICT, \
+		FMDO_SCTN0402_LDIEDICT, \
+		FMDO_SCTN0403_AXDEFCMNTDICT, \
+		FMDO_SCTN0403_AXDEFDICT, \
+		FMDO_SCTN0404_DEVICESCMNTDICT, \
+		FMDO_SCTN0404_DEVICESDICT, \
+		FMDO_SCTN0405_BTNNDXDICT, \
+		FMDO_SCTN0405_BTNTYPEDICT, \
+		FMDO_SCTN0405_PROFDICT, \
+		FMDO_SCTN0405_RPTDICT, \
+		FMDO_SCTN0406_XLATECMNTDICT, \
+		FMDO_SCTN0406_XLATEDICT, \
+		FMDO_SCTN0407_BTNSCMNTDICT, \
+		FMDO_SCTN0407_BTNSDICT, \
+		FMDO_SCTN0408_DEFCMNTDICT, \
+		FMDO_SCTN0408_DEFDICT, \
+		FMDO_SCTN0408_TYPESCMNTDICT, \
+		FMDO_SCTN0408_TYPESDICT, \
+		FMDO_SCTN0409_DIRTRANSCMNTDICT, \
+		FMDO_SCTN0409_DIRTRANSDICT, \
+		FMFM_SCTN0101_AXCMNTDICT, \
+		FMFM_SCTN0101_AXDICT, \
+		FMFM_SCTN0102_VALCMNTDICT, \
+		FMFM_SCTN0102_VALDICT, \
+		FMFM_SCTN0103_DICTCMNTDICT, \
+		FMFM_SCTN0103_DICTDICT, \
+		FMFM_SCTN0104_LISTCMNTDICT, \
+		FMFM_SCTN0104_LISTDICT, \
+		FMDO_SCTN0402_LDIERELLIST, \
+		FMDO_SCTN0402_LDIESPCLLIST, \
+		FMDO_SCTN0407_BTNSHOLDABLELIST, \
+		FMDO_SCTN040A_HBIABSLIST, \
+		FMDO_SCTN040A_HBIBTNLIST, \
+		FMDO_SCTN040A_HBIKEYLIST, \
+		FMDO_SCTN040A_HBIRELLIST
