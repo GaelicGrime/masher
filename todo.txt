@@ -1,0 +1,4 @@
+* modes like mouse move/wheel V0.9
+* support for checking ALT CTRL SHIFT state and acting appropriately for moded events
+* dynamic device detection V0.9.50
+* support for jstest reading state before the program was executed
