@@ -11,8 +11,8 @@ import os
 
 
 import CF
-import HBI
-HBIDev = HBI.IDB()
+import DO_HBI
+HBIDev = DO_HBI.IDB()
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -266,7 +266,7 @@ BTNTYPE_NOTHOLDABLE = "BTNTYPE_NOTHOLDABLE"  # NOTHOLDABLE button
 BTNTYPE_SIMABS = "BTNTYPE_SIMABS"  # simulated ABS button
 BTNTYPE_SIMKEY = "BTNTYPE_SIMKEY"  # simulated REL button
 BTNTYPE_SIMREL = "BTNTYPE_SIMREL"  # simulated REL button
-DEFT = "DEFT"  # device DEFT mouse
+DEFT = "DEFT"  # device DEFT trackball mouse
 DEVCD_ABSRZ = LD.EV_ABS.ABS_RZ  # shortcut to ABS_RZ
 DEVCD_ABSX = LD.EV_ABS.ABS_X  # shortcut to ABS_X
 DEVCD_ABSY = LD.EV_ABS.ABS_Y  # shortcut to ABS_HAT0Y
@@ -378,7 +378,7 @@ DEV_ERR_DELTA = "DEV_ERR_DELTA"  # number of ticks (1/100) between error checks
 DEV_ERR_NEXTTIME = "DEV_ERR_NEXTTIME"  # next error time for this device if erroring
 DEV_FD = "DEV_FD"  # FD (file descriptor) of the device
 DEV_GRAB = "DEV_GRAB"  # GRAB the device exclusively or not
-DEV_MODE = "DEV_MODE"  # MODE the device is currently in
+DEV_MODE = "DEV_MODE"  # MODE(S) the device is currently in
 DEV_MYNAME = "DEV_MYNAME"  # device my name_
 DEV_NAME = "DEV_NAME"  # NAME of device returned by uvdev/evdev/etc
 DEV_HASPAUSED = "DEV_HASPAUSED"  # PAUSED

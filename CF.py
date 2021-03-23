@@ -80,18 +80,19 @@ BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
 CBRCE = "}"  # CLOSEBRACE
 CBRKT = "]"  # CLOSEBRACKET
-CMNTLEN = 150
-CONFIGDIR = "/rcr/0-units/python/"
 CPAREN = ")"  # CLOSE PARENTHESIS
 DBLQT = "\""  # DOUBLE QUOTE
 ESC = "\x1b"
-FOLDLEN = 150
 NEWLINE = "\n"  # NEWLINE
 OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
 TABSTR = "\t"  # TAB
+
+CMNTLEN = 200
+CONFIGDIR = "/rcr/0-units/python/"
+FOLDLEN = 200
 TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 
@@ -113,21 +114,23 @@ CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
 CLRALL = f"{ESC}[2J"
 CLRDOWN = f"{ESC}[J"
 CLREOL = f"{ESC}[K"
-CMNTLINE = f"""# * {"#*" * CMNTLEN}"""
+CMNTLINE = f"""# * {"#*" * (CMNTLEN // 2)}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
+DOHBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
+DOHBI_NAME = "newHBI.py"
+DOHBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
 DO_NAME = "newDO.py"
 DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
 EEOL = "{ESC}[K"
 EMPTY_DICT = {}
 EMPTY_LIST = []
 EMPTY_STR = ""
-EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", "'", "''", "`", "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", SGLQT, f"{SGLQT}{SGLQT}", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
 EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
 FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
-FO_NAME = "newFO.py"
 FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
 FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
@@ -140,31 +143,17 @@ FOLD3ENDHERE = f"""# fold here {"⥣3" * (FOLDLEN // 2)}"""
 FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
 FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
-HASHER = "HASHER"  # HASHER key
-HASH_blake2b = HL.blake2b()  # define blake2b value
-HASH_blake2s = HL.blake2s()  # define blake2s value
-HASH_md5 = HL.md5()  # define md5 value
-HASH_sha1 = HL.sha1()  # define sha1 value
-HASH_sha224 = HL.sha224()  # define sha224 value
-HASH_sha256 = HL.sha256()  # define sha256 value
-HASH_sha3_224 = HL.sha3_224()  # define sha3_224 value
-HASH_sha3_256 = HL.sha3_256()  # define sha3_256 value
-HASH_sha3_384 = HL.sha3_384()  # define sha3_384 value
-HASH_sha3_512 = HL.sha3_512()  # define sha3_512 value
-HASH_sha384 = HL.sha384()  # define sha384 value
-HASH_sha512 = HL.sha512()  # define sha512 value
-HBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
-HBI_NAME = "newHBI.py"
-HBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
-HEX08 = lambda X_: f"{X_:02H}"   # {thisComment_}
-HEX16 = lambda X_: f"{X_:04H}"   # {thisComment_}
-HEX32 = lambda X_: f"{X_:08H}"   # {thisComment_}
-HEX64 = lambda X_: f"{X_:016H}"   # {thisComment_}
+FO_NAME = "newFO.py"
+FOTOP_NAME = f"{CONFIGDIR}FOTOP.py"
+HEX08 = lambda X_: f"{X_:02H}"  # {thisComment_}
+HEX16 = lambda X_: f"{X_:04H}"  # {thisComment_}
+HEX32 = lambda X_: f"{X_:08H}"  # {thisComment_}
+HEX64 = lambda X_: f"{X_:016H}"  # {thisComment_}
 IMPORTANTSTR = f"""# * {"!-" * (CMNTLEN // 2)}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
-INFOSTR = "# * " + "%_" * CMNTLEN  # INFO _STR_ line\
-LINESUP = lambda NUM_:  f"{ESC}[{NUM_}A"
+INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line\
+LINESUP = lambda NUM_: f"{ESC}[{NUM_}A"
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -219,11 +208,10 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MOVETO = lambda LN_, COL_: f"\{ESC}[{LN_};{COL_}H"
-NOTRECURSE = "RECURSE"  # NOTRECURSE key
-NOTTRIALRUN = "TRIALRUN"  # TRIALRUN key
+MARKLINES_NAME = f"{CONFIGDIR}MARKLINES.py"
+MOVETO = lambda LN_, COL_: f"{ESC}[{LN_};{COL_}H"
 NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
-QTSET = ['"', "'", "`"]  # set of all quote characters
+QTSET = [DBLQT, SGLQT, BKQT]  # set of all quote characters
 SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
 SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
 SP_NAME = "newSP.py"
@@ -240,14 +228,14 @@ CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from
 ]
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN21 CF defines
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * SCTN0201 CF defines
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 
 
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN22 options structures
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * SCTN0202 options structures
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 PARMSDICT = {
 }
 
@@ -257,9 +245,9 @@ OPTIONSDICT = {
 
 #
 #
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * end of managed sections of CF.py
-# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
