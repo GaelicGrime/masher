@@ -17,11 +17,8 @@
 # * def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
 # * def makeAWideComment(comment_):
 # * def makeCF():
-# * def makeDBSQLT()
 # * def makeDO():
 # * def makeFM():
-# * def makeFO(): !
-# * def makeDOHBI():
 # * def makeSP():
 # * def parseTBGLST(FDTBGLST):
 # * def readFileToStr(FILENAME_):
@@ -31,7 +28,6 @@
 
 
 import hashlib as HL
-
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 # * SCTN001 _CHR_ _CONST_
@@ -189,34 +185,12 @@ CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN03 TYPEs and lambda
+# * SCTN0003 TYPEs and lambda
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-_ARRAY_ = "list"  # list or array, adjust for language
-_AX_ = "_AX_"  # action involving a common key combination like ALT-D CTRL-W
-_CHR_ = "varchar"  # character
-_CONST_ = "_CONST_"  # constant in all uses
-_DATETIME_ = "datetime"  # SQL datetime type
-_DEC_ = "decimal"  # BCD like decimal sql value_
-_DECIMAL_ = "decimal"  # BCD like decimal sql value_
-_DEF_ = "_DEF_"  # define in all uses
-_DICT_ = "dict"  # dict dictionary
-_FLD_ = "varchar"  # field in all uses
-_FLOAT_ = "float"  # standard floating point numbers
-_INT_ = "int"  # integer any use
-_KEY_ = "key"  # _DICT_ or DB key
-_LIST_ = "list"  # list, table, etc.
-_LST_ = "_LST_"  # list in all uses
-_META_ = "metadata"  # metadata in all uses
-_NUM_ = "NUMBER"  # number in all uses
-_STR_ = "varchar"  # DB _STR_ to VARCHAR defined
-_TUP_ = "tuple"  # define a tuple short method
-_TUPLE_ = "tuple"  # define a tuple long method
-_TYPE_ = "type"  # type in all uses
-_TYPES_ = "types"  # types in all uses
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN04 BTNS
+# * SCTN0004 BTNS
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BTNGHAT_DN = "BTNGHAT_DN"  # artificial button for the hat on gamepads
 BTNGHAT_DNLT = "BTNGHAT_DNLT"  # artificial button for the hat on gamepads
@@ -306,7 +280,7 @@ BTNSHOLDABLELIST = [
 ]
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN11 FMAX _DEF_
+# * SCTN0101 FMAX _DEF_
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 FMAXCF_SCTN0003_LAMBDADEF = "FMAXCF_SCTN0003_LAMBDADEF"  # define a lambda function <NAC><NAME><lambda str>
 FMAXCF_SCTN0003_TYPEDEF = "FMAXCF_SCTN0003_TYPEDEF"  # define a fake type used in the translation dict <NAC><NAME><TYPE>
@@ -357,7 +331,6 @@ FMAXFM_SCTN0101_AXDEF = "FMAXFM_SCTN0101_AXDEF"  # define a new FM action <NAC>
 FMAXFM_SCTN0102_VALDEF = "FMAXFM_SCTN0102_VALDEF"  # define a CM value_ <NAC><NAME><VAL>
 FMAXFM_SCTN0103_DICTDEF = "FMAXFM_SCTN0103_DICTDEF"  # define a dict for FM <NAC>
 FMAXFM_SCTN0104_LISTDEF = "FMAXFM_SCTN0104_LISTDEF"  # define a list in FM <NAC>
-FMAXFO_SCTN0301_DICTDEF = "FMAXFO_SCTN0301_DICTDEF"  # define a dict in FO.py <NAC>
 FMAX_NOP = "FMAX_NOP"  # skip this entry
 
 
@@ -411,18 +384,17 @@ FMAXFM_AXLST = [
 	FMAXFM_SCTN0102_VALDEF,  # define a CM value_ <NAC><NAME><VAL>
 	FMAXFM_SCTN0103_DICTDEF,  # define a dict for FM <NAC>
 	FMAXFM_SCTN0104_LISTDEF,  # define a list in FM <NAC>
-	FMAXFO_SCTN0301_DICTDEF,  # define a dict in FO.py <NAC>
 	FMAX_NOP,  # skip this entry
 ]
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN12 VAL _DEF_
+# * SCTN0102 VAL _DEF_
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN13 _DICT_ _DEF_
+# * SCTN0103 _DICT_ _DEF_
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 FMCF_SCTN0003_TYPECMNTDICT = {}  # SCTN09 types comments
 FMCF_SCTN0003_TYPEDICT = {}  # SCTN03 types
@@ -469,7 +441,7 @@ FMFM_SCTN0104_LISTDICT = {}  # SCTN21 device defines
 
 
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN14 _LIST_ _DEF_
+# * SCTN0104 _LIST_ _DEF_
 # * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 FMDO_SCTN0402_LDIERELLIST = []  # SCTN22 LDIE relative evdev actions defined
 FMDO_SCTN0402_LDIESPCLLIST = []  # SCTN22 LDIE defined
@@ -511,28 +483,6 @@ FMDO_SCTN040A_HBIRELLIST = []  # SCTN53 list
 
 TBGLST = [
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
-	("CFVAL_ARRAY", FMAXCF_SCTN0003_TYPEDEF, "_ARRAY_", "list", "list or array, adjust for language",),
-	("CFVAL_AX", FMAXCF_SCTN0003_TYPEDEF, "_AX_", "_AX_", "action involving a common key combination like ALT-D CTRL-W",),
-	("CFVAL_CHR", FMAXCF_SCTN0003_TYPEDEF, "_CHR_", "varchar", "character",),
-	("CFVAL_CONST", FMAXCF_SCTN0003_TYPEDEF, "_CONST_", "_CONST_", "constant in all uses",),
-	("CFVAL_DATETIME", FMAXCF_SCTN0003_TYPEDEF, "_DATETIME_", "datetime", "SQL datetime type",),
-	("CFVAL_DEC", FMAXCF_SCTN0003_TYPEDEF, "_DEC_", "decimal", "BCD like decimal sql value_",),
-	("CFVAL_DECIMAL", FMAXCF_SCTN0003_TYPEDEF, "_DECIMAL_", "decimal", "BCD like decimal sql value_",),
-	("CFVAL_DEF", FMAXCF_SCTN0003_TYPEDEF, "_DEF_", "_DEF_", "define in all uses",),
-	("CFVAL_DICT", FMAXCF_SCTN0003_TYPEDEF, "_DICT_", "dict", "dict dictionary",),
-	("CFVAL_FLD", FMAXCF_SCTN0003_TYPEDEF, "_FLD_", "varchar", "field in all uses",),
-	("CFVAL_FLOAT", FMAXCF_SCTN0003_TYPEDEF, "_FLOAT_", "float", "standard floating point numbers",),
-	("CFVAL_INT", FMAXCF_SCTN0003_TYPEDEF, "_INT_", "int", "integer any use",),
-	("CFVAL_KEY", FMAXCF_SCTN0003_TYPEDEF, "_KEY_", "key", "_DICT_ or DB key",),
-	("CFVAL_LIST", FMAXCF_SCTN0003_TYPEDEF, "_LIST_", "list", "list, table, etc.",),
-	("CFVAL_LST", FMAXCF_SCTN0003_TYPEDEF, "_LST_", "_LST_", "list in all uses",),
-	("CFVAL_META", FMAXCF_SCTN0003_TYPEDEF, "_META_", "metadata", "metadata in all uses",),
-	("CFVAL_NUM", FMAXCF_SCTN0003_TYPEDEF, "_NUM_", "NUMBER", "number in all uses",),
-	("CFVAL_STR", FMAXCF_SCTN0003_TYPEDEF, "_STR_", "varchar", "DB _STR_ to VARCHAR defined",),
-	("CFVAL_TUP", FMAXCF_SCTN0003_TYPEDEF, "_TUP_", "tuple", "define a tuple short method",),
-	("CFVAL_TUPLE", FMAXCF_SCTN0003_TYPEDEF, "_TUPLE_", "tuple", "define a tuple long method",),
-	("CFVAL_TYPE", FMAXCF_SCTN0003_TYPEDEF, "_TYPE_", "type", "type in all uses",),
-	("CFVAL_TYPES", FMAXCF_SCTN0003_TYPEDEF, "_TYPES_", "types", "types in all uses",),
 	("DEVT_ABSREL00", FMAXDO_SCTN0408_EVTYPEDEF, "ABSREL", "EV type list entry ABSS",),
 	("DEVT_ABSREL01", FMAXDO_SCTN0408_EVTYPELST, "ABSREL", "DEVCD_ABSRZ", "code for right stick X entries",),
 	("DEVT_ABSREL02", FMAXDO_SCTN0408_EVTYPELST, "ABSREL", "DEVCD_ABSX", "code for left stick X entries",),
@@ -1777,6 +1727,7 @@ TBGLST = [
 	("D__RTSTK0D", FMAXDO_SCTN0409_DIRTRANSVALADD, "RTSTK", "DIRLTDNUP_VAL", "BTNGRTSTK_RLS", "convert DIRUPLT_VAL to BTNGRTSTK_UPLT",),
 	("D__RTSTK0E", FMAXDO_SCTN0409_DIRTRANSVALADD, "RTSTK", "DIRLTDNRT_VAL", "BTNGRTSTK_RLS", "convert DIRUPLT_VAL to BTNGRTSTK_UPLT",),
 	("D__RTSTK0F", FMAXDO_SCTN0409_DIRTRANSVALADD, "RTSTK", "DIRLTDNRTUP_VAL", "BTNGRTSTK_RLS", "convert DIRUPLT_VAL to BTNGRTSTK_UPLT",),
+	("FMAXCF", FMAX_NOP, "FMAX_TBGLST_CF_BEGINS",),
 	("FMAXCF_SCTN0003_LAMBDADEF", FMAXFM_SCTN0101_AXDEF, "define a lambda function <NAC><NAME><lambda str>",),
 	("FMAXCF_SCTN0003_TYPEDEF", FMAXFM_SCTN0101_AXDEF, "define a fake type used in the translation dict <NAC><NAME><TYPE>",),
 	("FMAXCF_SCTN0201_STRDEF", FMAXFM_SCTN0101_AXDEF, "define a STR in SCTN21 <NAC><NAME><str>",),
@@ -1790,6 +1741,8 @@ TBGLST = [
 	("FMAXCF_SCTN0204_LISTDEF", FMAXFM_SCTN0101_AXDEF, "define a list in SCTN24 <NAC><LISTNAME>",),
 	("FMAXCF_SCTN0204_LISTSTRADD", FMAXFM_SCTN0101_AXDEF, "define a list STR in SCTN24 <NAC><LISTNAME><STR>",),
 	("FMAXCF_SCTN0204_LISTVALADD", FMAXFM_SCTN0101_AXDEF, "define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>",),
+	("FMAXCF_____", FMAX_NOP, "FMAX_TBGLST_CF_ENDS",),
+	("FMAXDO", FMAX_NOP, "FMAX_TBGLST_DO_BEGINS",),
 	("FMAXDO_SCTN0401_DEVICEDEF", FMAXFM_SCTN0101_AXDEF, "define a device in PROF <NAC><MYNAME><DEV_NAME>",),
 	("FMAXDO_SCTN0401_DICTKEYDEF", FMAXFM_SCTN0101_AXDEF, "define a profile dict key <NAC><KEY>",),
 	("FMAXDO_SCTN0401_LAMBDADEF", FMAXFM_SCTN0101_AXDEF, "define a profile lambda <NAC><NAME><LAMBDA>",),
@@ -1822,12 +1775,15 @@ TBGLST = [
 	("FMAXDO_SCTN040A_HBIKEYADD", FMAXFM_SCTN0101_AXDEF, "enable KEY entry for IDB",),
 	("FMAXDO_SCTN040A_HBIRELADD", FMAXFM_SCTN0101_AXDEF, "enable REL entry for IDB",),
 	("FMAXDO_SCTN040B_DICTDEF", FMAXFM_SCTN0101_AXDEF, "define a dict in DO.py",),
+	("FMAXDO_____", FMAX_NOP, "FMAX_TBGLST_DO_ENDS",),
+	("FMAXFM", FMAX_NOP, "FMAX_TBGLST_FM_BEGINS",),
 	("FMAXFM_SCTN0101_AXDEF", FMAXFM_SCTN0101_AXDEF, "define a new FM action <NAC>",),
 	("FMAXFM_SCTN0102_VALDEF", FMAXFM_SCTN0101_AXDEF, "define a CM value_ <NAC><NAME><VAL>",),
 	("FMAXFM_SCTN0103_DICTDEF", FMAXFM_SCTN0101_AXDEF, "define a dict for FM <NAC>",),
 	("FMAXFM_SCTN0104_LISTDEF", FMAXFM_SCTN0101_AXDEF, "define a list in FM <NAC>",),
-	("FMAXFO_SCTN0301_DICTDEF", FMAXFM_SCTN0101_AXDEF, "define a dict in FO.py <NAC>",),
+	("FMAXFM_____", FMAX_NOP, "FMAX_TBGLST_FM_ENDS",),
 	("FMAX_NOP", FMAXFM_SCTN0101_AXDEF, "skip this entry",),
+	("FMCF", FMAX_NOP, "FMCF_TBGLST_BEGINS",),
 	("FMCF_SCTN0003_TYPECMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN09 types comments",),
 	("FMCF_SCTN0003_TYPEDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN03 types",),
 	("FMCF_SCTN0201_DEFCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 defines comments dict",),
@@ -1840,6 +1796,8 @@ TBGLST = [
 	("FMCF_SCTN0203_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN23 dict dict",),
 	("FMCF_SCTN0204_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN24 list comments dict",),
 	("FMCF_SCTN0204_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN24 list dict",),
+	("FMCF_____", FMAX_NOP, "FMCF_TBGLST_ENDS",),
+	("FMDO", FMAX_NOP, "FMDO_TBGLST_BEGINS",),
 	("FMDO_SCTN0401_DEVICEDEFCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
 	("FMDO_SCTN0401_DEVICEDEFDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
 	("FMDO_SCTN0402_LDIECMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 LDIE defined",),
@@ -1869,6 +1827,8 @@ TBGLST = [
 	("FMDO_SCTN040A_HBIBTNLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN51 list",),
 	("FMDO_SCTN040A_HBIKEYLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN52 list",),
 	("FMDO_SCTN040A_HBIRELLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN53 list",),
+	("FMDO_____", FMAX_NOP, "FMDO_TBGLST_ENDS",),
+	("FMFM", FMAX_NOP, "FMFM_TBGLST_BEGINS",),
 	("FMFM_SCTN0101_AXCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN03 types",),
 	("FMFM_SCTN0101_AXDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN11 FMAX defined",),
 	("FMFM_SCTN0102_VALCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN12 val",),
@@ -1877,6 +1837,7 @@ TBGLST = [
 	("FMFM_SCTN0103_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN13 dict defined",),
 	("FMFM_SCTN0104_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
 	("FMFM_SCTN0104_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
+	("FMFM_____", FMAX_NOP, "FMFM_TBGLST_ENDS",),
 	("GBTNC_HLD", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYHLD", "comment",),
 	("GBTNC_PRS", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYPRS", "comment",),
 	("GBTNC_RLS", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYRLS", "comment",),
@@ -2745,7 +2706,7 @@ def explodeItem(itemToExplode_):
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
 
-# FM_CF_MAKE_BEGINS
+# FM_MAKE_CF_BEGINS
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # makeCF
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -2762,7 +2723,7 @@ def makeCF():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
-	strToRtn_ += f"""{makeAComment("SCTN2020 options structures")}PARMSDICT = {OBRCE}{NEWLINE}"""
+	strToRtn_ += f"""{makeAComment("SCTN0202 options structures")}PARMSDICT = {OBRCE}{NEWLINE}"""
 	for name_, value_ in FMCF_SCTN0202_PARMSDICT.items():
 		strToRtn_ += f"""{value_}"""
 	strToRtn_ += f"""{CBRCE}{NEWLINE}{NEWLINE}"""
@@ -2779,7 +2740,7 @@ def makeCF():
 	return strToRtn_
 
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-# FM_CF_MAKE_ENDS
+# FM_MAKE_CF_ENDS
 
 
 # FM_MAKE_DO_BEGINS
@@ -2804,7 +2765,7 @@ def makeDOHBI():
 	strToRtn_ += f"""{readFileToStr(DOHBIBTM_NAME)}"""
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
-
+# ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥ ⥣1⥥
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # makeDO
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -2814,7 +2775,7 @@ def makeDO():
 	strToRtn_ += f"""{readFileToStr(DOTOP_NAME)}"""
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN41 device defines
-	strToRtn_ += f"""{makeAComment("SCTN41 device defines")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0401 device defines")}"""
 	for name_, value_ in FMDO_SCTN0401_DEVICEDEFDICT.items():
 		strToRtn_ += f"""{value_}  # {FMDO_SCTN0401_DEVICEDEFCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}{makeAComment("SCTN47 buttons lists")}BTNSHOLDABLELIST = {OBRKT}{NEWLINE}"""
@@ -2824,7 +2785,7 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN41 device defines
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN42 LDIE entries
-	strToRtn_ += f"""{makeAComment("SCTN42 LDIE entries")}{FOLD1STARTHERE}{NEWLINE}"""
+	strToRtn_ += f"""{makeAComment("SCTN0402 LDIE entries")}{FOLD1STARTHERE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN0402_LDIEDICT.items():
 		strToRtn_ += f"""{name_} = {value_}  # {FMDO_SCTN0402_LDIECMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{FOLD1ENDHERE}{NEWLINE}{NEWLINE}"""
@@ -2841,7 +2802,7 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN42 LDIE entries
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN43 actions to output entries
-	strToRtn_ += f"""{makeAComment("SCTN43 actions to output entries")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0403 actions to output entries")}"""
 	strToRtn_ += f"""ACTIONS = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN0403_AXDEFDICT.items():
 		strToRtn_ += f"""{NTAB(1)}{name_}: {OBRKT}  # {FMDO_SCTN0403_AXDEFCMNTDICT[name_]}{NEWLINE}{NTAB(1)}{FOLD2STARTHERE}{NEWLINE}{value_}{NTAB(1)}{CBRKT},{NEWLINE}{NTAB(1)}{FOLD2ENDHERE}{NEWLINE}{NEWLINE}"""
@@ -2849,7 +2810,7 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN43 actions to output entries
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN48 device code list and dict
-	strToRtn_ += f"""{makeAComment("SCTN48 device code list and dict")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0408 device code list and dict")}"""
 	for name_, item_ in FMDO_SCTN0408_DEFDICT.items():
 		strToRtn_ += f"""{item_}  # {FMDO_SCTN0408_DEFCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
@@ -2869,9 +2830,9 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN48 device code list and dict
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN44 device entries
-	strToRtn_ += f"""{makeAComment("SCTN44 device entries")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0404 device entries")}"""
 	strToRtn1_ = ""
-	strToRtn_ += f"""DEVICES = {OBRCE}  # define SCTN44 DEVICES{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
+	strToRtn_ += f"""DEVICES = {OBRCE}  # define SCTN0404 DEVICES{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}{NEWLINE}"""
 	for name_, value_ in FMDO_SCTN0404_DEVICESDICT.items():
 		strToRtn1_ += f"""{NTAB(1)}{name_}: {OBRCE}  # {FMDO_SCTN0401_DEVICEDEFCMNTDICT[name_]}{NEWLINE}{NTAB(2)}{FOLD2STARTHERE}{NEWLINE}"""
 		for name1_, value1_ in value_.items():
@@ -2882,7 +2843,7 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN44 device entries
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
-	strToRtn_ += f"""{makeAComment("SCTN45 device PROFILE BTNTYPEDICT REPEATDICT")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0405 device PROFILE BTNTYPEDICT REPEATDICT")}"""
 	strToRtn_ += f"""{makeAComment("PROFILE")}{NEWLINE}PROFILE = {OBRCE}  # device PROFILE{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
 	strToRtn1_ = f"""{makeAComment("REPEATDICT")}{NEWLINE}REPEATDICT = {OBRCE}  # device REPEATDSICT{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
 	strToRtn2_ = f"""{makeAComment("BTNTYPEDICT")}{NEWLINE}BTNTYPEDICT = {OBRCE}  # BTNTYPEDICT{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}"""
@@ -3012,14 +2973,14 @@ def makeDO():
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN45 device PROFILE BTNTYPEDICT REPEATDICT
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN46 device XLATE table
-	strToRtn_ += f"""{makeAComment("SCTN46 device XLATE table")}XLATETABLE = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
+	strToRtn_ += f"""{makeAComment("SCTN0406 device XLATE table")}XLATETABLE = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
 	for thisDEV_MYNAME_, entries_ in FMDO_SCTN0406_XLATEDICT.items():
 		strToRtn_ += f"""{NTAB(1)}{thisDEV_MYNAME_}: {OBRCE}{NEWLINE}{NTAB(2)}{FOLD2STARTHERELN}{entries_}{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERELN}"""
 	strToRtn_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERELN}{NEWLINE}{NEWLINE}"""
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 SCTN46 device XLATE table
 
 	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ SCTN49 DIR to BTN SIM translation
-	strToRtn_ += f"""{makeAComment("SCTN49 DIR to BTN SIM translation")}DIR2BTN = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
+	strToRtn_ += f"""{makeAComment("SCTN0409 DIR to BTN SIM translation")}DIR2BTN = {OBRCE}{NEWLINE}{NTAB(1)}{FOLD1STARTHERELN}"""
 	for thisDEVT_, theseItems_ in FMDO_SCTN0409_DIRTRANSDICT.items():
 		strToRtn_ += f"""{NTAB(1)}{thisDEVT_}: {OBRCE}  # {FMDO_SCTN0409_DIRTRANSCMNTDICT[thisDEVT_]}{NEWLINE}{NTAB(2)}{FOLD2STARTHERELN}{theseItems_}{NTAB(1)}{CBRCE},{NEWLINE}{NTAB(2)}{FOLD2ENDHERELN}"""
 	strToRtn_ += f"""{CBRCE}{NEWLINE}{NTAB(1)}{FOLD1ENDHERELN}{NEWLINE}{NEWLINE}"""
@@ -3043,13 +3004,13 @@ def makeFM():
 	strToRtn_ += f"""{readFileToStr(FMTOP_NAME)}{readFileToStr(SCTN0102NAME)}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += f"""{makeAComment("SCTN03 TYPEs and lambda")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0003 TYPEs and lambda")}"""
 	for name_, value_ in FMCF_SCTN0003_TYPEDICT.items():
 		strToRtn_ += f"""{name_} = {value_}  # {FMCF_SCTN0003_TYPECMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += NEWLINE + NEWLINE
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += makeAComment("SCTN04 BTNS")
+	strToRtn_ += makeAComment("SCTN0004 BTNS")
 	strToRtn1_ = ""
 	for name_, value_ in FMDO_SCTN0407_BTNSDICT.items():
 		strToRtn_ += f"""{name_} = {DBLQT}{name_}{DBLQT}  # {FMDO_SCTN0407_BTNSCMNTDICT[name_]}{NEWLINE}"""
@@ -3058,7 +3019,7 @@ def makeFM():
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}BTNSHOLDABLELIST = {OBRKT}{NEWLINE}{strToRtn1_}{CBRKT}{NEWLINE}{NEWLINE}"""
 
 	## ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += f"""{makeAComment("SCTN11 FMAX _DEF_")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0101 FMAX _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN0101_AXDICT.items():
 		strToRtn_ += f"""{name_} = {value_}  # {FMFM_SCTN0101_AXCMNTDICT[name_]}{NEWLINE}"""
@@ -3066,21 +3027,21 @@ def makeFM():
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}FMAXFM_AXLST = {OBRKT}{NEWLINE}{strToRtn01_}{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += f"""{makeAComment("SCTN12 VAL _DEF_")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0102 VAL _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN0102_VALDICT.items():
 		strToRtn_ += f"""{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN0102_VALCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += f"""{makeAComment("SCTN13 _DICT_ _DEF_")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0103 _DICT_ _DEF_")}"""
 	strToRtn01_ = ""
 	for name_, value_ in FMFM_SCTN0103_DICTDICT.items():
 		strToRtn_ += f"""{name_} = {OBRCE}{CBRCE}  # {FMFM_SCTN0103_DICTCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}"""
 
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
-	strToRtn_ += f"""{makeAComment("SCTN14 _LIST_ _DEF_")}"""
+	strToRtn_ += f"""{makeAComment("SCTN0104 _LIST_ _DEF_")}"""
 	for name_, value_ in FMFM_SCTN0104_LISTDICT.items():
 		strToRtn_ += f"""{name_} = {value_}  # {FMFM_SCTN0104_LISTCMNTDICT[name_]}{NEWLINE}"""
 	strToRtn_ += f"""{NEWLINE}{NEWLINE}{makeAWideComment("end of managed portions of FM.py")}{NEWLINE}{NEWLINE}"""
@@ -3181,7 +3142,7 @@ def parseTBGLST(FDTBGLST):
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 
-	# CF_PARSE_BEGINS
+	# FM_PARSE_CF_BEGINS
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXCF_SCTN0003_LAMBDADEF:
@@ -3328,9 +3289,9 @@ def parseTBGLST(FDTBGLST):
 			FMCF_SCTN0204_LISTDICT[thisListName_] += f"{NTAB(1)}{thisVal_},  # {thisComment_}{NEWLINE}"
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	# CF_PARSE_ENDS
+	# FM_PARSE_CF_ENDS
 
-	# FM_DO_PARSE_BEGINS
+	# FM_PARSE_DO_BEGINS
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXDO_SCTN0401_DEVICEDEF:
@@ -3824,7 +3785,7 @@ def parseTBGLST(FDTBGLST):
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
 	# FM_DO_PARSE_ENDS
 
-	# FM_FM_PARSE_BEGINS
+	# FM_PARSE_FM_BEGINS
 	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ for thisItem_ in TBGLST:
 		# ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ ⥥2⥣ if thisAX_ …
 		elif thisAX_ == FMAXFM_SCTN0101_AXDEF:
@@ -3874,7 +3835,7 @@ def parseTBGLST(FDTBGLST):
 			FMFM_SCTN0104_LISTCMNTDICT[thisName_] = f"{thisComment_}"
 			continue
 			# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	# FM_FM_PARSE_ENDS
+	# FM_PARSE_FM_ENDS
 
 		# ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2 ⥣2
 	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
@@ -3888,7 +3849,7 @@ def parseTBGLST(FDTBGLST):
 def __main__():
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 
-	# MAIN_FM_BEGINS
+	# FM_MAIN_FM_BEGINS
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 	with open(TBGLST_NAME, "tw") as FDOut:
 		FDOut.write(f"TBGLST = {OBRKT}{NEWLINE}{NTAB(1)}{FOLD1STARTHERE}{NEWLINE}")
@@ -3898,17 +3859,17 @@ def __main__():
 		strToWrt_ = makeFM()
 		FDOut.writelines(strToWrt_)
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	# MAIN_FM_ENDS
+	# FM_MAIN_FM_ENDS
 
-	# MAIN_CF_BEGINS
+	# FM_MAIN_CF_BEGINS
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 	with open(CF_NAME, "tw") as FDOut:
 		strToWrt_ = makeCF()
 		FDOut.writelines(strToWrt_)
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	# MAIN_CF_ENDS
+	# FM_MAIN_CF_ENDS
 
-	# MAIN_DO_BEGINS
+	# FM_MAIN_DO_BEGINS
 	# fold here ⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2⥥2
 	with open(DO_NAME, "tw") as FDOut:
 		strToWrt_ = makeDO()
@@ -3917,7 +3878,7 @@ def __main__():
 		strToWrt_ = makeDOHBI()
 		FDOut.writelines(strToWrt_)
 	# fold here ⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2⥣2
-	# MAIN_DO_ENDS
+	# FM_MAIN_DO_ENDS
 
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
