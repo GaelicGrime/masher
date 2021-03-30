@@ -24,7 +24,6 @@ import pickle as PD
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # modules defined in CF.py
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-
 # * def dateIntvlM(dateToUse, months):
 # * def dateToStr(dateIn):
 # * def displayStats(LN_, COL_, statsStr_):
@@ -47,7 +46,8 @@ import pickle as PD
 # * def nowZ():
 # * def nowZStr(dtObj=DT.utcnow()):
 # * def nowZStrSql(dtObj=DT.utcnow()):
-# * def outputOptionsDict():
+# * def outputHelp(argv_):
+# * def outputOptionsStruct():
 # * def pickleIt(fileName_, dataToPickle_):
 # * def print_(*args_):
 # * def readFileToStr(FILENAME_):
@@ -56,8 +56,11 @@ import pickle as PD
 # * def removeDictQuotes(dictToUnquote_):
 # * def removeStrQuotes(strToStrip_):
 # * def setOptions(argv_):
+# * def sortADict(dictToSort_):
 # * def stripCodesAndVersion(strToStrip_):
 # * def stripCodes(strToStrip_):
+# * def subParms(listIn_, tupDictParms_):
+# * def tabsToSpcs(strIn_):
 # * def timeHoler(timeStr):
 # * def today():
 # * def todayStr(dtObj=DT.today()):
@@ -71,10 +74,22 @@ import pickle as PD
 # * def yesterday(dtObj=DT.today()):
 # * def yesterdayStr(dtObj=yesterday(DT.today())):
 
+HASH_blake2b = HL.blake2b()  # 64 byte fast hash
+HASH_blake2s = HL.blake2s()  # 32 byte fast hash
+HASH_md5 = HL.md5()  # 16 byte fastest hash, most likely to collide
+HASH_sha1 = HL.sha1()  # 20 byte hash
+HASH_sha224 = HL.sha224()  # 28 byte hash
+HASH_sha256 = HL.sha256()  # 32 byte hash
+HASH_sha3_224 = HL.sha3_224()  # 28 byte hash
+HASH_sha3_256 = HL.sha3_256()  # 32 byte hash
+HASH_sha3_384 = HL.sha3_384()  # 48 byte hash
+HASH_sha3_512 = HL.sha3_512()  # 64 byte hash
+HASH_sha384 = HL.sha384()  # 48 byte hash",),
+HASH_sha512 = HL.sha512()  # 64 byte hash",),
 
 
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN001 _CHR_ _CONST_
+# * SCTN0001 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
@@ -88,6 +103,7 @@ OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
+SPCSTR = " "  # SPACE character"
 TABSTR = "\t"  # TAB
 
 CMNTLEN = 200
@@ -98,39 +114,41 @@ TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 #
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN002 value_ constants
+# * SCTN0002 value_ constants
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
-BIN04 = lambda X: f"{X:04b}"
-BIN08 = lambda X: f"{X:08b}"
-BIN16 = lambda X: f"{X:016b}"
-BIN32 = lambda X: f"{X:032b}"
-BIN64 = lambda X: f"{X:064b}"
+AO_NAME = "newAO.py"
+AOTOP_NAME = f"""{CONFIGDIR}AOTOP.py"""
+BIN04 = lambda X: f"""{X:04b}"""
+BIN08 = lambda X: f"""{X:08b}"""
+BIN16 = lambda X: f"""{X:016b}"""
+BIN32 = lambda X: f"""{X:032b}"""
+BIN64 = lambda X: f"""{X:064b}"""
 CF_NAME = "newCF.py"
-CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
-CLRALL = f"{ESC}[2J"
-CLRDOWN = f"{ESC}[J"
-CLREOL = f"{ESC}[K"
+CFTOP_NAME = f"""{CONFIGDIR}CFTOP.py"""
+CLRALL = f"""{ESC}[2J"""
+CLRDOWN = f"""{ESC}[J"""
+CLREOL = f"""{ESC}[K"""
 CMNTLINE = f"""# * {"#*" * (CMNTLEN // 2)}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
-DOHBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
-DOHBI_NAME = "newHBI.py"
-DOHBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
+DOHBIBTM_NAME = f"""{CONFIGDIR}DO_HBIBTM.py"""
+DOHBI_NAME = "newDOHBI.py"
+DOHBITOP_NAME = f"""{CONFIGDIR}DO_HBITOP.py"""
 DO_NAME = "newDO.py"
-DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
-EEOL = "{ESC}[K"
+DOTOP_NAME = f"""{CONFIGDIR}DOTOP.py"""
+EEOL = f"""{ESC}[K"""
 EMPTY_DICT = {}
 EMPTY_LIST = []
 EMPTY_STR = ""
-EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", SGLQT, f"{SGLQT}{SGLQT}", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTYSTRLST = [None, "", DBLQT, f"""{DBLQT}{DBLQT}""", SGLQT, f"""{SGLQT}{SGLQT}""", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
 EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
-FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
+FMTOP_NAME = f"""{CONFIGDIR}FMTOP.py"""
 FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
 FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
@@ -144,16 +162,18 @@ FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
 FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
 FO_NAME = "newFO.py"
-FOTOP_NAME = f"{CONFIGDIR}FOTOP.py"
-HEX08 = lambda X_: f"{X_:02H}"  # {thisComment_}
-HEX16 = lambda X_: f"{X_:04H}"  # {thisComment_}
-HEX32 = lambda X_: f"{X_:08H}"  # {thisComment_}
-HEX64 = lambda X_: f"{X_:016H}"  # {thisComment_}
+FOTOP_NAME = f"""{CONFIGDIR}FOTOP.py"""
+HEX08 = lambda X_: f"""{X_:02H}"""  # {thisComment_}
+HEX16 = lambda X_: f"""{X_:04H}"""  # {thisComment_}
+HEX32 = lambda X_: f"""{X_:08H}"""  # {thisComment_}
+HEX64 = lambda X_: f"""{X_:016H}"""  # {thisComment_}
 IMPORTANTSTR = f"""# * {"!-" * (CMNTLEN // 2)}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
-INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line\
-LINESUP = lambda NUM_: f"{ESC}[{NUM_}A"
+INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line
+IO_NAME = "newIO.py"
+IOTOP_NAME = f"""{CONFIGDIR}IOTOP.py"""
+LINESUP = lambda NUM_: f"""{ESC}[{NUM_}A"""
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -208,16 +228,21 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MARKLINES_NAME = f"{CONFIGDIR}MARKLINES.py"
-MOVETO = lambda LN_, COL_: f"{ESC}[{LN_};{COL_}H"
-NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
+MARKLINES_NAME = f"""{CONFIGDIR}MARKLINES.py"""
+MOVELEFT = lambda NUM_: f"""{ESC}[{NUM_}D"""
+MOVETO = lambda LN_, COL_: f"""{ESC}[{LN_};{COL_}H"""
+NSPC = lambda NUM_: f"""{SPCSTR * NUM_}"""  # returns a string with NUM_ SPC
+NTAB = lambda NUM_: f"""{TABSTR * NUM_}"""  # returns a string with NUM_ TAB
 QTSET = [DBLQT, SGLQT, BKQT]  # set of all quote characters
-SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
-SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
+SCTN0102NAME = f"""{CONFIGDIR}SCTN0102.py"""
+SCTNSNAME = f"""{CONFIGDIR}SCTNS.py"""
 SP_NAME = "newSP.py"
-SPTOP_NAME = f"{CONFIGDIR}SPTOP.py"
+SPTOP_NAME = f"""{CONFIGDIR}SPTOP.py"""
 TBGLST_NAME = "TBGLST.py"
-
+VO_NAME = "newVO.py"
+VOTOP_NAME = f"""{CONFIGDIR}VOTOP.py"""
+WHIRLSTR = f"""-{BKSLSH}|/*"""
+WHIRLCOUNT = 0
 
 CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from 'text' strings like color codes"}
 	f"{ESC}[0m",  # entry for ESC-[0m
@@ -241,6 +266,15 @@ PARMSDICT = {
 
 OPTIONSDICT = {
 }
+
+
+#
+#
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# * end of managed sections of CF.py
+# * #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+#
+#
 
 
 #

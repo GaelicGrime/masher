@@ -3,3 +3,4 @@
 * dynamic device detection V0.9.50
 * support for jstest reading state before the program was executed
 * adaptive mouse speed on non mouse/rel input
+* state indicator floating widget

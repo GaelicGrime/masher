@@ -17,20 +17,20 @@
 # * def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
 # * def makeAWideComment(comment_):
 # * def makeCF():
+# * def makeDBSQLT()
 # * def makeDO():
+# * def makeDOHBI():
 # * def makeFM():
+# * def makeFO():
 # * def makeSP():
 # * def parseTBGLST(FDTBGLST):
 # * def readFileToStr(FILENAME_):
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-
 # * def __main__():
 
 
-import hashlib as HL
-
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN001 _CHR_ _CONST_
+# * SCTN0001 _CHR_ _CONST_
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 BKQT = "`"  # BACK TICK
 BKSLSH = "\\"  # BACKSLASH
@@ -44,6 +44,7 @@ OBRCE = "{"  # OPENBRACE
 OBRKT = "["  # OPENBRACKET
 OPAREN = "("  # OPENPAREN
 SGLQT = "'"  # simple ' character
+SPCSTR = " "  # SPACE character"
 TABSTR = "\t"  # TAB
 
 CMNTLEN = 200
@@ -54,39 +55,41 @@ TRIQT = f"""{DBLQT}{DBLQT}{DBLQT}"""
 
 #
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
-# * SCTN002 value_ constants
+# * SCTN0002 value_ constants
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
 #
 #
 
 
-BIN04 = lambda X: f"{X:04b}"
-BIN08 = lambda X: f"{X:08b}"
-BIN16 = lambda X: f"{X:016b}"
-BIN32 = lambda X: f"{X:032b}"
-BIN64 = lambda X: f"{X:064b}"
+AO_NAME = "newAO.py"
+AOTOP_NAME = f"""{CONFIGDIR}AOTOP.py"""
+BIN04 = lambda X: f"""{X:04b}"""
+BIN08 = lambda X: f"""{X:08b}"""
+BIN16 = lambda X: f"""{X:016b}"""
+BIN32 = lambda X: f"""{X:032b}"""
+BIN64 = lambda X: f"""{X:064b}"""
 CF_NAME = "newCF.py"
-CFTOP_NAME = f"{CONFIGDIR}CFTOP.py"
-CLRALL = f"{ESC}[2J"
-CLRDOWN = f"{ESC}[J"
-CLREOL = f"{ESC}[K"
+CFTOP_NAME = f"""{CONFIGDIR}CFTOP.py"""
+CLRALL = f"""{ESC}[2J"""
+CLRDOWN = f"""{ESC}[J"""
+CLREOL = f"""{ESC}[K"""
 CMNTLINE = f"""# * {"#*" * (CMNTLEN // 2)}"""
 DBSQLT_NAME = "newDBSQLT.py"
 DICTMODE_KEYSTR = "DICTMODE_KEYSTR"  # define dictmode 'key':val
 DICTMODE_KEYVAL = "DICTMODE_KEYVAL"  # define dictmode key:val
-DOHBIBTM_NAME = f"{CONFIGDIR}HBIBTM.py"
-DOHBI_NAME = "newHBI.py"
-DOHBITOP_NAME = f"{CONFIGDIR}HBITOP.py"
+DOHBIBTM_NAME = f"""{CONFIGDIR}DO_HBIBTM.py"""
+DOHBI_NAME = "newDOHBI.py"
+DOHBITOP_NAME = f"""{CONFIGDIR}DO_HBITOP.py"""
 DO_NAME = "newDO.py"
-DOTOP_NAME = f"{CONFIGDIR}DOTOP.py"
-EEOL = "{ESC}[K"
+DOTOP_NAME = f"""{CONFIGDIR}DOTOP.py"""
+EEOL = f"""{ESC}[K"""
 EMPTY_DICT = {}
 EMPTY_LIST = []
 EMPTY_STR = ""
-EMPTYSTRLST = [None, "", DBLQT, f"{DBLQT}{DBLQT}", SGLQT, f"{SGLQT}{SGLQT}", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
+EMPTYSTRLST = [None, "", DBLQT, f"""{DBLQT}{DBLQT}""", SGLQT, f"""{SGLQT}{SGLQT}""", BKQT, "None", "\r", NEWLINE, "\r\n", "\n\r", ]
 EMPTY_TUPLE = ()
 FM_NAME = "newFM.py"
-FMTOP_NAME = f"{CONFIGDIR}FMTOP.py"
+FMTOP_NAME = f"""{CONFIGDIR}FMTOP.py"""
 FOLD1ENDHERE = f"""# fold here {"⥣1" * (FOLDLEN // 2)}"""
 FOLD1ENDHERELN = f"""# fold here {"⥣1" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD1STARTHERE = f"""# fold here {"⥥1" * (FOLDLEN // 2)}"""
@@ -100,16 +103,18 @@ FOLD3ENDHERELN = f"""# fold here {"⥣3" * (FOLDLEN // 2)}{NEWLINE}"""
 FOLD3STARTHERE = f"""# fold here {"⥥3" * (FOLDLEN // 2)}"""
 FOLD3STARTHERELN = f"""# fold here {"⥥3" * (FOLDLEN // 2)}{NEWLINE}"""
 FO_NAME = "newFO.py"
-FOTOP_NAME = f"{CONFIGDIR}FOTOP.py"
-HEX08 = lambda X_: f"{X_:02H}"  # {thisComment_}
-HEX16 = lambda X_: f"{X_:04H}"  # {thisComment_}
-HEX32 = lambda X_: f"{X_:08H}"  # {thisComment_}
-HEX64 = lambda X_: f"{X_:016H}"  # {thisComment_}
+FOTOP_NAME = f"""{CONFIGDIR}FOTOP.py"""
+HEX08 = lambda X_: f"""{X_:02H}"""  # {thisComment_}
+HEX16 = lambda X_: f"""{X_:04H}"""  # {thisComment_}
+HEX32 = lambda X_: f"""{X_:08H}"""  # {thisComment_}
+HEX64 = lambda X_: f"""{X_:016H}"""  # {thisComment_}
 IMPORTANTSTR = f"""# * {"!-" * (CMNTLEN // 2)}"""  # important line marker
 INDENTIN = " -=> "  # display arrow RIGHT
 INDENTOUT = " <=- "  # display arrow LEFT
-INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line\
-LINESUP = lambda NUM_: f"{ESC}[{NUM_}A"
+INFOSTR = f"""# * {"%_" * (CMNTLEN // 2)}"""  # INFO _STR_ line
+IO_NAME = "newIO.py"
+IOTOP_NAME = f"""{CONFIGDIR}IOTOP.py"""
+LINESUP = lambda NUM_: f"""{ESC}[{NUM_}A"""
 MARK1END = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}"""
 MARK1ENDLN = lambda TAG_: f"""# {"⥣1 " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
 MARK1MID = lambda TAG_: f"""# {"⥣1⥥ " * (CMNTLEN // 4)} {TAG_}"""
@@ -164,16 +169,21 @@ MARK9MID = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}"""
 MARK9MIDLN = lambda TAG_: f"""# {"⥣9⥥ " * (CMNTLEN // 4)} {TAG_}{NEWLINE}"""
 MARK9START = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}"""
 MARK9STARTLN = lambda TAG_: f"""# {"9⥥ " * (CMNTLEN // 3)} {TAG_}{NEWLINE}"""
-MARKLINES_NAME = f"{CONFIGDIR}MARKLINES.py"
-MOVETO = lambda LN_, COL_: f"{ESC}[{LN_};{COL_}H"
-NTAB = lambda NUM_: TABSTR * NUM_  # returns a string with _NUM_ TAB
+MARKLINES_NAME = f"""{CONFIGDIR}MARKLINES.py"""
+MOVELEFT = lambda NUM_: f"""{ESC}[{NUM_}D"""
+MOVETO = lambda LN_, COL_: f"""{ESC}[{LN_};{COL_}H"""
+NSPC = lambda NUM_: f"""{SPCSTR * NUM_}"""  # returns a string with NUM_ SPC
+NTAB = lambda NUM_: f"""{TABSTR * NUM_}"""  # returns a string with NUM_ TAB
 QTSET = [DBLQT, SGLQT, BKQT]  # set of all quote characters
-SCTN0102NAME = f"{CONFIGDIR}SCTN0102.py"
-SCTNSNAME = f"{CONFIGDIR}SCTNS.py"
+SCTN0102NAME = f"""{CONFIGDIR}SCTN0102.py"""
+SCTNSNAME = f"""{CONFIGDIR}SCTNS.py"""
 SP_NAME = "newSP.py"
-SPTOP_NAME = f"{CONFIGDIR}SPTOP.py"
+SPTOP_NAME = f"""{CONFIGDIR}SPTOP.py"""
 TBGLST_NAME = "TBGLST.py"
-
+VO_NAME = "newVO.py"
+VOTOP_NAME = f"""{CONFIGDIR}VOTOP.py"""
+WHIRLSTR = f"""-{BKSLSH}|/*"""
+WHIRLCOUNT = 0
 
 CODES2STRIP = [  # {'CODES2STRIP': "dict holding all of the things to strip from 'text' strings like color codes"}
 	f"{ESC}[0m",  # entry for ESC-[0m
@@ -982,6 +992,12 @@ TBGLST = [
 	("DOVAL_AX_ALTTAB03", FMAXDO_SCTN0403_AXVALADD, "AX_ALTTAB", "KBDTAB_RLS", "release TAB",),
 	("DOVAL_AX_ALTTAB04", FMAXDO_SCTN0403_AXVALADD, "AX_ALTTAB", "KBDALTLT_RLS", "release ALT",),
 	("DOVAL_AX_ALTTAB05", FMAXDO_SCTN0403_AXVALADD, "AX_ALTTAB", "SYNREPORT", "SYNREPORT",),
+	("DOVAL_AX_ALTX", FMAXDO_SCTN0403_AXDEF, "AX_ALTX", "ALT-TAB",),
+	("DOVAL_AX_ALTX01", FMAXDO_SCTN0403_AXVALADD, "AX_ALTX", "KBDALTLT_PRS", "press ALT",),
+	("DOVAL_AX_ALTX02", FMAXDO_SCTN0403_AXVALADD, "AX_ALTX", "KBDX_PRS", "press X",),
+	("DOVAL_AX_ALTX03", FMAXDO_SCTN0403_AXVALADD, "AX_ALTX", "KBDX_RLS", "release X",),
+	("DOVAL_AX_ALTX04", FMAXDO_SCTN0403_AXVALADD, "AX_ALTX", "KBDALTLT_RLS", "release ALT",),
+	("DOVAL_AX_ALTX05", FMAXDO_SCTN0403_AXVALADD, "AX_ALTX", "SYNREPORT", "SYNREPORT",),
 	("DOVAL_AX_ALT_T01", FMAXDO_SCTN0403_AXDEF, "AX_ALT_T01", "ALT-C",),
 	("DOVAL_AX_ALT_T0101", FMAXDO_SCTN0403_AXVALADD, "AX_ALT_T01", "KBDALTLT_PRS", "press ALT",),
 	("DOVAL_AX_ALT_T0102", FMAXDO_SCTN0403_AXVALADD, "AX_ALT_T01", "SYNREPORT", "SYNREPORT",),
@@ -1610,6 +1626,7 @@ TBGLST = [
 	("D_MIMD__BTNG_0513", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_13", "AXXNVSEL2TOP", "select to top in many file lists SHIFT-HOME SHIFT-RT",),
 	("D_MIMD__BTNG_05HATLT", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_LT", "AX_BKSPC", "BACKSPACE on BTNG_05+BTNGHAT_LT",),
 	("D_MIMD__BTNG_05HATRT", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_RT", "AX_TAB", "TAB on BTNG_05+BTNGHAT_RT",),
+	("D_MIMD__BTNG_05HATUP", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_UP", "AX_ALTX", "ALT-A on BTNG05HATUP",),
 	("D_MIMD__BTNG_0601", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_01", "AX_Q", "QUIT Q in many programs",),
 	("D_MIMD__BTNG_0602", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_02", "AX_CTRLQ", "QUIT CTRL-Q in many programs",),
 	("D_MIMD__BTNG_0603", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_03", "AX_ALTD", "ALT-D dismiss in some programs",),
@@ -1617,6 +1634,7 @@ TBGLST = [
 	("D_MIMD__BTNG_0604_T02", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_06", "BTNG_04", "AX_ENTER", "gimp overwrite ENTER",),
 	("D_MIMD__BTNG_0604_T03", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_06", "BTNG_04", "AX_CTRLQ", "gimp overwrite CTRL-Q",),
 	("D_MIMD__BTNG_0604_T04", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_06", "BTNG_04", "AX_ALTD", "gimp overwrite ALT-D",),
+	("D_MIMD__BTNG_0610", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_10", "AX_F6", "many apps move to selected destination",),
 	("D_MIMD__BTNG_0611LTSTK_T01", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_06", "BTNG_11LTSTK", "AXMSEBTNLT_T01", "click MSEBTNLT",),
 	("D_MIMD__BTNG_0611LTSTK_T02", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_TOGGLE", "DORPT_NOT", "BTNG_06", "BTNG_11LTSTK", "AXMSEBTNLT_T02", "click MSEBTNLT",),
 	("D_MIMD__BTNG_06HATDN", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNGHAT_DN", "AX_PGDN", "PGDN",),
