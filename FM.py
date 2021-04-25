@@ -338,7 +338,8 @@ FMAXDO_SCTN040A_HBIKEYADD = "FMAXDO_SCTN040A_HBIKEYADD"  # enable KEY entry for 
 FMAXDO_SCTN040A_HBIRELADD = "FMAXDO_SCTN040A_HBIRELADD"  # enable REL entry for IDB
 FMAXDO_SCTN040B_DICTDEF = "FMAXDO_SCTN040B_DICTDEF"  # define a dict in DO.py
 FMAXFM_SCTN0101_AXDEF = "FMAXFM_SCTN0101_AXDEF"  # define a new FM action <NAC>
-FMAXFM_SCTN0102_VALDEF = "FMAXFM_SCTN0102_VALDEF"  # define a CM value_ <NAC><NAME><VAL>
+FMAXFM_SCTN0102_STRDEF = "FMAXFM_SCTN0102_STRDEF"  # define a FM string <NAC><VALNAME><STR>
+FMAXFM_SCTN0102_VALDEF = "FMAXFM_SCTN0102_VALDEF"  # define a FM value_ <NAC><VALNAME><VAL>
 FMAXFM_SCTN0103_DICTDEF = "FMAXFM_SCTN0103_DICTDEF"  # define a dict for FM <NAC>
 FMAXFM_SCTN0104_LISTDEF = "FMAXFM_SCTN0104_LISTDEF"  # define a list in FM <NAC>
 FMAX_NOP = "FMAX_NOP"  # skip this entry
@@ -391,7 +392,8 @@ FMAXFM_AXLST = [
 	FMAXDO_SCTN040A_HBIRELADD,  # enable REL entry for IDB
 	FMAXDO_SCTN040B_DICTDEF,  # define a dict in DO.py
 	FMAXFM_SCTN0101_AXDEF,  # define a new FM action <NAC>
-	FMAXFM_SCTN0102_VALDEF,  # define a CM value_ <NAC><NAME><VAL>
+	FMAXFM_SCTN0102_STRDEF,  # define a FM string <NAC><VALNAME><STR>
+	FMAXFM_SCTN0102_VALDEF,  # define a FM value_ <NAC><VALNAME><VAL>
 	FMAXFM_SCTN0103_DICTDEF,  # define a dict for FM <NAC>
 	FMAXFM_SCTN0104_LISTDEF,  # define a list in FM <NAC>
 	FMAX_NOP,  # skip this entry
@@ -484,7 +486,7 @@ FMDO_SCTN040A_HBIRELLIST = []  # SCTN53 list
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# START OF TBGLST
+# START OF TBGLST SCTN0105
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
@@ -492,7 +494,7 @@ FMDO_SCTN040A_HBIRELLIST = []  # SCTN53 list
 
 
 TBGLST = [
-	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥question1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	("DEVT_ABSREL00", FMAXDO_SCTN0408_EVTYPEDEF, "ABSREL", "EV type list entry ABSS",),
 	("DEVT_ABSREL01", FMAXDO_SCTN0408_EVTYPELST, "ABSREL", "DEVCD_ABSRZ", "code for right stick X entries",),
 	("DEVT_ABSREL02", FMAXDO_SCTN0408_EVTYPELST, "ABSREL", "DEVCD_ABSX", "code for left stick X entries",),
@@ -1626,7 +1628,8 @@ TBGLST = [
 	("D_MIMD__BTNG_0513", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNG_13", "AXXNVSEL2TOP", "select to top in many file lists SHIFT-HOME SHIFT-RT",),
 	("D_MIMD__BTNG_05HATLT", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_LT", "AX_BKSPC", "BACKSPACE on BTNG_05+BTNGHAT_LT",),
 	("D_MIMD__BTNG_05HATRT", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_RT", "AX_TAB", "TAB on BTNG_05+BTNGHAT_RT",),
-	("D_MIMD__BTNG_05HATUP", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_UP", "AX_ALTX", "ALT-A on BTNG05HATUP",),
+	("D_MIMD__BTNG_05HATDN", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_DN", "AX_ALTX", "ALT-X on BTNG05HATDN",),
+	("D_MIMD__BTNG_05HATUP", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_05", "BTNGHAT_UP", "AX_F", "F on BTNG05HATUP",),
 	("D_MIMD__BTNG_0601", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_01", "AX_Q", "QUIT Q in many programs",),
 	("D_MIMD__BTNG_0602", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_02", "AX_CTRLQ", "QUIT CTRL-Q in many programs",),
 	("D_MIMD__BTNG_0603", FMAXDO_SCTN0405_HOLDABLEADD1, "MIMD", "BTNAXTYPE_NORMAL", "DORPT_NOT", "BTNG_06", "BTNG_03", "AX_ALTD", "ALT-D dismiss in some programs",),
@@ -1760,7 +1763,7 @@ TBGLST = [
 	("FMAXCF_SCTN0204_LISTSTRADD", FMAXFM_SCTN0101_AXDEF, "define a list STR in SCTN24 <NAC><LISTNAME><STR>",),
 	("FMAXCF_SCTN0204_LISTVALADD", FMAXFM_SCTN0101_AXDEF, "define a VAL in a list in SCTN24 <NAC><LISTNAME><VAL>",),
 	("FMAXCF_____", FMAX_NOP, "FMAX_TBGLST_CF_ENDS",),
-	("FMAXDO", FMAX_NOP, "FMAX_TBGLST_DO_BEGINS",),
+	("FMAXDO", FMAX_NOP, "FMAXDO_BEGINS",),
 	("FMAXDO_SCTN0401_DEVICEDEF", FMAXFM_SCTN0101_AXDEF, "define a device in PROF <NAC><MYNAME><DEV_NAME>",),
 	("FMAXDO_SCTN0401_DICTKEYDEF", FMAXFM_SCTN0101_AXDEF, "define a profile dict key <NAC><KEY>",),
 	("FMAXDO_SCTN0401_LAMBDADEF", FMAXFM_SCTN0101_AXDEF, "define a profile lambda <NAC><NAME><LAMBDA>",),
@@ -1793,29 +1796,31 @@ TBGLST = [
 	("FMAXDO_SCTN040A_HBIKEYADD", FMAXFM_SCTN0101_AXDEF, "enable KEY entry for IDB",),
 	("FMAXDO_SCTN040A_HBIRELADD", FMAXFM_SCTN0101_AXDEF, "enable REL entry for IDB",),
 	("FMAXDO_SCTN040B_DICTDEF", FMAXFM_SCTN0101_AXDEF, "define a dict in DO.py",),
-	("FMAXDO_____", FMAX_NOP, "FMAX_TBGLST_DO_ENDS",),
-	("FMAXFM", FMAX_NOP, "FMAX_TBGLST_FM_BEGINS",),
+	("FMAXDO_____", FMAX_NOP, "FMAXDO_ENDS",),
+	("FMAXFM", FMAX_NOP, "FMAXFM_BEGINS",),
 	("FMAXFM_SCTN0101_AXDEF", FMAXFM_SCTN0101_AXDEF, "define a new FM action <NAC>",),
-	("FMAXFM_SCTN0102_VALDEF", FMAXFM_SCTN0101_AXDEF, "define a CM value_ <NAC><NAME><VAL>",),
+	("FMAXFM_SCTN0102_STRDEF", FMAXFM_SCTN0101_AXDEF, "define a FM string <NAC><VALNAME><STR>",),
+	("FMAXFM_SCTN0102_VALDEF", FMAXFM_SCTN0101_AXDEF, "define a FM value_ <NAC><VALNAME><VAL>",),
 	("FMAXFM_SCTN0103_DICTDEF", FMAXFM_SCTN0101_AXDEF, "define a dict for FM <NAC>",),
 	("FMAXFM_SCTN0104_LISTDEF", FMAXFM_SCTN0101_AXDEF, "define a list in FM <NAC>",),
-	("FMAXFM_____", FMAX_NOP, "FMAX_TBGLST_FM_ENDS",),
+	("FMAXFM_____", FMAX_NOP, "FMAXFM_ENDS",),
 	("FMAX_NOP", FMAXFM_SCTN0101_AXDEF, "skip this entry",),
-	("FMCF", FMAX_NOP, "FMCF_TBGLST_BEGINS",),
-	("FMCF_SCTN0003_TYPECMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN09 types comments",),
-	("FMCF_SCTN0003_TYPEDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN03 types",),
-	("FMCF_SCTN0201_DEFCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 defines comments dict",),
-	("FMCF_SCTN0201_DEFDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 defines dict",),
-	("FMCF_SCTN0202_OPTIONSCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 options comments dict",),
-	("FMCF_SCTN0202_OPTIONSDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 options dict",),
-	("FMCF_SCTN0202_PARMSCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 options comments dict",),
-	("FMCF_SCTN0202_PARMSDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 options dict",),
-	("FMCF_SCTN0203_DICTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN23 dict comments dict",),
-	("FMCF_SCTN0203_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN23 dict dict",),
-	("FMCF_SCTN0204_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN24 list comments dict",),
-	("FMCF_SCTN0204_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN24 list dict",),
-	("FMCF_____", FMAX_NOP, "FMCF_TBGLST_ENDS",),
-	("FMDO", FMAX_NOP, "FMDO_TBGLST_BEGINS",),
+	("FMCF", FMAX_NOP, "FMCF_BEGINS",),
+	("FMCF_SCTN0003_TYPECMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN009 types comments",),
+	("FMCF_SCTN0003_TYPEDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN003 types",),
+	("FMCF_SCTN0201_DEFCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN201 defines comments dict",),
+	("FMCF_SCTN0201_DEFDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN201 defines dict",),
+	("FMCF_SCTN0202_OPTIONSCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN202 OPTIONS comments dict",),
+	("FMCF_SCTN0202_OPTIONSDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN202 OPTIONS dict",),
+	("FMCF_SCTN0202_OPTIONSDICTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN202 OPTIONSDICT comments dict",),
+	("FMCF_SCTN0202_OPTIONSDICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN202 OPTIONSDICT",),
+	("FMCF_SCTN0202_OPTIONSHELPDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN202 OPTIONS HELPDICT",),
+	("FMCF_SCTN0203_DICTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN203 dict comments dict",),
+	("FMCF_SCTN0203_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN203 dict dict",),
+	("FMCF_SCTN0204_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN204 list comments dict",),
+	("FMCF_SCTN0204_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN204 list dict",),
+	("FMCF_____", FMAX_NOP, "FMCF_ENDS",),
+	("FMDO", FMAX_NOP, "FMDO_BEGINS",),
 	("FMDO_SCTN0401_DEVICEDEFCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
 	("FMDO_SCTN0401_DEVICEDEFDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
 	("FMDO_SCTN0402_LDIECMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN22 LDIE defined",),
@@ -1845,17 +1850,19 @@ TBGLST = [
 	("FMDO_SCTN040A_HBIBTNLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN51 list",),
 	("FMDO_SCTN040A_HBIKEYLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN52 list",),
 	("FMDO_SCTN040A_HBIRELLIST", FMAXFM_SCTN0104_LISTDEF, "SCTN53 list",),
-	("FMDO_____", FMAX_NOP, "FMDO_TBGLST_ENDS",),
-	("FMFM", FMAX_NOP, "FMFM_TBGLST_BEGINS",),
-	("FMFM_SCTN0101_AXCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN03 types",),
-	("FMFM_SCTN0101_AXDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN11 FMAX defined",),
-	("FMFM_SCTN0102_VALCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN12 val",),
-	("FMFM_SCTN0102_VALDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN12 val",),
-	("FMFM_SCTN0103_DICTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN13 dict defined",),
-	("FMFM_SCTN0103_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN13 dict defined",),
-	("FMFM_SCTN0104_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
-	("FMFM_SCTN0104_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN21 device defines",),
-	("FMFM_____", FMAX_NOP, "FMFM_TBGLST_ENDS",),
+	("FMDO_____", FMAX_NOP, "FMDO_ENDS",),
+	("FMFM", FMAX_NOP, "FMFM_BEGINS",),
+	("FMFM_SCTN0004_BTNSHOLDABLELIST", FMAXFM_SCTN0104_LISTDEF, "buttons holdable list",),
+	("FMFM_SCTN0101_AXCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN003 types",),
+	("FMFM_SCTN0101_AXCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN101 FMAX defined",),
+	("FMFM_SCTN0101_AXDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN101 FMAX defined",),
+	("FMFM_SCTN0102_VALCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN102 val",),
+	("FMFM_SCTN0102_VALDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN102 val",),
+	("FMFM_SCTN0103_DICTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN103 dict defined",),
+	("FMFM_SCTN0103_DICTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN103 dict defined",),
+	("FMFM_SCTN0104_LISTCMNTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN201 device defines",),
+	("FMFM_SCTN0104_LISTDICT", FMAXFM_SCTN0103_DICTDEF, "SCTN201 device defines",),
+	("FMFM_____", FMAX_NOP, "FMFM_ENDS",),
 	("GBTNC_HLD", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYHLD", "comment",),
 	("GBTNC_PRS", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYPRS", "comment",),
 	("GBTNC_RLS", FMAXDO_SCTN0402_LDIEBTNDEF, "BTN_C", "KEYRLS", "comment",),
@@ -2624,7 +2631,7 @@ TBGLST.sort()
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-# END OF TBGLST
+# END OF TBGLST SCTN0105
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
 # !_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!_!
@@ -2666,17 +2673,33 @@ def makeADict(dictName_, dictComment_, dictItems_):
 
 
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+# makeAList
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+def makeAList(listName_, listComment_, listItems_):
+	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
+	strToRtn_ = ""
+	strToRtn_ += f"""{listName_} = {OBRKT}  # {listComment_}
+{listItems_}{CBRKT}{NEWLINE}{NEWLINE}{NEWLINE}"""
+	return strToRtn_
+	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
+
+
+# #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 # makeATupDict
 # #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
 	# fold here ⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1⥥1
 	strToRtn_ = ""
 	strToRtn1_ = ""
+
+	# 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥ 1⥥
 	if tupDictSidecar_ is None:
 		strToRtn_ += f"""{makeAComment(f"start of {tupDictName_} structures")}
 {tupDictName_}TUP = {OPAREN}
 {tupDictItems_}{CPAREN}{NEWLINE}{NEWLINE}def {tupDictName_}DICT{OPAREN}{CPAREN}:
 {NTAB(1)}return dict{OPAREN}{OPAREN}x, y{CPAREN} for x, y in {tupDictName_}TUP{CPAREN}{NEWLINE}{NEWLINE}{NEWLINE}"""
+
+	# ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣ ⥥1⥣
 	else:
 		strToRtn_ += f"""{makeAComment(f"start of {tupDictName_} structures")}{NEWLINE}"""
 		for key_, items_ in tupDictSidecar_.items():
@@ -2685,6 +2708,8 @@ def makeATupDict(tupDictName_, tupDictItems_, tupDictSidecar_):
 		strToRtn_ += f"""{tupDictName_}TUP = {OPAREN}
 {tupDictItems_}{CPAREN}{NEWLINE}{NEWLINE}def {tupDictName_}DICT{OPAREN}{CPAREN}:
 {NTAB(1)}dictToRtn_ = dict{OPAREN}{OPAREN}x, y{CPAREN} for x, y in {tupDictName_}TUP{CPAREN}{NEWLINE}{strToRtn1_}{NTAB(1)}return listToRtn_, dictToRtn_{NEWLINE}{NEWLINE}{NEWLINE}"""
+
+	# ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1 ⥣1
 	return strToRtn_
 	# fold here ⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1⥣1
 
