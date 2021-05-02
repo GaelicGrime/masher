@@ -25,7 +25,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-TBGLST.py
 test*.py
 
 # PyInstaller
@@ -142,3 +141,5 @@ cython_debug/
 
 SQLconfig.py
 .idea
+
+
